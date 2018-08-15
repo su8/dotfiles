@@ -1,0 +1,30 @@
+title:  TP-LINK devices with built-in backdoors
+date:   2014-05-18
+author: Aaron
+
+<p>Few hours ago I spoke with a penetration tester and he mentioned about the TP-LINK devices that ship with built-in backdoors.</p>
+
+<p>I wasn't impressed at the beginning, but when I came in home decided to test my TP-LINK: router, switch and wifi extender.
+</p>
+
+<p>I'd better show you 3 pictures, so you can quickly eliminate that company from your future purchase list.</p>
+
+<p>Just to remind you, even some of the biggest companies in the networking are shipping their gear with built-in backdoors, so be EXTREMELY careful with your future purchase.</p>
+
+<br /><a href="$img/tp_link_backdoor/tp-link-backdoor.png"><img src='$img/tp_link_backdoor/tp-link-backdoor.png' alt='' /></a><br />
+
+<a href="$img/tp_link_backdoor/tp-link-backdoor-2.png"><img src='$img/tp_link_backdoor/tp-link-backdoor-2.png' alt='' /></a><br />
+
+<a href="$img/tp_link_backdoor/tp-link-backdoor-busybox-shell.png"><img src='$img/tp_link_backdoor/tp-link-backdoor-busybox-shell.png' alt='' /></a>
+
+<p>One thing is sure, will replace the firmware of that vulnerable piece of sh1t with <a href="http://dd-wrt.com/site/index" target="_blank">dd-wrt</a>.</p>
+
+<p>Post edit: With half-closed eyes I replaced the firmware with dd-wrt, it took me nearly 2 hours to read all the documentation and advices from dd-wrt.</p>
+
+<p>I'm surprised that this new firmware added two new operation modes: router and BG (dunno what the BG acronym stands for), while with the previous it could only operate as access point or wifi extender, also the LEDs blink fine.</p>
+
+<a href="$img/tp_link_backdoor/dd-wrt.png"><img src='$img/tp_link_backdoor/dd-wrt.png' alt='' /></a>
+
+<p>Access point mode set</p>
+
+<a href="$img/tp_link_backdoor/dd-wrt-1.png"><img src='$img/tp_link_backdoor/dd-wrt-1.png' alt='' /></a>

@@ -1,0 +1,205 @@
+########################################
+## fbpanel configuration file         ##
+########################################
+
+Global {
+    edge                = bottom
+    allign              = center
+    margin              = 0
+    widthtype           = percent
+    width               = 20           # adjust the position for the apps
+    height              = 24
+    transparent         = true
+    tintcolor           = #RRGGBB
+    alpha               = 0
+    setdocktype         = true
+    setpartialstrut     = true
+    autohide            = false
+    heightWhenHidden    = 2
+    roundcorners        = false
+    layer               = none
+    roundcornersradius  = 0
+    MaxElemHeight       = 32
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 65    # increase the value to move the apps to the right
+    }
+}
+
+###################################################################
+#                    Application Launcher                         #
+###################################################################
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/firefox.png
+            action = firefox
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/xterm.png
+            action = sakura
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/Thunar.png
+            action = thunar
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/internet-mail.png
+            action = sakura --execute mutt
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/pixmaps/qbittorrent.png
+            action = qbittorrent
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/geany.png
+            action = geany
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /opt/sublime_text_3/Icon/32x32/sublime-text.png
+            action = subl3
+        }
+    }
+}
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/pixmaps/pdf2img_icon.png
+            action = pdf2img
+        }
+    }
+}
+
+#Plugin {
+#    type     = space
+#    config {
+#        size = 10
+#    }
+#}
+
+#Plugin {
+#    type    = launchbar
+#    padding = 0
+#    config {
+#        button {
+#            image  = /usr/share/icons/hicolor/24x24/apps/plv.png
+#            action = plv
+#        }
+#    }
+#}
+
+#Plugin {
+#    type     = space
+#    config {
+#        size = 10
+#    }
+#}
+
+#Plugin {
+#    type    = launchbar
+#    padding = 0
+#    config {
+#        button {
+#            image  = /usr/share/icons/Faenza/apps/22/bleachbit.png
+#            action = bleachbit
+#        }
+#    }
+#}

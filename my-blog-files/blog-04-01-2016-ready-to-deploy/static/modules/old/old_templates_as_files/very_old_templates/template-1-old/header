@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!-- Consider adding a manifest.appcache: h5bp.com/d/Offline -->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<title>titlefixed</title>
+	<link rel="shortcut icon" href="img/icon.ico" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+    <meta name="author" content="Aaron">
+    <meta name="description" content="Blogging useful linux tips">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body><br />
+	<!-- WRAPPER -->
+	<div class="wrapper cf">
+		<header class="cf">
+		 <div class="cf"></div>
+			<div id="logo" class="cf">
+			  <a href="index.html" ><img src="img/logo.png" alt="" /></a>
+				<div class="blogdescription">Blogging useful linux tips</div>
+					 <form action="/search" id="searchform" method="get">
+                      <p>
+					   <input type="hidden" name="cref" value="http://linux.sytes.net/search.html">  
+                       <input type="hidden" name="cx" value="000510344615717143304:k7p5xn-2xbi" />
+                       <input type="hidden" name="cof" value="FORID:11" />
+                       <input type="hidden" name="ie" value="UTF-8" />
+                       <input class="search-sidebar" type="text" placeholder="Search..." name="q" size="30" />
+                      </p>
+                      <input name="siteurl" type="hidden" value="linux.sytes.net/">
+                      <input name="ref" type="hidden" value="">
+                      <input name="ss" type="hidden" value="">
+                     </form>
+			    </div>
+			<!-- nav -->
+			<nav class="cf">
+				<ul id="nav" class="sf-menu">
+					<li><a href="index.html"><span>Home</span></a></li>
+					<li><a href="archive.html"><span>Archive</span></a></li>
+					<li><a href="forum.html"><span>Forum</span></a></li>
+<!--					<li><a href="rss.html"><span>RSS</span></a></li>-->
+				</ul>
+				<div id="combo-holder"></div>
+			</nav>
+		  <!-- ends nav -->
+		</header>
+         <!-- MAIN -->
+			<div id="main" class="cf">
+			  <!-- posts list -->
+				<div id="posts-list" class="cf"> 
+
+

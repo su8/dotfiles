@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# DO NOT USE SUDO/SU !
+
+# supply the 'find_mkdir_cp' function
+source install1
+
+find_mkdir_cp home $USER
+
+# set the correct [d]irectory and [f]ile permissions
+find_n_chmod() { find $HOME -type $1 -print0 | xargs -0 chmod $2 ;}
+
+find_n_chmod d 700
+find_n_chmod f 600
+
+# make `xinitrc' and `dwm-start' executable
+make_exec() { chmod +x "$HOME/.config/$1" ;}
+
+make_exec 'misc/xinitrc'
+make_exec 'dwm_scripts/dwm-start'

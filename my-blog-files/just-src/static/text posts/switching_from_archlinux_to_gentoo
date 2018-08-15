@@ -1,0 +1,209 @@
+title:  Switching from Archlinux to FreeBSD then Gentoo
+date:   2015-08-29
+author: Aaron
+
+<p>The decision was taken and I want to explore other BSD flavours and or distributions.</p>
+
+<p>Past two weeks I've been using FreeBSD, but will I keep it as my daily driver ?</p>
+
+<p>I was using Arch Linux for roughly 2 years and 3 months. But as you might or might not know I wanted more control over what's about to be included in particular program and or library. All of the packages on my system was compiled from source code, but with no control there is no sense in wasting system resources and electricity.</p>
+
+<p>I have even created many patches to patch the PKGBUILD scripts, let me show you just one example:</p>
+
+<pre>--- a/PKGBUILD	2015-02-11 19:00:12.935518000 +0000
+<p>+++ b/PKGBUILD	2015-02-11 19:00:17.225520638 +0000</p>
+<p>@@ -75,72 +75,6 @@</p>
+<p> </p>
+<p>   make</p>
+<p> </p>
+<p>-  cd "${srcdir}"/vim-minimal-build</p>
+<p>-</p>
+<p>-  ./configure \</p>
+<p>-    --prefix=/usr \</p>
+<p>-    --localstatedir=/var/lib/vim \</p>
+<p>-    --with-features=huge \</p>
+<p>-    --with-compiledby='Arch Linux' \</p>
+<p>-    --disable-gpm \</p>
+<p>-    --enable-acl \</p>
+<p>-    --with-x=no \</p>
+<p>-    --disable-gui \</p>
+<p>-    --enable-multibyte \</p>
+<p>-    --enable-cscope \</p>
+<p>-    --disable-netbeans \</p>
+<p>-    --disable-perlinterp \</p>
+<p>-    --disable-pythoninterp \</p>
+<p>-    --disable-python3interp \</p>
+<p>-    --disable-rubyinterp \</p>
+<p>-    --disable-luainterp</p>
+<p>-</p>
+<p>-  make</p>
+<p>-</p>
+<p>-  cd "${srcdir}"/vim-build</p>
+<p>-</p>
+<p>-  ./configure \</p>
+<p>-    --prefix=/usr \</p>
+<p>-    --localstatedir=/var/lib/vim \</p>
+<p>-    --with-features=huge \</p>
+<p>-    --with-compiledby='Arch Linux' \</p>
+<p>-    --disable-gpm \</p>
+<p>-    --enable-acl \</p>
+<p>-    --with-x=no \</p>
+<p>-    --disable-gui \</p>
+<p>-    --enable-multibyte \</p>
+<p>-    --enable-cscope \</p>
+<p>-    --disable-netbeans \</p>
+<p>-    --disable-perlinterp \</p>
+<p>-    --disable-pythoninterp \</p>
+<p>-    --disable-python3interp \</p>
+<p>-    --disable-rubyinterp \</p>
+<p>-    --disable-luainterp</p>
+<p>-</p>
+<p>-  make</p>
+<p>-</p>
+<p>-  cd "${srcdir}"/vim-python3-build</p>
+<p>-</p>
+<p>-  ./configure \</p>
+<p>-    --prefix=/usr \</p>
+<p>-    --localstatedir=/var/lib/vim \</p>
+<p>-    --with-features=huge \</p>
+<p>-    --with-compiledby='Arch Linux' \</p>
+<p>-    --disable-gpm \</p>
+<p>-    --enable-acl \</p>
+<p>-    --with-x=no \</p>
+<p>-    --disable-gui \</p>
+<p>-    --enable-multibyte \</p>
+<p>-    --enable-cscope \</p>
+<p>-    --disable-netbeans \</p>
+<p>-    --disable-perlinterp \</p>
+<p>-    --disable-pythoninterp \</p>
+<p>-    --disable-python3interp \</p>
+<p>-    --disable-rubyinterp \</p>
+<p>-    --disable-luainterp</p>
+<p>-</p>
+<p>-  make</p>
+<p>-</p>
+<p>   cd "${srcdir}"/gvim-build</p>
+<p> </p>
+<p>   ./configure \</p>
+<p>@@ -163,33 +97,12 @@</p>
+<p> </p>
+<p>   make</p>
+<p> </p>
+<p>-  cd "${srcdir}"/gvim-python3-build</p>
+<p>-</p>
+<p>-  ./configure \</p>
+<p>-    --prefix=/usr \</p>
+<p>-    --localstatedir=/var/lib/vim \</p>
+<p>-    --with-features=huge \</p>
+<p>-    --with-compiledby='Arch Linux' \</p>
+<p>-    --disable-gpm \</p>
+<p>-    --enable-acl \</p>
+<p>-    --with-x=yes \</p>
+<p>-    --enable-gui=gtk2 \</p>
+<p>-    --enable-multibyte \</p>
+<p>-    --enable-cscope \</p>
+<p>-    --disable-netbeans \</p>
+<p>-    --disable-perlinterp \</p>
+<p>-    --disable-pythoninterp \</p>
+<p>-    --disable-python3interp \</p>
+<p>-    --disable-rubyinterp \</p>
+<p>-    --disable-luainterp</p>
+<p>-</p>
+<p>-  make</p>
+<p> }</p>
+<p> </p>
+<p> check() {</p>
+<p>   # disable tests because they seem to freeze</p>
+<p> </p>
+<p>-  cd "${srcdir}"/vim-build</p>
+<p>+  cd "${srcdir}"/vim-runtime-build</p>
+<p> </p>
+<p>   #make test</p></pre>
+
+<p>But wait, there is more. There is script that applies the patch:</p>
+
+<pre>THEPKGB='/tmp/vim/PKGBUILD'
+<p></p>
+<p>sed -i "s/pkgname=('vim-minimal' 'vim' 'vim-python3' 'gvim' 'gvim-python3' 'vim-runtime')/pkgname=('gvim' 'vim-runtime')/g" ${THEPKGB}</p>
+<p></p>
+<p>sed -i "s/'ruby'//g" ${THEPKGB}</p>
+<p>sed -i "s/'python'//g" ${THEPKGB}</p>
+<p>sed -i "s/'lua'//g" ${THEPKGB}</p>
+<p>sed -i "s/'gpm'//g" ${THEPKGB}</p>
+<p></p>
+<p>sed -i "s/--enable-gpm/--disable-gpm/g" ${THEPKGB}</p>
+<p>sed -i "s/--enable-pythoninterp/--disable-pythoninterp/g" ${THEPKGB}</p>
+<p>sed -i "s/--enable-python3interp/--disable-python3interp/g" ${THEPKGB}</p>
+<p>sed -i "s/--enable-netbeans/--disable-netbeans/g" ${THEPKGB}</p>
+<p>sed -i "s/--enable-perlinterp/--disable-perlinterp/g" ${THEPKGB}</p>
+<p>sed -i "s/--enable-luainterp/--disable-luainterp/g" ${THEPKGB}</p>
+<p>sed -i "s/--enable-rubyinterp/--disable-rubyinterp/g" ${THEPKGB}</p>
+<p></p>
+<p></p>
+<p>patch ${THEPKGB} 'my_gvim.diff'</p></pre>
+
+<p>You think that's too much, you haven't seen my kernel patch, lol.</p>
+
+<p>In 2014 switched and used OpenBSD for about 3 months (because of too much paranoia), but trying to keep it as bleeding edge resulted in copying the ports tree from FreeBSD and working my way to make the <strong>Makefile</strong>s OpenBSD compatible. At the beginning was fun, but at the end became almost full time job leaving me almost no time to enjoy my system. Kinda one man army.</p>
+
+<p>Don't get me wrong, I fall in love with OpenBSD ! All of my servers and firewalls are using it, just not as my daily driver 'cause I'm addicted to the bleeding edge and can't stand next to old software.</p>
+
+<p>Right, so past two weeks I was FreeBSD user. Installed it (the cli way and not with the ncurses installer) with full drive encryption, but grub does not support geli, so I had to give up from encrypted boot partition.</p>
+
+<p><code>startx</code> didn't worked and the Xorg log told me <strong>dri failed to load radeon</strong>, but I already had mesa, xf86-video-ati and their dependencies installed.</p>
+
+<p>After trying everything, from configuring <strong>/etc/X11/xorg.conf</strong> down to recompiling xorg-drivers to include all the possible gpu drivers nothing worked out.</p>
+
+<p>I did remember that in Archlinux's <strong>dmesg</strong> log I've seen <strong>kvm disabled by bios</strong> and this led me to a link that described that in FreeBSD there are two type of radeon drivers: one with KMS enabled and others without KMS.</p>
+
+<p>After removing the current xf86-video-ati drivers and compiled the new xf86-video-ati-ums drivers everything worked flawlessly. Except I couldn't use my wireless keyboard and mouse once X is started.</p>
+
+<p>It turns out that FreeBSD has limited <strong>USB</strong> support, and fades away whenever you plug something that's not wired in first place. This is not a big deal, in the garage I've got PS2 keyboard and mouse. Have to admit that my wireless keyboard and mouse are working fine in OpenBSD.</p>
+
+<p>Several days later decided to purchase a mouse and keyboard that are known to work in FreeBSD, but will talk about this and show them next week in a new blog post.</p>
+
+<p>The FreeBSD developers recommend not to mess with CFLAGS, so in Archlinux you got all the freedom to play around with <strong>/etc/makepkg.conf</strong> but you have no say over what's about to be included in given program, on the other hand in FreeBSD you have limited <strong>make.conf</strong> options that in most of the cases are ignored, but slightly more customizations via <code>make recursive-config</code> that has to be repeated minimum 5 times untill all dependencies are configured.</p>
+
+<p>Here is my FreeBSD <strong>make.conf</strong></p>
+
+<pre>WITH_PKGNG=yes
+<p>WITH_DEBUG=YES</p>
+<p>MAKE_JOBS_NUMBER?=3</p>
+<p>OPTIMIZED_CFLAGS=YES</p>
+<p>BUILD_OPTIMIZED=YES</p>
+<p>WITH_CPUFLAGS=YES</p>
+<p>WITH_OPTIMIZED_CPUFLAGS=YES</p>
+<p>WITHOUT_CUPS=yes</p>
+<p>OPTIONS_UNSET=CUPS</p>
+<p>NO_SENDMAIL=true</p>
+<p>NO_INET6=YES</p>
+<p>KERNCONF=BSD GENERIC</p>
+<p>VIDEO_DRIVER=ati</p>
+<p>FORCE_MAKE_JOBS=yes</p>
+<p>CC=clang</p>
+<p>CXX=clang++</p>
+<p>CPP=clang-cpp</p></pre>
+
+<p>In most cases the available <code>make recursive-config</code> customizations are "Doc, Debug, Native Language Support". But in ffmpeg, openssl and other big programs you get plenty of choice, except not as much as in Gentoo.</p>
+
+<p>After using it for 2 weeks I was honestly dissapointed of the limited customizations.</p>
+
+<p>Instead screwing up my SSD with FreeBSD on it, plugged some random hard drive and installed Gentoo on it (yesterday). I have to say that Gentoo fits my customization needs perfectly and most importantly is bleeding edge, the stable repos are not so bleeding as in arch though.</p>
+
+<p>When I started X and tried to open several programs to work with everything was <strong>lagging</strong> or opened with huge delay, then looked down to my right and saw the hard drive. It seems I get used to the speed of my SSD too much and have forgotten how slow hard drives are.</p>
+
+<p>There is so much to learn about Gentoo, my first priority is to wrap my head around emerge, pciutils, gentoolkit. The second priority will be to maintain really small number of installed programs and libraries. The third priority will be to use per program USE flags in <strong>/etc/portage/package.use/</strong>. Here is a screenshot of my system:</p>
+
+<a href="$img/archlinux-freebsd-gentoo/gentoo.png" target="_blank"><img src="$img/archlinux-freebsd-gentoo/gentoo.png" alt="" /></a>
+
+<p>The very first kernel I compiled missed my motherboard sensors module, so had to dig little bit further and enable it, so my statusbar program is now able to work properly.</p>
+
+<p>This blog post is not meant to show-off myself or being "slick". All I wanted was more control over the features that are relevant to me. That is why I had to explore different FOSS UNIX systems to find out which OS will serve my <strong>current</strong> needs.</p>
+
+<p>The different operating systems serve different purpose and different people, Arch Linux is binary distribution that doesn't stop you from messing around with <strong>makepkg.conf</strong>, but you have no say over what's included in given program/library.</p>
+
+<p>FreeBSD provides slightly more control over over the features, but not all the time (most of it will be "Doc, Debug, NLS"), lacks make.conf customizations, also lacks USB mouse and keyboard support, the support for wireless hardware is almost none (at least the hardware I tested didn't worked <strong>only in FreeBSD</strong>).</p>
+
+<p>In OpenBSD you get plug-and-forget support out of the box for such hardware, bit outdated packages, small ports tree in comparison to the one in FreeBSD, same limited features as in FreeBSD, but it is proven to be the most secure operating system in the world that also audits it's kernel and base.</p>
+
+<p>Gentoo is the do-it-yourself or should I say break-it-and-fix-it-yourself distribution, and with it you have total control over the features and your init system.</p>

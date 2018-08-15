@@ -1,0 +1,7 @@
+rc-update add dbus default
+eselect fontconfig list
+# disable all fonts
+eselect fontconfig enable 35  (70-yes-bitmaps.conf)
+# rldfonts (my zsh function)
+mkdir -p /var/pkg
+eselect mesa set r600 gallium

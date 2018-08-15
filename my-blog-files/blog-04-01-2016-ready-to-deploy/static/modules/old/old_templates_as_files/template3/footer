@@ -1,0 +1,27 @@
+        <!-- pagination -->
+       </div></div></div>
+        <div class="col-lg-4">
+          <!-- tags_bar -->
+          <div class="list-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Recent Posts</h3>
+                </div>
+            <ul class="list-unstyled">
+            <!-- recent posts -->
+            </ul>
+          </div></div>
+          <!-- github_sidebar -->
+        </div>
+      </div>
+      <footer>
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- footer_text -->
+          </div>
+        </div>
+      </footer>
+    </div>
+    <!-- github -->
+  </body>
+</html>

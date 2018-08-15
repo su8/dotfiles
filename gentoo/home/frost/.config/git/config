@@ -1,0 +1,42 @@
+[user]
+    email = wifiextender2@gmail.com
+    name = su8
+	signingkey = 0xF3BC613861A25A87
+[push]
+    default = simple
+[core]
+    editor = vim
+    whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+    excludesfile = ~/.gitignore
+    pager = more
+[color]
+    ui = auto
+[color "branch"]
+    current = yellow bold
+    local = green bold
+    remote = cyan bold
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+    commit = green bold
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    untracked = red bold
+[diff]
+    tool = vimdiff
+[difftool]
+    prompt = false
+[pager]
+    log = diff-highlight | more
+    show = diff-highlight | more
+    diff = diff-highlight | more
+[alias]
+	serve = daemon --verbose --export-all --base-path=.git --reuseaddr --strict-paths .git/
+[commit]
+	gpgsign = 0
+[gpg]
+	program = gpg

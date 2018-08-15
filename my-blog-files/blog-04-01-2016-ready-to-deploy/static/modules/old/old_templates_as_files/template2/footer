@@ -1,0 +1,40 @@
+    <!-- pagination -->
+		</div>
+			<!-- SIDEBAR -->
+			<!-- tags_bar -->
+				<aside id="sidebar">
+					<li class="block">
+						</li>
+					<ul>
+						<li class="block">
+							<h4 class="heading">Recent Posts</h4>
+							<ul>
+                               <!-- recent posts --> 
+							</ul>
+						</li>			
+					</ul>
+				</aside>
+				<!-- github_sidebar -->
+				<!-- ENDS SIDEBAR -->
+				
+			</div>
+			<!-- ENDS MAIN -->
+			
+			
+			<!-- WIDGETS -->
+			<ul  class="widget-cols cf">
+				<a href="#"><li class="scroll"></li></a>
+			</ul>
+			<!-- ENDS WIDGETS -->
+			
+			
+			<!-- FOOTER -->
+			<div class="footer-divider"></div>
+			<footer class="cf">
+				footer_text
+			</footer>
+			<!-- ENDS FOOTER -->
+		</div>
+		<!-- github -->
+	</body>
+</html>

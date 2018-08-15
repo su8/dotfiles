@@ -1,0 +1,240 @@
+!!------------------------------------------------------------------------
+!! OpenBox Theme: Archey
+!! Author: Aaron Caffrey  https://github.com/wifiextender
+!! Date: June 25 2014
+!!------------------------------------------------------------------------
+
+
+!!------------------------------------------------------------------------
+!! OSD SETTINGS
+!!------------------------------------------------------------------------
+
+osd.hilight.bg:         flat
+osd.hilight.bg.color:   #356AA0
+
+osd.unhilight.bg:       flat
+osd.unhilight.bg.color: #E04613
+
+osd.border.width:       1
+osd.border.color:       #FAFAFA
+
+osd.bg:                 flat border vertical gradient
+osd.bg.color:           #222222
+osd.bg.colorTo:         #222222
+osd.bg.border.color:    #222222
+
+osd.label.bg:           parentrelative
+osd.label.text.color:   #c0c0c0
+
+
+!!------------------------------------------------------------------------
+!! FONTS
+!!------------------------------------------------------------------------
+
+!!window.active.label.text.font: Cantarell,sans:size=10:shadow=y:shadowoffset=2:shadowtint=32:weight=0
+!!window.inactive.label.text.font: Cantarell,sans:size=10:shadowoffset=3:shadowtint=32:shadow=y:weight=0
+
+!!menu.title.text.font: Cantarell,sans:size=10:shadowoffset=2:shadowtint=35:shadow=y
+!!menu.items.font: Cantarell,sans:size=10:shadowoffset=2:shadowtint=15:shadow=y
+
+
+!!------------------------------------------------------------------------
+!! MENU
+!!------------------------------------------------------------------------
+
+*.bg.highlight:                     50
+*.bg.shadow:                        05
+
+window.active.title.bg.highlight:   35
+window.active.title.bg.shadow:      05
+
+window.inactive.title.bg.highlight: 30
+window.inactive.title.bg.shadow:    05
+
+window.*.grip.bg.highlight:         50
+window.*.grip.bg.shadow:            30
+
+window.*.handle.bg.highlight:       50
+window.*.handle.bg.shadow:          30
+
+
+!!------------------------------------------------------------------------
+!! MENU SETTINGS
+!!------------------------------------------------------------------------
+
+menu.title.bg:                          flat
+menu.title.bg.color:                    #202020
+menu.title.text.color:                  #DEDEDE
+menu.title.text.justify:                center
+
+menu.items.bg:                          flat
+menu.items.bg.color:                    #565656
+menu.items.text.color:                  #DEDEDE
+menu.items.disabled.text.color:         #434343
+
+menu.items.active.bg:                   flat
+menu.items.active.bg.color:             #95B3CC
+menu.items.active.text.color:           #565656
+menu.items.active.disabled.text.color:  #434343
+menu.border.width:                      1
+menu.border.color:                      #1793D1
+
+
+!!------------------------------------------------------------------------
+!! MENU ITEMS
+!!------------------------------------------------------------------------
+
+menu.items.active.bg:               flat
+menu.items.bg.color:                #222222
+menu.items.bg.colorTo:              #0b0b0b
+
+!!menu.separator.padding.width:       10
+menu.separator.color:               #222222
+
+menu.items.text.justify:            center
+menu.items.text.color:              #8C8C8C
+menu.items.active.text.color:       #C5C5C5
+
+menu.items.justify:                 center
+
+menu.items.disabled.text.color:     #777777
+
+menu.items.active.bg:               flat gradient vertical
+menu.items.active.bg.color:         #444444
+menu.items.active.bg.colorTo:       #252525
+menu.items.active.bg.border.color:  #222222
+
+
+
+!!------------------------------------------------------------------------
+!! WINDOW GEOMETRY
+!!------------------------------------------------------------------------
+
+padding.width:                0
+padding.height:               3
+border.width:                 1
+
+window.client.padding.width:  0
+window.client.padding.height: 0
+window.handle.width:          0
+
+menu.border.width:            1
+menu.overlap:                -3
+
+
+!!------------------------------------------------------------------------
+!! WINDOW TITLE
+!!------------------------------------------------------------------------
+
+window.active.title.bg:         flat vertical
+window.active.title.bg.color:   #222222
+
+window.inactive.title.bg:       flat vertical
+window.inactive.title.bg.color: #222222
+
+
+!!------------------------------------------------------------------------
+!! WINDOW TEXT
+!!------------------------------------------------------------------------
+
+padding.width:                    4
+padding.height:                   2
+window.label.text.justify:        center
+
+window.active.label.bg:           flat vertical
+window.active.label.bg.color:     #222222
+window.active.label.bg.colorTo:   #222222
+window.active.label.text.color:   #E4E4E4
+
+window.inactive.label.bg:         flat vertical
+window.inactive.label.bg.color:   #222222
+window.inactive.label.bg.colorTo: #222222
+window.inactive.label.text.color: #A5A5A5
+
+
+!!------------------------------------------------------------------------
+!! WINDOW BORDER
+!!------------------------------------------------------------------------
+
+border.width:                           1
+border.color:                           #1793D1
+
+window.client.padding.width:            0
+window.client.padding.height:           0           
+
+window.active.client.color:             #222222
+window.inactive.client.color:           #222222
+
+window.active.title.separator.color:    #222222
+window.inactive.title.separator.color:  #222222
+
+
+!!------------------------------------------------------------------------
+!! WINDOW HANDLE AND GRIP
+!!------------------------------------------------------------------------
+
+window.handle.width:              0
+
+window.active.handle.bg:          flat vertical
+window.active.handle.bg.color:    #222222
+
+window.active.grip.bg:            flat vertical
+window.active.grip.bg.color:      #222222
+
+window.inactive.handle.bg:        flat vertical
+window.inactive.handle.bg.color:  #222222
+
+window.inactive.grip.bg:          flat vertical
+window.inactive.grip.bg.color:    #222222
+
+
+!!------------------------------------------------------------------------
+!! ACTIVE WINDOW BUTTONS
+!!------------------------------------------------------------------------
+
+window.active.button.unpressed.bg:          flat vertical
+window.active.button.unpressed.bg.color:    #222222
+window.active.button.unpressed.image.color: #222222
+
+window.active.button.pressed.bg:            flat vertical
+window.active.button.pressed.bg.color:      #222222
+window.active.button.pressed.image.color:   #656565
+
+window.active.button.disabled.bg:           flat vertical
+window.active.button.disabled.bg.color:     #222222
+window.active.button.disabled.image.color:  #000000
+
+window.active.button.hover.bg:              flat vertical
+window.active.button.hover.bg.color:        #151515
+window.active.button.hover.bg.colorTo:      #151515
+window.active.button.hover.image.color:     #ffffff
+
+window.active.button.toggled.bg:            flat vertical
+window.active.button.toggled.bg.color:      #222222
+window.active.button.toggled.image.color:   #656565
+
+
+!!------------------------------------------------------------------------
+!! INACTIVE WINDOW BUTTONS
+!!------------------------------------------------------------------------
+
+window.inactive.button.unpressed.bg:            flat vertical
+window.inactive.button.unpressed.bg.color:      #222222
+window.inactive.button.unpressed.image.color:   #222222
+
+window.inactive.button.pressed.bg:              flat vertical
+window.inactive.button.pressed.bg.color:        #222222
+window.inactive.button.pressed.image.color:     #222222
+
+window.inactive.button.disabled.bg:             flat vertical
+window.inactive.button.disabled.bg.color:       #222222
+window.inactive.button.disabled.image.color:    #222222
+
+window.inactive.button.hover.bg:                flat vertical
+window.inactive.button.hover.bg.color:          #222222
+window.inactive.button.hover.bg.colorTo:        #222222
+window.inactive.button.hover.image.color:       #656565
+
+window.inactive.button.toggled.bg:              flat vertical
+window.inactive.button.toggled.bg.color:        #222222
+window.inactive.button.toggled.image.color:     #222222

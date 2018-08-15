@@ -1,0 +1,29 @@
+title:  Switching from dwm to xmonad
+date:   2015-08-15
+author: Aaron
+
+<p>Going back to the future.</p>
+
+<p>My first attemp to have xmonad long time ago as my primary window manager failed.</p>
+
+<p>I <a href="$web/post/openbox-to-dwm/" target="_blank">mentioned</a> half year ago that my first attemp to go with xmonad failed due to the fact that I didn't knew Haskell. I still don't know Haskell, but the experience from dwm encouraged me to give it a try again.</p>
+
+<p>Just to mention that this is my second day in xmonad.</p>
+
+<a href="$img/dwm-to-xmonad/hello_xmonad.png" target="_blank"><img src="$img/dwm-to-xmonad/hello_xmonad.png" alt="" /></a><br />
+
+<p>Edited this post on next day to add a new image. The top bar is made of 2 dzen instances, lol.</p>
+
+<a href="$img/dwm-to-xmonad/hello2_xmonad.png" target="_blank"><img src="$img/dwm-to-xmonad/hello2_xmonad.png" alt="" /></a><br />
+
+<p>It's key bindings are almost identical to the one in dwm, had to verify twice that I am actually running xmonad and not dwm. If you are dwm user or ever used dwm you won't have too many difficulties.</p>
+
+<p>Going down to the code level. I have zero knowledge in Haskell, thus all the configuration code is copied from other people. The only not copied code is my statusbar program that is slightly modified to output it's data to dzen instead.</p>
+
+<p>xmonad is encouraging you to develop unhealty (system) habits. For example it doesn't have top or bottom bar with visible tags, thus forcing you to use external statusbar program that have to be feeded by one more script or your own crafted program. It's so bare bone (not so bare as dwm) by default that you'll be forced to download a whole <strong>xmonad-contrib</strong> package in order to copy and paste code (even if it's 1 line long) found in internet.</p>
+
+<p>Yesterday was all about to find a way to force and shift some programs to particular tags (there is no <strong>tags mask</strong> like in dwm).</p>
+
+<p>While surfing from one website to another one, I found a code that allows me to specify unique layout regarding each tag, so I can have bottom stack layout in one tag, tiled in another one, and monocole in the next one.</p>
+
+<p>I like xmonad despite the language barrier and my inability to expand it the way I want to. It's like dwm's cousin written in Haskell with slightly more features included by default and is forcing you to have a dinner in fast food restaurant instead cooking some healty dinner at home.</p>

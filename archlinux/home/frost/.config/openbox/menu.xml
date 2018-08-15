@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+
+<!--
+    Every menu category has it's own `xml' file,
+    see "categories/*.xml". `rc.xml' is responsible
+    to load them at system startup, and the skeleton
+    here is responsible to show their content
+    when you right click.
+-->
+
+<menu id="root-menu" label="OpenBox 3">
+
+  <menu id="dev"   icon="/usr/share/icons/Faenza/categories/22/applications-development.png" />
+  <menu id="graph" icon="/usr/share/icons/Faenza/categories/22/applications-graphics.png"    />
+  <menu id="media" icon="/usr/share/icons/Faenza/categories/22/applications-multimedia.png"  />
+  <menu id="net"   icon="/usr/share/icons/Faenza/categories/22/applications-internet.png"    />
+  <menu id="sys"   icon="/usr/share/icons/Faenza/categories/22/applications-system.png"      />
+  <menu id="hell"  icon="/usr/share/icons/Faenza/places/22/distributor-logo-archlinux.png"   />
+
+</menu>
+</openbox_menu>

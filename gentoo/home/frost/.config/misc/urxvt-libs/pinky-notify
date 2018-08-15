@@ -1,0 +1,24 @@
+sub pinky_status_start {
+  my ($self, $statusLine) = @_;
+
+  $statusLine->XChangeInput ($statusLine->parent, urxvt::PropertyChangeMask);
+  push @{$self->{pinky_line}}, $statusLine;
+  $self->make_pinky_window ($statusLine);
+
+  return;
+}
+
+sub pinky_status_property_notify {
+  my ($self, $tab, $event) = @_;
+
+  my $atom = $self->XInternAtom("_NET_WM_NAME", 1);
+  my $statusLine = $self->{cur};
+  $self->{cur}->{name} = $self->XGetWindowProperty($statusLine->parent, $atom);
+
+  $self->refresh;
+  return 1;
+}
+
+man xprop
+xprop -id 0x2000009
+ xprop -root -format MY_ATOM_NAME 8s -set MY_ATOM_NAME  "my_value"

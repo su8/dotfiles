@@ -1,0 +1,21 @@
+Allow console login only to users that are in the "logingp" group.
+
+Read the title again !
+
+
+Files to edit:
+
+/etc/pam.d/login
+    account  required  pam_access.so
+
+/etc/security/access.conf
+    -:ALL EXCEPT logingp :ALL
+
+
+# groups user
+# groupadd logingp
+# gpasswd -a user logingp
+
+# systemd log
+#Mar 01 17:00:18 localhost login[542]: pam_access(login:account): access denied for user `root' from `tty2'
+#Mar 01 17:00:18 localhost login[542]: Permission denied

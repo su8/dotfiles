@@ -1,0 +1,16 @@
+Create new repo and upload the content.
+Wait 20 minutes and run the commands below.
+Go to the repo and select the gh-pages branch.
+
+git checkout --orphan gh-pages
+git add -A
+git commit -am "blog"
+git push origin gh-pages
+git push --set-upstream origin gh-pages
+
+
+########################################
+git rm -rf .
+git checkout -b gh-pages
+git push --set-upstream origin gh-pages
+########################################

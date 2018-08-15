@@ -1,0 +1,9 @@
+# makepkg -s
+# a=()
+# for x in $(pacman -Qq);do a+="'$x'";done
+pkgname=qlqlql
+pkgver=1
+pkgrel=2
+pkgdesc='olololololol'
+arch=('i686' 'x86_64')
+depends=('packages' 'goes' 'here')

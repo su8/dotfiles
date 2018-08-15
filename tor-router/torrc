@@ -1,0 +1,20 @@
+# Transparent proxy (tor router) configuration file.
+# More information and firewall rules are available at https://trac.torproject.org/projects/tor/wiki/doc/TransparentProxy
+# The below options provide short introduction information, head over https://www.torproject.org/docs/tor-manual.html.en  to learn more  
+
+# Tor router -> OpenBSD firewall -> Tor bundle installed installed on every computer at home
+
+VirtualAddrNetworkIPv4 10.192.0.0/10  # When providing proxy server service to a network of computers using a tool like dns-proxy-tor, change the IPv4 network to "10.192.0.0/10" or "172.16.0.0/12" and change the IPv6 network to "[FC00]/7". The default VirtualAddrNetwork address ranges on a properly configured machine will route to the loopback or link-local interface. For local use, no change to the default VirtualAddrNetwork setting is needed. 
+AutomapHostsOnResolve 1                # This is handy for making ".onion" addresses work with applications that resolve an address and then connect to it
+AutomapHostsSuffixes .onion,.exit      # A comma-separated list of suffixes to use with AutomapHostsOnResolve 
+ExitPolicy reject *:*                  # We don't want to be a exit node 
+CircuitBuildTimeout 15                 # Try for at most NUM seconds when building circuits. If the circuit isn’t open in that time, give up on it. 
+KeepalivePeriod 60                     # To keep firewalls from expiring connections, send a padding keepalive cell every NUM seconds on open connections that are in use. 
+NewCircuitPeriod 15                    # Every NUM seconds consider whether to build a new circuit. 
+AvoidDiskWrites 1                      # If non-zero, try to write to disk less frequently than we would otherwise. This is useful when running on flash memory or other media that support only a limited number of writes. 
+ExcludeNodes {??},{gb},{us},{fr}       # A list of identity fingerprints, nicknames, country codes and address patterns of nodes to avoid when building a circuit. 
+AllowSingleHopCircuits 0               # When this option is set, the attached Tor controller can use relays that have the AllowSingleHopExits option turned on to build one-hop Tor connections. 
+ExcludeSingleHopRelays 1               # This option controls whether circuits built by Tor will include relays with the AllowSingleHopExits flag set to true. Also note that relatively few clients turn off this option, so using these relays might make your client stand out. 
+SocksPort 9050                         # Open this port to listen for connections from SOCKS-speaking applications. 
+DNSPort 53                             # If non-zero, open this port to listen for UDP DNS requests, and resolve them anonymously. This port only handles A, AAAA, and PTR requests---it doesn’t handle arbitrary DNS request types. 
+TransPort 9040                         # Open this port to listen for transparent proxy connections. 

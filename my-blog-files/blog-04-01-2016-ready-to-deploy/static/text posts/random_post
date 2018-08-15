@@ -1,0 +1,33 @@
+title:  Random post
+date:   2015-01-17
+author: Aaron
+
+<p>I'm proud to announce that I have wrote pdf2img in C.</p>
+
+<p>Read on and I'll reveal my <strong>uname</strong> implementation.</p>
+
+<p>I quickly get used and loved C (started half year ago). The language is pretty small, and doesn't come with <strong>batteries included</strong>, nor it has <strong>cheese shop</strong> as some other languages.</p>
+
+<p>Instead there are some libraries considered as <strong>"standard libraries"</strong>, but they are not part of the language itself.</p>
+
+<p>The new version of pdf2img not only runs faster than it's python cousins, it preserves the same look and functionalities, but has sligthly more features than them, have a look: <a href="https://github.com/wifiextender/pdf2img-c" target="_blank">https://github.com/wifiextender/pdf2img-c</a></p>
+
+<p>If anyone wants to start with C as first programming language that would be terrible mistake.</p>
+
+<p>Python, ruby or perl on other hand will give you the necessary how-to, <strong>object-oriented</strong> knowledge, and many good principles like "Don't repeat yourself".</p>
+
+<p>You won't appreciate how useful, time saving and cross platform are the language modules until you dive in C where you'll be forced to write their alternatives.</p>
+
+<p>You have to know some programming language from A to Z in order to make successful jump in C, otherwise you will be spending most of your developing time in the search engines and forums asking others to write your program's code instead YOU.</p>
+
+<p>Let me show you my <strong>uname</strong> implementation, the only difference between your pre-installed uname and my implementation is that my version doesn't have '-i' and '-o' options, otherwise the program behaves exactly as uname.</p>
+
+<p>Here is the program itself, please note that this is a picture taken from my text editor, there is a link to the program's source code right below the picture.</p>
+
+<img src="$img/1misc/uname2.png" alt="" /><br />
+
+<p>You can download the source code here: <a href="$img/1misc/uname2.c" target="_blank">$img/1misc/uname2.c</a></p>
+
+<p>Compile the program with <code>gcc -Wall -O2 -o uname2 uname2.c</code>. Whenever you stuck just issue <code>./uname2 --help</code></p>
+
+<p>Now I can have my breakfast, lol.</p>

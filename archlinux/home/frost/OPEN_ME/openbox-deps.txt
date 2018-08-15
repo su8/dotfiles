@@ -1,0 +1,122 @@
+###################################################################################################
+#####   REQUIRED PACKAGES    #####
+openbox
+xorg-xset
+xorg-setxkbmap
+ifplugd       # needed by netctl to establish wired connection
+wpa_actiond   # for wireless connection
+dhclient
+
+#####   GOODIES    #####
+udisks
+udisks2
+faenza-icon-theme
+evince
+nitrogen
+sxiv
+tumbler
+conky
+thunar
+polkit
+gvfs
+giblib
+sakura
+vim
+pkgcacheclean # from aur | sudo pkgcacheclean -v 2
+zsh
+zsh-completions
+zsh-syntax-highlighting
+fbpanel       # good replacement for tint2-svn's buggier app launcher
+pulseaudio-alsa, alsa-lib, alsa-plugins, alsa-utils  # if there is no sound, launch alsamixer and press 'M'
+libclens
+
+########################################################################################################
+#####   REMOVED PACKAGES    #####
+# qpdfview from aur
+tint2-svn # from aur
+slim     # edit /etc/slim.conf and replace current_theme default with archlinux-soft-grey
+archlinux-themes-slim
+lxde-icon-theme
+obconf
+gsimplecal
+lxappearance
+lxappearance-obconf
+lxrandr
+lxinput
+file-roller
+thunar-archive-plugin
+unzip  # Python + zlib = Get the hell out of here
+zip    # See $HOME/.config/zsh/functions/compress_extract.zsh
+volumeicon
+sbxkb  # keyboard layout indicator
+asciidoc
+polkit-gnome
+feh
+network-manager-applet
+networkmanager
+gnome-icon-theme
+gnome-themes-standard
+vte
+oblogout
+lxsession # to avoid NO XSETTINGS manager
+xorg-xwininfo
+libconfig
+gdb
+geany
+qtcreator
+codeblocks
+sublime-text-dev  # from aur
+thunar-volman
+ristretto
+udiskie
+gnome-keyring
+libmpdclient
+python2-xdg
+xfce4-notifyd
+########################################################################################################
+
+##################################################
+chsh -s $(which zsh) # to change the shell to zsh
+echo $SHELL          # to check the active shell
+##################################################
+
+in `.xinitrc' add: xrdb -merge ~/.config/Xresources
+also comment out 'exec openbox-session'
+
+exo-preferred-applications -c # clear preferred apps
+
+##################################################
+To update the icon cache run: gtk-update-icon-cache
+Plus: sudo gdk-pixbuf-query-loaders --update-cache
+##################################################
+
+##################################################
+ati legacy drivers:
+    old ati drivers: [ 
+        glamor-egl
+        ati-dri -> mesa-dri -> (merged into extra/mesa)
+        lib32-ati-dri -> lib32-mesa-dri -> lib32-mesa
+]
+
+xf86-video-ati
+xorg-server
+xorg-server-common
+xorg-server-utils
+libtxc_dxtn
+lib32-libtxc_dxtn
+mesa
+mesa-libgl
+mesa-vdpau
+lib32-mesa
+lib32-mesa-dri
+lib32-mesa-vdpau  # accelerated video playback
+lib32-mesa-libgl
+libxshmfence
+lib32-libxshmfence
+lib32-libvdpau
+libvdpau
+lib32-wayland
+wayland
+libva
+libva-mesa-driver
+##################################################

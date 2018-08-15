@@ -1,0 +1,92 @@
+#---------------------------------------------
+# TINT2 CONFIG FILE |  ~/.config/tint2/tint2rc
+#---------------------------------------------
+    rounded = 1
+    border_width = 0
+    background_color = #171717 100
+    border_color = #000000 100
+
+    rounded = 0
+    border_width = 1
+    background_color = #2D2D2D 100
+    border_color = #1793D1 100
+
+    rounded = 1
+    border_width = 1
+    background_color = #171717 100
+    border_color = #171717 100
+
+#---------------------------------------------
+# PANEL
+#---------------------------------------------
+    panel_monitor = all
+    panel_position = top left
+    panel_size = 100% 25
+    panel_margin = 0 0
+    panel_padding = 0 0
+    font_shadow = 0
+    panel_background_id = 5
+    panel_items = LT
+
+#---------------------------------------------
+# PANEL AUTOHIDE
+#---------------------------------------------
+    autohide = 0
+    autohide_show_timeout = 0.3
+    autohide_hide_timeout = 1.5
+    autohide_height = 6
+    strut_policy = follow_size
+
+#---------------------------------------------
+# TASKBAR
+#---------------------------------------------
+    taskbar_mode = single_desktop
+    taskbar_padding = 0 0 0
+    taskbar_background_id = 5
+
+#---------------------------------------------
+# TASKS
+#---------------------------------------------
+    task_icon = 1
+    task_text = 1
+    task_width = 150
+    task_centered = 1
+    task_padding = 2 2
+    task_font = Terminus 10
+    task_font_color = #A9A9A9 80
+    task_active_font_color = #D0D0D0 100
+    task_background_id = 5
+    task_active_background_id = 2
+    task_urgent_background_id = 5
+    task_iconified_background_id = 5
+
+#---------------------------------------------
+# TASK ICONS
+#---------------------------------------------
+    task_icon_asb = 100 -100 -50
+    task_active_icon_asb = 100 0 0
+    task_urgent_icon_asb = 100 -100 -50
+    task_iconified_icon_asb = 100 -100 -50
+
+# systray was here
+
+# the clock was here
+
+#---------------------------------------------
+# TOOLTIPS
+#---------------------------------------------
+    tooltip = 1
+    tooltip_padding = 2 2
+    tooltip_show_timeout = 0.0
+    tooltip_hide_timeout = 0.0
+    tooltip_background_id = 6
+    tooltip_font_color = #CBCBCB 100
+    tooltip_font = Terminus 10
+
+#---------------------------------------------
+# MOUSE ACTION ON TASK
+#---------------------------------------------
+    mouse_middle = close
+    mouse_right = none
+    mouse_scroll_up = toggle
+    mouse_scroll_down = iconify

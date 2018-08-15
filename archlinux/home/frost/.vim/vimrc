@@ -1,0 +1,32 @@
+syntax on
+filetype plugin on
+filetype indent on
+
+" vimfiles path
+if has("unix")
+    let vimfiles = expand("$HOME/.cache/vim-garbage")
+endif
+
+" Different themes for gvim and vim
+if has("gui_running")
+    colorscheme hybrid
+    let g:airline_theme='base16'
+    let g:airline#extensions#tabline#enabled = 1  " tabline, display all buffers
+else
+    colorscheme micro8
+    let g:airline_theme='ravenpower'
+endif
+
+" Create the undo and swap dirs
+let DiRzToCreaTe = ['/undo', '/tmp']
+if !isdirectory(vimfiles) | call mkdir(vimfiles, 'p', 0700) | endif
+for TrashDiR in DiRzToCreaTe
+    if !isdirectory(vimfiles . TrashDiR)
+        call mkdir(vimfiles . TrashDiR, 'p', 0700)
+    endif
+endfor
+
+" Source the rest *.vim configuration files
+for HaLo in split(globpath('~/.vim/user-configs', '*.vim'), '\n')
+    exe 'source' HaLo
+endfor

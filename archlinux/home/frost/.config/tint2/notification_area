@@ -1,0 +1,50 @@
+#----------------------------------------------
+# NOTIFICATION AREA ~/.config/tint2/notification_area
+#----------------------------------------------
+    rounded = 1
+    border_width = 0
+    background_color = #171717 100
+    border_color = #000000 100
+
+    rounded = 0
+    border_width = 2
+    background_color = #2D2D2D 100
+    border_color = #1793D1 100
+
+    rounded = 1
+    border_width = 1
+    background_color = #171717 100
+    border_color = #171717 100
+
+#---------------------------------------------
+# PANEL
+#---------------------------------------------
+    panel_monitor = all
+    panel_position = bottom right
+    panel_size = 300 25
+    panel_margin = 0 0
+    panel_padding = 0 0
+    font_shadow = 0
+    panel_background_id = 5
+    panel_items = LTSBC
+
+#---------------------------------------------
+# SYSTRAYBAR
+#---------------------------------------------
+    systray = 1
+    systray_padding = 0 0 0
+    systray_sort = right2left
+    systray_background_id = 5
+    systray_icon_size = 25
+    systray_icon_asb = 100 0 0
+
+#---------------------------------------------
+# CLOCK
+#---------------------------------------------
+    time1_format = %I:%M %p, %a %d %b
+    time1_font = Terminus 10
+    clock_font_color = #CBCBCB 100
+    clock_padding = 0 0
+    clock_background_id = 5
+    clock_lclick_command = gsimplecal
+    clock_rclick_command = gsimplecal

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="<!-- charset -->">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../img/file/icon.ico" />
+    <meta name="description" content="<!-- description -->">
+    <meta name="author" content="<!-- author -->">
+    <title><!-- title --></title>
+    <link href="../../css/template-3/bootstrap-min.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="../../index.html">Home</a>
+          <a class="navbar-brand" href="../../archive.html">Archive</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="panel panel-primary">
+          <div class="panel-body">

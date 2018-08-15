@@ -1,0 +1,197 @@
+title:  Install Arch with full disk encryption
+date:   2015-04-23
+author: Aaron
+
+<p>In today's post we are going to install Arch Linux with full disk encryption.</p>
+
+<p>Before we proceed, I want you to backup your existing data.</p>
+
+<p>In the previous post we learnt what dm-crypt and LUKS are and how to encrypt single disk partition. While in the post today we will take a slightly different approach to encrypt the whole disk with dm-crypt LUKS and install Archlinux on it.</p>
+
+<p>Let's start with disk erasing. Run <strong>lsblk</strong> to find your primary disk and replace <code>/dev/sda</code> where needed:</p>
+
+<pre>$root shred --verbose --random-source=/dev/urandom --iterations=3 /dev/sda</pre>
+
+<p>I ran the above command with '--iterations=15' on my 120GB SSD overnight and it finished after 7 hours.</p>
+
+<p>Once done, partition the disk. Unless your motherboard is using UEFI firmware, make sure to select 'dos' (msdos) label, otherwise go with the 'gpt' when you type:</p>
+
+<pre>$root cfdisk /dev/sda</pre>
+
+<img src="$img/archlinux-luks/dos-label.png" alt="" />
+
+<p>After that create boot loader partition:</p>
+
+<pre>$root New-> Partition Size: 100M -> primary -> Bootable</pre>
+
+<p>The last one will be the root partition. The partition size should be automatically set to your remaining free space.</p>
+
+<pre>$root New-> Partition Size: xxxGB -> primary</pre>
+
+<p>Write the changes and quit from cfdisk.</p>
+
+<p>In order to boot your encrypted root partition, the boot loader partition <code>/dev/sda1</code> that will be mounted in <strong>/boot</strong> won't be encrypted. I will place couple links at the end of this post that will guide you how to encrypt and even move the boot partition on a CD/DVD/USB.</p>
+
+<p>Create cryptographic device mapper device in LUKS encryption mode:</p>
+
+<pre>$root cryptsetup --verbose --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --use-random luksFormat /dev/sda2</pre>
+
+<p>Unlock the partition, note that <strong>cryptroot</strong> will be the device mapper name that we will operate on.</p>
+
+<pre>$root cryptsetup open --type luks /dev/sda2 cryptroot</pre>
+
+<p>Create the boot and root file systems:</p>
+
+<pre>$root mkfs.ext4 /dev/sda1
+<p>$root mkfs.ext4 /dev/mapper/cryptroot</p></pre>
+
+<p>Mount them:</p>
+
+<pre>$root mount -t ext4 /dev/mapper/cryptroot /mnt
+<p>$root mkdir -p /mnt/boot</p>
+<p>$root mount -t ext4 /dev/sda1 /mnt/boot</p></pre>
+
+<p>Install the base and base-devel systems:</p>
+
+<pre>$root pacstrap -i /mnt base base-devel</pre>
+
+<p>Generate the fstab:</p>
+
+<pre>$root genfstab -U -p /mnt >> /mnt/etc/fstab</pre>
+
+<p>Chroot to configure the base system:</p>
+
+<pre>$root arch-chroot /mnt</pre>
+
+<p>Uncomment the <strong>en_US</strong> locale:</p>
+
+<pre>$root sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g' /etc/locale.gen</pre>
+
+<p>Generate the locale:</p>
+
+<pre>$root locale-gen</pre>
+
+<p>Create configuration file that would instruct the system what language locale it should be using:</p>
+
+<pre>$root echo LANG=en_US.UTF-8 > /etc/locale.conf</pre>
+
+<p>Export the locale</p>
+
+<pre>$root export LANG=en_US.UTF-8</pre>
+
+<p>Create a symbolic link with the desired time zone:</p>
+
+<pre>$root ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime</pre>
+
+<p>Set the hardware clock to UTC:</p>
+
+<pre>$root hwclock --systohc --utc</pre>
+
+<p>Set the desired hostname:</p>
+
+<pre>$root echo CookieMonster > /etc/hostname</pre>
+
+<p>Set the root password:</p>
+
+<pre>$root passwd</pre>
+
+<p>Add a system user:</p>
+
+<pre>$root useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video -s /bin/bash username</pre>
+
+<p>Set the system user password:</p>
+
+<pre>$root passwd username</pre>
+
+<p>Install sudo (base-devel) and the boot loader grub and os-prober:</p>
+
+<pre>$root pacman -S sudo grub-bios os-prober</pre>
+
+<p>Allow the system user to use sudo and run commands (temporary) as root:</p>
+
+<pre>$root EDITOR=nano visudo</pre>
+
+<p>Press CTRL + W and type wheel, then uncomment the following line:</p>
+
+<img src="$img/archlinux/9.png" alt="" />
+
+<p>Add the following kernel parameter to be able to unlock your LUKS encrypted root partition during system startup:</p>
+
+<img src="$img/archlinux-luks/kern-param.png" alt="" />
+
+<p>Add <strong>encrypt</strong> hook:</p>
+
+<img src="$img/archlinux-luks/mkinitcpio-hook.png" alt="" />
+
+<p>Since we added new hook in the mkinitcpio configuration file, we should re-generate our initrams image (ramdisk):</p>
+
+<pre>$root mkinitcpio -p linux</pre>
+
+<p>Install grub and save it's configuration file:</p>
+
+<pre>$root grub-install --recheck /dev/sda
+<p>$root grub-mkconfig --output /boot/grub/grub.cfg</p></pre>
+
+<p>Exit from chroot, unmount the partitions, close the device and reboot (remove the installation media):</p>
+
+<pre>$root exit
+<p>$root umount -R /mnt/boot</p>
+<p>$root umount -R /mnt</p>
+<p>$root cryptsetup close cryptroot</p>
+<p>$user systemctl reboot</p></pre>
+
+<p>Once you type in your password and login as system user, start dhcpcd.</p>
+
+<img src="$img/archlinux-luks/unlock-root.png" alt="" />
+
+<pre>$root systemctl start dhcpcd
+<p>$user ping -c2 youtube.com</p></pre>
+
+<p>Install Xorg and copy <strong>.xinitrc</strong> over your $HOME dir:</p>
+
+<pre>$root pacman -S xorg-server xorg-server-utils xorg-xinit mesa xterm xorg-twm xorg-xclock
+<p>$user cp /etc/X11/xinit/xinitrc ~/.xinitrc</p></pre>
+
+<p>There is a special wiki page that contains useful information for the GPU drivers, check it out <a href="https://wiki.archlinux.org/index.php/xorg#Driver_installation" target="_blank">https://wiki.archlinux.org/index.php/xorg#Driver_installation</a> and if it happens your GPU brand to be amd/ati, intel or nvidia install the appropriate drivers listed there.</p>
+
+<p>Type <code>startx</code> and you should see couple terminals side-by-side, now type <code>exit</code></p>
+
+<p>Comment in the following lines in <strong>.xinitrc</strong> and add some to specify that we want the <strong>xfce</strong> desktop environment to be started upon successful login:</p>
+
+<img src="$img/archlinux-luks/add-xfce-session.png" alt="" />
+
+<p>Install xfce, external display manager and network manager:</p>
+
+<pre>$root pacman -S slim archlinux-themes-slim xfce4 networkmanager network-manager-applet</pre>
+
+<p>Exchange the default slim theme:</p>
+
+<img src="$img/archlinux-luks/slim-theme.png" alt="" />
+
+<p>Stop dhcpcd, enable slim, enable NetworkManager, startx:</p>
+
+<pre>$root systemctl stop dhcpcd
+<p>$root systemctl enable NetworkManager</p>
+<p>$root systemctl enable slim</p>
+<p>$user startx</p></pre>
+
+<p>That was it, hope you enjoyed this post.</p>
+
+<img src="$img/archlinux-luks/xfce-final-result.png" alt="" />
+
+<p>If you ever manage to f*ck up your system and have to chroot from removable media, the order is:</p>
+
+<pre>$root cryptsetup open --type luks /dev/sda2 cryptroot
+<p>$root mount -t ext4 /dev/mapper/cryptroot /mnt</p>
+<p>$root mount -t ext4 /dev/sda1 /mnt/boot</p>
+<p>$root arch-chroot /mnt</p></pre>
+
+<p>To unmount them:</p>
+
+<pre>$root umount -R /mnt/boot
+<p>$root umount -R /mnt</p>
+<p>$root cryptsetup close cryptroot</p></pre>
+
+<p>The promised links, read the 8th and 9th links carefully if you got SSD:</p>
+
+<p><a href="http://crunchbang.org/forums/viewtopic.php?id=24722" target="_blank">link 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=943338" target="_blank">link 2</a>, <a href="https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption" target="_blank">link 3</a>, <a href="https://wiki.archlinux.org/index.php/Dm-crypt" target="_blank">link 4</a>, <a href="https://wiki.gentoo.org/wiki/DM-Crypt_LUKS" target="_blank">link 5</a>, <a href="https://wiki.gentoo.org/wiki/Dm-crypt" target="_blank">link 6</a>, <a href="https://help.ubuntu.com/community/EncryptedFilesystemHowto" target="_blank">link 7</a>, <a href="https://wiki.archlinux.org/index.php/Solid_State_Drives#Enable_TRIM_for_dm-crypt" target="_blank">link 8</a>, <a href="http://thunk.org/tytso/blog/2009/03/01/ssds-journaling-and-noatimerelatime/" target="_blank">link 9</a>, <a href="https://gitlab.com/cryptsetup/cryptsetup/wikis/FrequentlyAskedQuestions" target="_blank">link 10</a></p>

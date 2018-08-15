@@ -1,0 +1,86 @@
+title:  Useful dead simple bash scripts
+date:   2013-07-26
+author: Aaron
+
+<p>Do you type a lot of commands ? Do you want somekind of automation which with a single mouse click to complete the desired task ? I guarantee you that after reading my tutorial you will know how to ease your tasks from now on.</p>
+
+<p>Check out what shell you are using</p>
+
+<pre>$user ps -p $$</pre>
+
+<p>Writing the most simple disk space checker, modify the script if you are using cli server -> New_file.sh </p> 
+
+<pre>$user &#35;!/bin/bash
+<p>$user xfce4-terminal -H -x /home/frost/New_file2.sh</p>
+<p>$user exit</p></pre>
+
+<p>New_file2.sh</p>
+
+<pre>$user &#35;!/bin/bash
+<p>$user partition=sda3</p>
+<p>$user percent=80</p>
+<p>$user hdd=`df -h |grep $partition | awk '{ print $5 }' | cut -d'%' -f1`</p>
+<p>$user if [ $hdd -gt $percent ]; then</p>
+<p>$user echo -e "\e[93mUsed space in %: \e[31m$hdd"</p>
+<p>$user echo Running out of disk space > /home/frost/Desktop/readme.txt</p>
+<p>$user echo -e "\033[0m"</p>
+<p>$user else</p>
+<p>$user echo -e "\e[40;38;5;82mUsed space in %: \e[44m$hdd"</p>
+<p>$user echo -e "\033[0m"</p>
+<p>$user fi</p></pre>
+
+<p>The New_file.sh bash is telling on xfce4-terminal to open new terminal window, browse and execute  New_file2.sh</p>
+
+<p>New_file2.sh: run "lsblk" to see what's yours partitions. Then modify the "partition" name in the script. "percent" specify the number when it will warn you about the used space. Take your time because your next task is to examine the rest of the script and try to learn why those lines are there.</p>
+
+<h2>Wine</h2>
+
+<p>Do you have windows applications ? Is it possible to run them via bash instead manually navigating to the folder where they resides ?</p>
+
+<p>Yes it is possible with the mighty Bash again</p>
+
+<p>I am huge MMORPG fan - yes that's me :D</p>
+
+<p>Got the application, so let's create a bash script that will launch automatically this app without the need to manually browse it's directory</p>
+
+<p>openmu.sh</p>
+
+<pre>$user &#35;!/bin/bash
+<p>$user cd /home/frost/Documents/OpenMu</p>
+<p>$user wine main.exe</p>
+<p>$user exit</p></pre>
+
+<p>cd, dvd, blu-ray, floppy</p>
+
+<p>wine main.exe - tells on wine to execute main.exe, while exit is used to exit from the shell and stop the process from endless main.exe launchings - read these words CAREFULLY !</p>
+
+<h2>GitHub file uploader</h2>
+
+<p>To be honest there isn't eyecandy file uploaders for linux, we still use the good old terminal. The next script aims to save your time while adding,commiting and pushing your files. We are about to use two-step launching script again.</p>
+
+<p>gi.sh</p>
+
+<pre>$user &#35;!/bin/bash
+<p>$user xfce4-terminal -H -x /home/frost/tt/gi2.sh</p>
+<p>$user exit</p></pre>
+
+<p>I already explained at the beginning that script actions. Let's move to second script.</p>
+
+<p>gi2.sh</p>
+
+<pre>$user &#35;!/bin/bash
+<p>$user cd /home/frost/tt/site</p>
+<p>$user git add -A</p>
+<p>$user git commit -am "blog"</p>
+<p>$user git push origin gh-pages</p>
+<p>$user exit</p></pre>
+
+<p>I was using many opened terminals in the past to browse each folder, add the desired files, commit the changes and finally upload everything to my "gh-pages", since I realized that with bash I can save my precious time I can easily write a bash script to do all of this.</p>
+
+<p>My panel with the GitHub uploader</p>
+
+<img src="$img/1misc/panel-07-26.png" alt="">
+
+<p>While writing this tutorial I think to create another script that will browse my blogpy folder and automatically generate new posts. </p>
+
+<p>You can use icons to those scripts and pin them like me to your panel, I am using "lxmed" and "alacarte". </p>

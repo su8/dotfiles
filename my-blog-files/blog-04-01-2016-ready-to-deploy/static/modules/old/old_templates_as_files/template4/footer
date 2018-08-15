@@ -1,0 +1,31 @@
+        <!-- pagination -->
+				</div>
+				<!-- tags_bar -->
+					<div id="sidebar">    
+						<div id="sidebar-widget">   
+							<div class="sidebar-heading">
+								Recent Posts
+							</div>
+							<ul>
+								<!-- recent posts --> 
+							</ul>
+						</div>
+						<!-- github_sidebar -->
+					</div>
+					
+					<div id="clear">
+					</div>
+				</div>
+				
+				<div class="line-footer">
+					<div style="text-align:center; padding-top:3px;">
+					      <a href="archive.html">Archive</a>
+    </div>
+    <div style="text-align:center;">
+        footer_text
+    </div>
+				</div>
+			</div>    
+			<!-- github -->
+	</body>
+</html>

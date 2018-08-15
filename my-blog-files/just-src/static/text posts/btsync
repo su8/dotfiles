@@ -1,0 +1,54 @@
+title:  Bittorrent Sync installation
+date:   2014-05-31
+author: Aaron
+
+<p>Bittorrent Sync is P2P file synchronization tool that encrypts your data with AES-128 key.</p>
+
+<p>If you are paranoid about security, BtSync is the most secure program that let's you to share files with other devices or computers locally.</p>
+
+<p>The installation is really <strong>difficult</strong>, lol.</p>
+
+<p>Download the BtSync archive and extract the archive.</p>
+
+<pre><p>$user cd ~</p>
+<p>$user mkdir -p sync-folder</p><br />
+<p>For 32-bit server:</p>
+<p>$user wget btsync.s3-website-us-east-1.amazonaws.com/btsync_i386.tar.gz</p><br />
+<p>For 64-bit server:</p>
+<p>$user wget btsync.s3-website-us-east-1.amazonaws.com/btsync_x64.tar.gz</p><br />
+<p>For raspberry pi:</p>
+<p>$user wget btsync.s3-website-us-east-1.amazonaws.com/btsync_arm.tar.gz</p><br />
+<p>$user tar -zxvf btsync_i386.tar.gz  # for 32-bit server</p></pre>
+
+<p>Start BtSync.</p>
+
+<pre>$user ./btsync</pre>
+
+<p>Open up port 8888</p>
+
+<pre><p>$root iptables -I INPUT 4 -p tcp -d 10.10.10.1 --dport 8888 -j ACCEPT</p>
+<p>$root service iptables save</p>
+<p>$root service iptables restart</p></pre>
+
+<p>Go ahead, open up your browser and point your internal ip followed by port 8888.</p>
+<p>http://10.10.10.1:8888</p>
+
+<img src="$img/btsync/btsync-first-run.png" alt="" />
+
+<img src="$img/btsync/btsync-started.png" alt="" /><br />
+
+<img src="$img/btsync/btsync-add-folder.png" alt="" /><br />
+
+<p>I'll show you how to sync your android device folder(s) with the server. First get the android BtSync application <a href="https://play.google.com/store/apps/details?id=com.bittorrent.sync" target="_blank">https://play.google.com/store/apps/details?id=com.bittorrent.sync</a>. Install the app and generate qrcode.</p>
+
+<img src="$img/btsync/btsync-sharing.png" alt="" /><br />
+
+<img src="$img/btsync/btsync-qrcode.png" alt="" /><br />
+
+<p>Open up the android BtSync application, choose which folder(s) you would like to sync, scan the qrcode with your rear camera and have fun.</p>
+
+<img src="$img/btsync/btsync-android.png" alt="" /><br />
+
+<img src="$img/btsync/btsync-android-ready.png" alt="" /><br />
+
+<p>Our data compression post has been visited from more than 2000 people, so in our next post we will compare image compression tools.</p>

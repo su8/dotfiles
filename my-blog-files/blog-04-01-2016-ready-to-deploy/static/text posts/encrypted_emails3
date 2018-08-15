@@ -1,0 +1,72 @@
+title:  Encrypted emails part 2 of 2
+date:   2015-06-02
+author: Aaron
+
+<p>From the previous part we learned how to create a keypair and gpg configuration file.</p>
+
+<p>The last email encryption part will cover the installation and usage of an text based email client called Mutt.</p>
+
+<p>The GUI programs tend to remove the learning curve, and oftentimes the people refuse to switch and use something else because all other alternatives <strong>sucks</strong>. The alternatives sucks because they doesn't meet their needs and are lazy enough to spend some time and learn the alternative properly to meet those needs.</p>
+
+<p>With Mutt you are the one that controls the program and not the otherwise. You have to create a configuration file to instruct Mutt how to work properly. And yes, you can turn in into a full-fledged replacement for your current email client. At the end you'll have better understanding how the electronic mail process works, and you can be pride that you have became a power-user that is not affraid to get their hands dirty.</p>
+
+<p>Feel free to borrow my Mutt <a href="https://github.com/wifiextender/dotfiles/tree/master/archlinux-openbsd/home/frost/.config/mutt" target="_blank">configs</a> and learn what they do. Exchange the information where needed to fit your needs. You'll have to download my whole dotfiles repository, later on you can borrow other configration files not related to Mutt to tailor your needs or use them as starting point.</p>
+
+<p>Explore how you authenticate with your email provider and how you send emails. Protocol hints: IMAP, SMTP, POP3. Adjust those details in the configration files.</p>
+
+<p>I've split the configuration among several files to make the maintenance process easier, and the variables that have to remain secret are encrypted with GPG. There are plenty of themes to make Mutt eyecandy, and all of that is compressed in archive and sourced on-the-fly.</p>
+
+<p>In order this post to stay relevant when the installation process changes, I will point you a <a href="https://projects.archlinux.org/svntogit/packages.git/tree/trunk?h=packages/mutt" target="_blank">link</a> that will guide you how to download, compile and install Mutt if you want to verify with your eyes that there are no strings attached. Alternatively, if your distribution is binary and you trust the packagers, you can install Mutt with a single command from your package manager.</p>
+
+<p>If you are Arch Linux user, you can use ABS:</p>
+
+<pre>$root pacman -S abs fakeroot
+<p>$root abs</p>
+<p>$user cp -r /var/abs/extra/mutt /tmp && cd /tmp/mutt</p>
+<p>$user makepkg --clean --install --force --syncdeps</p></pre>
+
+<p>Once you configured Mutt to work properly, it is time to show you how to send encrypted emails and how to operate Mutt with your keyboard.</p>
+
+<p>To compose an email press <code>m</code></p>
+
+<img src="$img/mutt_encryption/create_a_new_email.png" alt="" /><br />
+
+<p>Fill the message body with an text editor (vim) that is specified with the <strong>set editor</strong> variable (formats config file).</p>
+
+<img src="$img/mutt_encryption/write_message_body.png" alt="" /><br />
+
+<p>To attach a file press <code>a</code> and you'll be asked to enter the file location manually, after that press <code>p</code> to bring the encryption menu, then press <code>b</code> to sign and encrypt the message, and <code>y</code> to send it</p>
+
+<img src="$img/mutt_encryption/attach_pubkey_as_file.png" alt="" /><br />
+
+<p>You can attach a public key manually as file or press <code>Escape-k</code> and leave mutt deal with that:</p>
+
+<img src="$img/mutt_encryption/attach_pubkey.png" alt="" /><br />
+
+<p>The recipient will have to decrypt the email with their private/secret key in order to read it</p>
+
+<img src="$img/mutt_encryption/enter_pass_to_decrypt_email.png" alt="" /><br />
+
+<p>And they will see the email content</p>
+
+<img src="$img/mutt_encryption/decrypted_email.png" alt="" /><br />
+
+<p>To save the attachments press <code>v</code> to view them and <code>s</code> to save the desired attachment</p>
+
+<img src="$img/mutt_encryption/view_and_save_attachments.png" alt="" /><br />
+
+<p>Mark email for deletion with <code>d</code>, undo mark deletion; jump to email by it's number and press <code>SHIFT-w</code> afterwards press <code>d</code>, if you press <code>w</code> (without shift-w) you can set different flag such as delete, new, read etc.</p>
+
+<img src="$img/mutt_encryption/set_flag.png" alt="" /><br />
+
+<p>Where are Sent, Drafts, Trash folders ? Press <code>c-?</code> (c shift /)</p>
+
+<img src="$img/mutt_encryption/change_folder.png" alt="" /><br />
+
+<p>Return to your inbox with <code>y</code></p>
+
+<img src="$img/mutt_encryption/return_to_inbox.png" alt="" /><br />
+
+<p>Whenever you stuck, just type <code>?</code> (shift /) to issue the help documentation.</p>
+
+<p>And <a href="$img/mutt_encryption/the_encrypted_mail" target="_blank">this</a> is what the encrypted email looks like when someone gets a copy of it while it travels around the world until it reaches the recipient inbox.</p>

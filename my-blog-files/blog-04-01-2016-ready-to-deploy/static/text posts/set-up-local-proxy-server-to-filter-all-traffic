@@ -1,0 +1,63 @@
+title:  Set up local proxy server which will filter all the traffic
+date:   2013-06-25
+author: Aaron
+
+<p>
+Scenario: You want proxy server to filter the traffic on some of the ip(s) that are on your network, and/or you got children at home and do not want them to access some websites.
+</p>
+
+<img src="$img/1misc/squid-proxy.jpg" alt="" />
+
+<p>As usual the very fist thing to do will be:</p>
+
+<pre>$root apt-get update</pre>
+
+<p>Keep in mind that different distributions are using older and newer versions of squid, recommend you to check out what version has your repository.</p>
+
+<pre$root apt-get install squid3</pre>
+
+<p>Next, type these things as is and do not attempt to change something unless I tell you, when you see the following symbol <strong>&crarr;</strong> it will mean that you have to press enter - got it right ?</p>
+
+<pre$root sed -i -e "/TAG: visible_hostname/,/^#[ ]*visible_hostname/{/#[ ]*visible_hostname/a\\ &crarr;
+<p>visible_hostname ${HOSTNAME} &crarr;</p>
+<p>;}" "/etc/squid3/squid.conf" &crarr;</p></pre>
+
+<pre$root LAN_RANGE="192.168.10.3" &crarr;
+<p$root LAN_ALIAS="my-local-network" &crarr;</p></pre>
+
+<p>Edit and replace 192.168.10.3 ip with your server internal ip.</p>
+
+<pre$root sed -i -e "0,/INSERT YOUR OWN RULE(S) HERE/{//a\\ &crarr;
+<p>\\  &crarr;</p>
+<p># Allowing Local network allowed-lan-${LAN_ALIAS}.\\  &crarr;</p>
+<p>acl allowed-lan-${LAN_ALIAS} src ${LAN_RANGE}\\  &crarr;</p>
+<p>http_access allow allowed-lan-${LAN_ALIAS}  &crarr;</p>
+<p>;}" '/etc/squid3/squid.conf'  &crarr;</p></pre>
+
+<p>The next thing that you will have to consider is do you want to allow or deny http access (browsing websites).</p>
+
+<pre$root sed -i -e 's/^http_access deny all/http_access allow all/' \  &crarr;
+<p>'/etc/squid3/squid.conf'  &crarr;</p></pre>
+
+<p>Which websites do you want to blacklist/ban ? Take your time, in the meantime see the following example example where I will blacklist/ban all subdomains that are owned by .foo.com</p>
+
+<pre$root nano /etc/squid3/squid.conf  &crarr;
+<p$root acl yuck dstdomain .foo.com  &crarr;</p>
+<p$root http_access deny yuck  &crarr;</p></pre>
+
+<p>If you ever want to allow some ip(s) to access internet, then edit the <i>squid.conf</i> file and add that:</p>
+
+<pre>$root acl allowed-lan-my-local-network src 192.168.10.24
+<p>$root acl allowed-lan-my-local-network src 192.168.10.25</p>
+<p>$root acl allowed-lan-my-local-network src 192.168.10.26</p>
+<p>$root acl allowed-lan-my-local-network src 192.168.10.27</p>
+<p>$root acl allowed-lan-my-local-network src 192.168.10.28</p>
+<p>$root acl allowed-lan-my-local-network src 192.168.10.29</p></pre>
+
+<p>Those ip(s) are just for demonstration, replace them with yours.</p>
+
+<p>Restart the squid via:</p>
+
+<pre>$root /etc/init.d/squid3 reload</pre>
+
+<p>Now open up your browser and navigate to the <strong>Connection settings</strong>, click on manual proxy and enter the server internal ip with port 3128. Alternavely purchase few network cards and place them in the squid server, configure them to route/bridge all the traffic to the computers that will be attached. Read more about squids ACL (access control list) <a href="http://wiki.squid-cache.org/SquidFaq/SquidAcl" target="_blank">here</a></p>

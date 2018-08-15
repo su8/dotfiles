@@ -1,0 +1,80 @@
+! Xcursor --------------------------------------------------------------------
+
+!Cursor
+!Xcursor.theme: Bridge
+!Xcursor.size: 22
+
+! Xft settings ---------------------------------------------------------------
+
+Xft.dpi:        96
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintslight
+Xft.autohint:   false
+Xft.lcdfilter:  lcddefault
+
+! Urxvt -----------------------------------------------------------------------
+
+!Config Urxvt
+!URxvt.depth: 32
+!URxvt.background: rgba:1500/1500/1500/fff
+URxvt.font: xft: Terminus:pixelsize=9:antialias=false
+URxvt.geometry: 52x31
+URxvt.scrollBar: true
+Urxvt.secondaryScroll: true
+URxvt.scrollBar_right: true
+URxvt.scrollBar_floating: true
+URxvt.scrollstyle: plain
+URxvt.scrollColor: #222222
+URxvt.cursorColor: #404040
+!URxvt.letterSpace: -4
+
+!Color fonts
+*foreground: grey
+*background: #222222
+#*background: #1f1f1f
+!colors
+!black
+URxvt*color0:					#A67BB5
+URxvt*color8:					#A67BB5
+!red
+URxvt*color1:					#765E5A
+URxvt*color9:					#765E5A
+!green
+URxvt*color2:					#85A863
+URxvt*color10:					#C9FF96
+!yellow
+URxvt*color3:					#A67BB5
+URxvt*color11:					#C09B65
+!blue
+URxvt*color4:					#71C5F4
+URxvt*color12:					#67CDE9
+!magenta
+URxvt*color5:					#E2BAF1
+URxvt*color13:					#ECAEE9
+!cyan
+URxvt*color6:					#21F1EA
+URxvt*color14:					#36FFFC
+!white
+URxvt*color7:					#717171
+URxvt*color15:					#717171
+
+
+XTerm.vt100.geometry:   80x24
+XTerm*faceName:     DejaVu Sans Book
+XTerm*faceSize:     9
+XTerm*toolBar:      off
+
+
+xterm*termName: xterm-256color
+XTerm*locale: true
+xterm*cursorColor: #FFFFFF
+xterm*toolBar: false
+xterm*scrollBar: false
+xterm*rightScrollBar: false
+xterm*background: #222222
+xterm*foreground: #999999
+xterm*faceName: DejaVu Sans Book:pixelsize=12
+xterm*allowBoldFonts: false
+xterm*geometry: 80x24

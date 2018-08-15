@@ -1,0 +1,108 @@
+title:  Install Owncloud in CentOS (version 2)
+date:   2014-05-24
+author: Aaron
+
+<p>It's been a year since I posted owncloud installation in CentOS with Nginx and PostgreSQL.</p>
+
+<p>In this post I'll focus in making the deployment easier by using Apache and MariaDB.</p>
+
+<p>Let's begin with disabling the SELinux first.</p>
+
+<p><code>vi /etc/sysconfing/selinux</code></p>
+
+<pre>$root SELINUX=disabled</pre>
+
+<p>Press the Escape button and then type <code>:wq</code> to save the changes and close the text editor. Now <code>reboot</code> the computer.</p>
+
+<p>Add the MariaDB repository in order to replace the older and slower MySucksQueryLanguage err MySQL.</p>
+
+<p><code>vi /etc/yum.repos.d/MariaDB.repo</code></p>
+
+<pre>$root [mariadb]
+<p>$root name = MariaDB</p>
+<p>$root baseurl = http://yum.mariadb.org/5.5/centos6-x86</p>
+<p>$root gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB</p>
+<p>$root gpgcheck=1</p></pre>
+
+<p>Update the repositories <code>yum update</code> and then install MariaDB client and server.</p>
+
+<pre>$root yum install MariaDB-client MariaDB-server</pre>
+
+<p>Start the MariaDB service and add it to system startup services with chkconfig.</p>
+
+<pre>$root service mysql start
+<p>$root chkconfig mysql on</p></pre>
+
+<p>Secure MariaDB</p>
+
+<pre>$root mysql_secure_installation</pre>
+
+<p>When asked <strong>Y/n</strong> type y to all questions. Restart the database:</p>
+
+<pre>$root service mysql restart</pre>
+
+<p>Install the following libraries in order to satisfy the OwnCloud requirements.</p>
+
+<pre>$root yum install wget php httpd php-curl php-mysql php-zip sqlite php-dom php-gd php-pdo php-mbstring php-xml php-json</pre>
+
+<p>Download the OwnCloud archive.</p>
+
+<pre>$user wget http://download.owncloud.org/community/owncloud-6.0.3.tar.bz2</pre>
+
+<p>Extract the archive, delete all content in /var/www/ and move the extracted content from owncloud archive there and 'chown' it.</p>
+
+<pre>$user tar xjf owncloud-6.0.3.tar.bz2
+<p>$root rm -rf /var/www/*</p>
+<p>$root mv owncloud /var/www/</p>
+<p>$root chown -R apache.apache /var/www/owncloud</p>
+<p>$root chmod 755 /var/www/owncloud/config/</p></pre>
+
+<p>Edit the Apache configuration and add your server internal ip and/or domain name, add the owncloud path and AllowOverride.</p>
+
+<p><code>vi /etc/httpd/conf/httpd.conf</code></p>
+
+<pre># type /DocumentRoot to perform a search about the given string
+<p>DocumentRoot "/var/www/owncloud"</p>
+<p># Search for /ServerName,  it should be below "ServerAdmin root@localhost"</p>
+<p>ServerName 10.10.10.105 # internal ip or domain name</p>
+<p># /AllowOverride</p>
+<p>AllowOverride All</p>
+<p># Save and close the file</p></pre>
+
+<p>Start the Apache webserver and add it to system startup services with chkconfig.</p>
+
+<pre>$root service httpd start
+<p>$root chkconfig httpd on</p></pre>
+
+<p>Create new database.</p>
+
+<pre>mysql -u root -p
+<p># enter the following content</p>
+<p>create database clouddb;</p>
+<p>grant all on clouddb.* to 'clouduser'@'localhost' identified by 'password';</p>
+<p>flush privileges;</p>
+<p>exit;</p></pre>
+
+<p>Allow incomming tcp connections to port 80, which is used to serve the owncloud page by Apache on this port.</p>
+
+<pre>$root iptables -I INPUT 4 -p tcp -d 10.10.10.105 --dport 80 -j ACCEPT
+<p>$root service iptables save</p>
+<p>$root service iptables restart</p></pre>
+
+<p>Open up your favourite web browser and navigate to your internal server ip or domain name that you have specified in apache's configuration file earlier.</p>
+
+<img src="$img/centos_owncloudv2/centos-owncloud-v2.png" alt="" /><br />
+
+<img src="$img/centos_owncloudv2/centos-owncloud-v2-2.png" alt="" /><br />
+
+<img src="$img/centos_owncloudv2/centos-owncloud-v2-3.png" alt="" />
+
+<p>Here is my small intel dual core, 4GB, CentOS 6.5 server with OwnCloud and Bittorrent Sync installed.</p>
+
+<p>Having that said, next post will cover Bittorrent Sync installation and management.</p>
+
+<img src="$img/centos_owncloudv2/my-server.jpg" alt="" /><br />
+
+<img src="$img/centos_owncloudv2/my-server-2.jpg" alt="" /><br />
+
+<img src="$img/centos_owncloudv2/my-server-3.jpg" alt="" /><br />

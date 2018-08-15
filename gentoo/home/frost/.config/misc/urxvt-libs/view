@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+#
+use strict;
+use warnings;
+
+sub on_add_lines {
+  my ($self) = @_;
+  
+  # $self->{view_start} = $self->view_start(123);
+
+  # my $line = $self->line(3);
+
+  my $w = $self->DefaultRootWindow;
+
+
+
+  # $self->want_refresh();
+  # print $line->t("elo");
+  # print $self->view_start();
+  # $self->line($self->nrow - 1)->t("ELO");
+  # $self->screen_cur(123,12)
+  # $self->view_start(List::Util::min 0, 13);
+  return 0;
+}

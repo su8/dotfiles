@@ -1,0 +1,32 @@
+title:  Encrypt your files with openssl
+date:   2013-06-28
+author: Aaron
+
+<p>
+When it come to encryption not many of you are familiar how to do this thing properly and most of the time you will be required to use special software. Must tell you that there is simple technique for single file encryption with openssl.
+</p>
+
+<p>If openssl is not installed by default in your distribution then install it. In the following demonstration I will be encrypting a .txt file, but you are not limited to .txt files - you can encrypt whatever file extension you want, from password protected archives to .htaccess and etc.</p>
+
+<p>That's the file that I want to encrypt.</p>
+
+<img src="$img/encrypt_with_openssl/todo1.png" alt="" /><br />
+
+<p>I assume you already have your terminal opened.</p>
+
+<pre>$user openssl aes-256-cbc -a -salt -in todo.txt -out todoencrypted.txt</pre>
+
+<p>Just replace the <strong>todo.txt</strong> with yours, also it's up to you what name do you want for the output file - I used <strong>todoencrypted.txt</strong>, once you press enter you will be asked to insert some password - take your time and decide what password you want to use, the longer and complex the better.</p>
+
+<p>The file is encrypted:</p>
+
+<img src="$img/encrypt_with_openssl/todo2.png" alt="" />
+
+<p>And it will create new file named todoencrypted.txt, if you open it you will see that the file does not containt the same information, but a random symbols - that's because you encrypted it. Next - decrypting.</p>
+
+<pre>$user openssl aes-256-cbc -d -a -salt -in todoencrypted.txt -out tododecrypted.txt</pre>
+
+<p>Again does not matter what kind of name you will choose for the <strong>-out</strong> output file. As I said in the beginning, you are not limited to .txt file encryption. The thing that I will recommend you to do is: password protected archive then encryption with openssl - that's double protection. Don't panic if you try to uncompress the archive without decrypting it with openssl in the first place.</p>
+
+<img src="$img/encrypt_with_openssl/todo3.png" alt="" />
+

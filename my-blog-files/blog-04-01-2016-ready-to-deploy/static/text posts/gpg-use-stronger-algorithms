@@ -1,0 +1,39 @@
+title:  GPG - use stronger algorithms
+date:   2014-07-12
+author: Aaron
+
+<p>I just don't get it. GPG is using the weakest as possible encryption algorithms by default.</p>
+
+<p>Let's have a look what we can do about it.</p>
+
+<p>It's all about the compatibility between newer and older GPG versions, but the fact that you've started using GPG means that you care about your privacy, so what's the point then ?</p>
+
+<p>Your are signing all of the emails with SHA-1 which is known to be extremely weak. The signing is used to prove that you are the person that has wrote and sent that email and not someone else.</p>
+
+<p>Start with changing the deault GPG preferences.</p>
+
+<p>Open up <code>~/.gnupg/gpg.conf</code> as normal user and add the following at the bottom:</p>
+
+<pre>$user personal-digest-preferences SHA512 SHA384 SHA256 SHA224
+<p>$user cert-digest-algo SHA512</p>
+<p>$user default-preference-list AES256 CAMELLIA256 AES192 CAMELLIA192 AES CAMELLIA128 TWOFISH CAST5 3DES SHA512 SHA384 SHA256 SHA224 SHA1 RIPEMD160 ZLIB BZIP2 ZIP Uncompressed</p>
+<p>$user personal-cipher-preferences AES256 CAMELLIA256 TWOFISH</p></pre>
+
+<p>For signatures we've set SHA-512, note that the preferred algorithms go first. For the cipher we prefer AES256, so far we managed to get rid off the sha1 and cast5 algoritms that your keys &amp; signature are created and protected with.</p>
+
+<p>We will benefit from the newer default algorithms as well. Create a new keypair, we will be using salting, strengthening and slow down if not make impossible dictionary attacks with:</p>
+
+<pre>$user gpg --cert-digest-algo SHA512 --cipher-algo AES256 --digest-algo SHA512 --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-mode 3 --s2k-count 64981052 --gen-key
+<p># Choose 4096 key length</p>
+<p># if you ever need to edit your keys</p>
+<p>$user gpg --cert-digest-algo SHA512 --cipher-algo AES256 --digest-algo SHA512 --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-mode 3 --s2k-count 64981052 --edit-key your@email.com</p></pre>
+
+<p>What is <strong>s2k</strong> and the values that we specified - visit the <a href="https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html" target="_blank">following link</a>. Used the highest s2k count value as possible to slow down greatly those who got managed to get your private key and are trying dictionary attack against it, so don't decrease that value.</p>
+
+<p>GPG offers an option to include a photo of yourself, although it sounds 'cool' this is a two edged sword since you don't wish to be added in any <a href="https://en.wikipedia.org/wiki/Facial_recognition_system" target="_blank">https://en.wikipedia.org/wiki/Facial_recognition_system</a> database because of the fact that you are encrypting your emails and the so famous warrantless wiretapping agencies can misunderstand your profile and target you as <strong>extremist</strong>, so don't ease them !</p>
+
+
+<p>Email question from visitor: <strong>"How to use the verification signature that comes with the archlinux iso ?"</strong></p>
+
+<p>Answer:</p>
+<img src="$img/1misc/archlinux-pgp-sig-iso.png" alt="" />

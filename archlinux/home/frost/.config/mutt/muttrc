@@ -1,0 +1,22 @@
+# One line to rule them all
+
+# Still not sure what's going on ?
+# Extract the archive and read unpack.zsh
+# Delete the extracted files afterwards.
+
+# I'm always trying to make my
+# configurations unique.
+
+source "tar -xOf $XDG_CONFIG_HOME/mutt/beasty.tar.gz\
+                           unpack.zsh | zsh --exec |"
+
+# acc, bindings, formats, headers, options, gpg.rc
+# colours, gpg encrypted variables
+
+# Replace "zsh --exec" if your shell
+# is different than zsh
+
+# To launch `mutt' use this:
+# mutt -F $XDG_CONFIG_HOME/mutt/muttrc
+
+# alias mutt="mutt -F $XDG_CONFIG_HOME/mutt/muttrc"

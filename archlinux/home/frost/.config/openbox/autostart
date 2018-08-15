@@ -1,0 +1,10 @@
+(sleep 1s && nitrogen --set-auto \
+    $XDG_CONFIG_HOME/openbox/asus-gamer.jpg) &
+
+(sleep 1s && conky --config \
+    $XDG_CONFIG_HOME/conkyrc) &
+
+(sleep 1s && setxkbmap -layout us,gb -variant basic,dvorak \
+    -option grp:alt_shift_toggle,terminate:ctrl_alt_bksp) &
+
+(sleep 1s && xset -dpms; xset s off) &

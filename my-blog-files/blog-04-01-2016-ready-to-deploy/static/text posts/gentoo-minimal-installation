@@ -1,0 +1,153 @@
+title:  Gentoo - minimal installation
+date:   2014-08-09
+author: Aaron
+
+<p>After several requests finally agreed to write a post about the Gentoo installation.</p>
+
+<p>There is a nice, well written handbook that will take your hand and install gentoo for you, even if you don't have any experience or knowledge. So this post is bit redundant.</p>
+
+<p>It is strange to do archlinux, gentoo installation tutorials, but that is your requests.</p>
+
+<p>After you have done a couple gentoo installations you will have better understanding what does the commands do, strip the kernel manually, use your own USE,CFLAGS and so on.</p>
+
+<p>Head over <a href="http://distfiles.gentoo.org/releases/amd64/autobuilds/current-install-amd64-minimal/" target="_blank">http://distfiles.gentoo.org/releases/amd64/autobuilds/current-install-amd64-minimal/</a> and download <strong>install-amd64-minimal-*.iso</strong></p>
+
+<p>Once downloaded burn it to a disc or usb thumb drive e.g: <code>sudo dd if=install-amd64-minimal-*.iso of=/dev/sdXxX bs=4M</code></p>
+
+<p>Now is the time to decide wheter you want to experiment with a spare drive or with your primary one.</p>
+
+<p>Reboot the computer and boot the disc/usb thumb drive. Type <code>ping -c3 youtube.com</code> and in case of network issue you should head over <a href="http://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=3" target="_blank">the handbook section to learn how to configure your network.</a></p>
+
+<h1>Preparing the Disk</h1>
+
+<p>The following scheme represents how our drive will be partitioned.</p>
+<pre>$root /dev/sda1 bios
+<p>$root /dev/sda2 boot</p>
+<p>$root /dev/sda3 root</p></pre>
+
+<p>Type <code>parted -a optimal /dev/sda</code></p>
+
+<p>Set gpt label with <code>mklabel gpt</code></p>
+
+<p>Instruct parted to use size unit of megabytes <code>unit MB</code></p>
+
+<p>Create the bios partition <code>mkpart primary 1 100</code>, name it with <code>name 1 grub</code> and set a bootable flag with <code>set 1 bios_grub on</code></p>
+
+<p>Create the boot partition <code>mkpart primary 101 1000</code> name it with <code>name 2 boot</code></p>
+
+<p>Create the root partition <code>mkpart primary 1001 -1</code> name it with <code>name 3 root</code>. Type <code>print</code> to see the disk partitions and type <code>quit</code> to quit</p>
+
+<p>Creating the filesystems. Type <code>mkfs.ext2 /dev/sda2</code> <code>mkfs.ext4 /dev/sda3</code></p>
+
+<p>Next, mount them</p>
+<pre>$root mount /dev/sda3 /mnt/gentoo
+<p>$root mkdir /mnt/gentoo/boot</p>
+<p>$root mount /dev/sda2 /mnt/gentoo/boot</p>
+<p>$root cd /mnt/gentoo</p></pre>
+
+<h1>Installing the gentoo installation files</h1>
+
+<p>Open up <strong>links</strong> and find the closest mirror to you, then download the stage3 tarball.</p>
+
+<p>I suggest you to get some piece of paper and ballpoint pen, select the wanted mirror, open it up, go to <strong>releases</strong>, <strong>amd64</strong> <strong>current-iso</strong> and write down the mirror address plus <strong>stage3-amd64-*.tar.bz2</strong>. Simple example: http://de-mirror.org/gentoo/releases/amd64/current-iso/stage3-amd64-20140724.tar.bz2 (use wget to download it instead links).</p>
+
+
+<p>Use links to get the mirror address then download the stage3 tarball with wget.</p>
+<pre>$root links http://www.gentoo.org/main/en/mirrors.xml</pre>
+
+<p>Once the tarball is downloaded, type <code>tar xvjpf stage3-*.tar.bz2</code></p>
+
+<p>We want to get gentoo up and running, so don't mess with the cflags, cxxflags if this is your first attemp to install it.</p>
+
+<h1>Installing the Gentoo Base System</h1>
+
+<p>Setting up the GENTOO_MIRRORS variable, again point the closest mirror to you by hitting the spacebar, seek the phrase <strong>Any available mirror</strong>.</p>
+<pre>$root mirrorselect -i -o >> ./etc/portage/make.conf</pre>
+
+<p>Setting up the SYNC variable</p>
+<pre>$root mirrorselect -i -r -o >> ./etc/portage/make.conf</pre>
+
+<p>Copy your current DNS nameservers, because once we chroot the filesystem we want to have flawless internet connection <code>cp -L /etc/resolv.conf ./etc/</code></p>
+
+<p>Mount the filesystem</p>
+<pre>$root mount -t proc /proc ./proc</p>
+<p>$root mount --rbind /sys ./sys</p>
+<p>$root mount --rbind /dev ./dev</p></pre>
+
+<p>It's time to chroot</p>
+<pre>$root chroot . /bin/bash
+<p>$root source /etc/profile</p>
+<p>$root export PS1="(chroot) $PS1"</p>
+</pre>
+
+<p>Installing a Portage Snapshot</p>
+<pre>$root emerge-webrsync
+<p>$root emerge --sync</p>
+<p>$root eselect news read</p></pre>
+
+<p>Choosing the Right Profile. <code>eselect profile list</code>, as you can see gnome and kde are listed, so if you want any other desktop environment you will have to select profile number <strong>3</strong> like that <code>eselect profile set 3</code></p>
+
+<p>Setting your timezone</p>
+<pre>$root echo "Europe/Brussels" > /etc/timezone
+<p>$root cp /usr/share/zoneinfo/Europe/Brussels /etc/localtime</p>
+<p>$root emerge --config sys-libs/timezone-data</p>
+<p>$root hwclock --systohc --utc</p>
+</pre>
+
+<p>Configure locales, open up <code>/etc/locale.gen</code> and uncomment <strong>en_US.UTF-8 UTF-8</strong> or add your country specific locales. Generate the locales with <code>locale-gen</code></p>
+
+<p>Reload your environment <code>env-update && source /etc/profile</code></p>
+
+<h1>Configuring the Kernel</h1>
+<p>We won't be configuring the kernel manually, <strong>genkernel</strong> will build the kernel automatically. Once you have gentoo installed, download virtualbox and experiment with the kernel configuration there, so in future you will know how to optimize and strip the kernel for your hardware.</p>
+
+<p>Install the kernel source and genkernel <code>emerge -av gentoo-sources genkernel</code>. Then type <code>genkernel all</code> and wait around 10 minutes. Once genkernel completes, a kernel, full set of modules and initial ram disk (initramfs) will be created.</p>
+
+<p>Don't panic if you see a triple <strong>WARNING... WARNING... WARNING...</strong>, read on and you'll realize that we need to take care of the fstab mounting points.</p>
+
+<p>Open up <code>/etc/fstab</code> and remove the swap and floppy lines by hitting once CTRL + K for each line, the rest layout should look exactly like this:</p>
+
+<pre>$root /dev/sda2  /boot  ext2  defaults  0 2
+<p>$root /dev/sda3  /      ext4  noatime   0 1</p>
+<p>$root /dev/cdrom  /mnt/cdrom  auto  noatime,ro  0 0</p>
+</pre>
+
+<h1>Networking Information</h1>
+
+<p>Setting the hostname, open up <code>/etc/conf.d/hostname</code> and replace <strong>hostname="localhost"</strong> with something like "CookieMonster"</p>
+
+<p>Setting the root password with <code>passwd</code></p>
+
+<h1>Installing Necessary System Tools</h1>
+
+<p>If you require Gentoo to automatically obtain an IP address for your network interface(s), you need to install dhcpcd with <code>emerge -av dhcpcd</code> followed by <code>rc-update add dhcpcd default</code></p>
+
+<p>If you want to index your system's files so you are able to quickly locate them using the locate tool, you need to install sys-apps/mlocate. <code>emerge -av mlocate</code></p>
+
+<p>If you want you can log everything that happens on your system in logfiles. This happens through the system logger <code>emerge -av syslog-ng</code> followed by <code>rc-update add syslog-ng default</code></p>
+
+<h1>Configuring the Bootloader</h1>
+
+<p>Installing GRUB2 and sudo <code>emerge -av sys-boot/grub sudo</code>. Type exactly sys-boot/grub and not just grub, otherwise you'll end up with grub legacy.</p>
+
+<p>Installing the GRUB2 files in /boot/grub and generating GRUB2 configuration.</p>
+<pre>$root grub2-install /dev/sda
+<p>$root grub2-mkconfig -o /boot/grub/grub.cfg</p>
+</pre>
+
+<p>Exit the chrooted environment and unmount all mounted partitions.</p>
+<pre>$root umount -l /mnt/gentoo/dev
+<p>$root umount -l /mnt/gentoo/sys</p>
+<p>$root umount -l /mnt/gentoo/proc</p>
+<p>$root umount -l /mnt/gentoo/boot</p>
+<p>$root umount -l /mnt/gentoo</p>
+<p>$root reboot</p></pre>
+
+<p>Once booted log in as root, type <code>visudo</code> and uncomment <strong>wheel</strong>, next add a system user.</p>
+<pre>$root useradd -m -G users,wheel,audio,cdrom,portage,usb,games,video,lp -s /bin/bash username</pre>
+
+<p>That's it, you have minimal gentoo up and running - <a href="http://www.gentoo.org/doc/en/handbook/handbook-amd64.xml?part=1&chap=12" target="_blank">Where to go from here?</a></p>
+
+<p>Install X, the desktop environment of your choice, network manager plus applet, audio libs, gpu drivers, and all of your favourite apps.</p>
+
+<p>Gentoo has bigger if not the biggest wiki how-to and troubleshooting guides, so don't post low quality questions in the forum but seek the wiki and more especially read the <strong>man</strong> docs.</p>

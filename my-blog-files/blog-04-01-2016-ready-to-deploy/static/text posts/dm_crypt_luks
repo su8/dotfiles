@@ -1,0 +1,71 @@
+title:  DM-Crypt LUKS encrypted partition
+date:   2015-04-01
+author: Aaron
+
+<p>Despite being april 1st, we won't joke about drive encryption.</p>
+
+<p>TrueCrypt is no more, and the purpose of this post is to show you straightforward partition encryption with dm-crypt luks.</p>
+
+<p>DM-Crypt is transparent drive encryption that is kernel module and part of the device mapper framework for mapping physical block device onto higher-level virtual block devices, it uses cryptographic routines from the kernel's crypto api. Long story short, device mapping encryption provided by the kernel "linux" crypto api.</p>
+
+<p>Make sure that you have <strong>at least</strong> one partition with no data in it. If you don't have any partitions available, use parted, gparted or whatever program you like to shrink some of your existing partitions and create a new one.</p>
+
+<p>I'll use partition called <code>/dev/sda3</code>, and our first task will be to overwrite that partition 3 times with random data, that's enough to protect you against forensic investigation. It took me nearly 30 minutes for 20 GB partition to be overwritten 3 times.</p>
+
+<pre>$root shred --verbose --random-source=/dev/urandom --iterations=3 /dev/sda3</pre>
+
+<p>Create cryptographic device mapper device in LUKS encryption mode:</p>
+
+<pre>$root cryptsetup --verbose --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --use-random luksFormat /dev/sda3</pre>
+
+<p>You'll be asked the following question:</p>
+
+<pre>WARNING!
+<p>========</p>
+<p>This will overwrite data on /dev/sda3 irrevocably.</p>
+<p></p>
+<p>Are you sure? (Type uppercase yes): YES</p>
+<p>Enter passphrase:</p>
+<p>Verify passphrase:</p>
+<p>Command successful</p></pre>
+
+<p>Unlock the partition, here <strong>"root"</strong> is device mapper name, think of it as label.</p>
+
+<pre>$root cryptsetup open --type luks /dev/sda3 root</pre>
+
+<p>We have to create filesystem in order to write encrypted data that would be accessible through the device mapper name (label).</p>
+
+<pre>$root mkfs.ext4 /dev/mapper/root</pre>
+
+<p>Mount the device and transfer all of your data:</p>
+
+<pre>$root mount -t ext4 /dev/mapper/root /mnt</pre>
+
+<p>Unmount and close the device once you are done:</p>
+
+<pre>$root umount /mnt
+<p>$root cryptsetup close root</p></pre>
+
+<p>Last but not least, clear the copy and cache buffers:</p>
+
+<pre>$root sysctl --write vm.drop_caches=3</pre>
+
+<p>That was it, simple and straightforward encryption. From now on all you have to do is: unlock, mount, transfer data, unmount and close the device.</p>
+
+<p>If you have couple hours to spare and experiment, feel free to read those pages:</p>
+
+<p><a href="http://crunchbang.org/forums/viewtopic.php?id=24722" target="_blank">link 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?pid=943338" target="_blank">link 2</a>, <a href="https://wiki.archlinux.org/index.php/Dm-crypt/Device_encryption" target="_blank">link 3</a>, <a href="https://wiki.archlinux.org/index.php/Dm-crypt" target="_blank">link 4</a>, <a href="https://wiki.gentoo.org/wiki/DM-Crypt_LUKS" target="_blank">link 5</a>, <a href="https://wiki.gentoo.org/wiki/Dm-crypt" target="_blank">link 6</a>, <a href="https://help.ubuntu.com/community/EncryptedFilesystemHowto" target="_blank">link 7</a></p>
+
+<p>Protect your <strong>/boot</strong> partition if you want full disk encryption. Everything is written in great details how to do it in the above links.</p>
+
+<p>Post edit: The things get even better as I just learnt that it is possible to burn LUKS encrypted CD and DVD discs.</p>
+
+<p>Instead using drive partition, we will create a file via <strong>dd</strong> and the kernel's random number generator <strong>/dev/urandom</strong> that will fill the initial file with entropy.</p>
+
+<p>Create 500MB file that will be used as file system within a single file.</p>
+
+<pre>$user dd if=/dev/urandom of=encrypted.volume bs=1MB count=500</pre>
+
+<p>Just replace the first command in this post <strong>(shred)</strong> with the <strong>dd</strong> one and type the rest commands as is.</p>
+
+<p>Now you can be sure that no one will get past your data that it is burn within the single file which is entire file system in LUKS encryption, just make sure to unmount and close <strong>encrypted.volume</strong> before burning it to the disc.</p>

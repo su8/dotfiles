@@ -1,0 +1,33 @@
+title:  Xfce + Kwin = eyecandy combination
+date:   2013-08-10
+author: Aaron
+
+<p>Few days ago I found out that it is possible to have compiz &#40;like&#41; effects in xfce environment. Sounds good, but for us the arch users the compiz is no more maintained &#40;unless you want to mess with out of date packages in yaourt&#41; and we have to seek some alternative, and here it comes KWin.</p>
+
+<h2>Kwin installation</h2>
+
+<pre>$root yaourt -S kwin-standalone-git
+<p>$root pacman -R kwin-standalone-git<p>
+<p>$root pacman -S kdebase-workspace</p></pre>
+
+<p>Replace the xfce window manager with KWin - line 12: replace <strong>xfwm4</strong> with <strong>kwin</strong></p>
+
+<pre>$root nano /etc/xdg/xfce4/xfconf/xfce-per­channel-xml/xfce4-session.xml</pre>
+
+<p>Once you are done reboot your pc and attempt to tweak the new window manager settings to make it eyecandy. Open up some folder and hover your mouse to the window title, click and hold the right click then navigate to: More Actions-> Window Manager Settings</p>
+
+<a href="$img/xfce_kwin/window-manager-settings.png" target="_blank">See the image</a>
+
+<p>I've enabled some effects in "Desktop Settings-> All Effects", so I got 3D cube, window highlighting, all workspaces are showed in a grid. The effects are named: Box Switch, Desktop Cube, Desktop Cube Animation, Desktop Grid, Highlight Window.</p>
+
+<a href="$img/xfce_kwin/kwin-effects.png" target="_blank">Desktop Grid</a>
+
+<p>I do liked Yakuake &#40;in gnome env. is guake&#41; as replacement for the xfce drop down terminal that I had to tweak earlier. The yakuake is using "transparent tabs" theme and looks outstanding.</p>
+
+<a href="$img/xfce_kwin/yakuake.png" target="_blank">Yakuake</a>
+
+<p> You can customize the window themes to your personal preferences, just play around with the <strong>Window Decorations</strong></p>
+
+<a href="$img/xfce_kwin/xfce-kwin2.png" target="_blank">See the image</a>
+
+<p>The particular theme in the above image is called <strong>Ghost</strong>

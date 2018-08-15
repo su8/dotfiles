@@ -1,0 +1,76 @@
+title:  Dead simple DNS caching
+date:   2015-03-11
+author: Aaron
+
+<p>Instead tweaking and squeezing the browsers settings, there are more elegant solutions that would speed up your internet browsing.</p>
+
+<p>The post today will be simple enough, so even a casual computer user will be able to configure <strong>dnsmasq</strong>.</p>
+
+<p>Let's begin with what DNS is and why we need it.</p>
+
+<p>The Domain Name System - DNS is distributed naming system technology that translates domain names like the domain name provided to me by github which I use for this blog into IP address. Long story short, without DNS you would have to type the IP address associated to every website you are about to visit, while the DNS job is to simply translate the human readable domain name into IP address, and I can't imagine the internet existance without DNS as not every website and/or service are served by static IP.</p>
+
+<p>Every device that is connected to internet is using at least 1 DNS name server that would resolve every single query. Here is the catch, all queries will have to be resolved (dns lookup), no matter even if the particular website and/or service was already resolved.</p>
+
+<p>What we are going to do now is to locally cache those DNS requests with <strong>dnsmasq</strong> and speed up our internet browsing.</p>
+
+<p>Install <code>dnsmasq</code> and <code>dnsutils</code>.</p>
+
+<p>Open up <code>/etc/resolv.conf</code> and add 3 name servers:</p>
+
+<pre>$root nameserver 127.0.0.1
+<p>$root nameserver 208.67.220.220 # OpenDNS</p>
+<p>$root nameserver 208.67.220.222 # OpenDNS</p></pre>
+
+<p>You can replace the OpenDNS name servers with others that are recommended by the PRISM Break project, located <a href="http://wiki.opennicproject.org/Tier2" target="_blank">here</a>, choose 2 servers that are closer to your country and pay attention if it is mentioned that there is no logging for the particular servers.</p>
+
+<p>I use <strong>netctl</strong> to manage my network connection, if you use the NetworkManager program, you should visit the <a href="https://wiki.archlinux.org/index.php/Dnsmasq#NetworkManager" target="_blank">Archlinux</a> page, or the <a href="https://help.ubuntu.com/community/Dnsmasq" target="_blank">Ubuntu</a> page for more details.</p>
+
+<p>Now open up <code>/etc/dnsmasq.conf</code> and add:</p>
+
+<pre>$root interface=eth0
+<p>$root listen-address=127.0.0.1</p>
+<p>$root bind-interfaces</p>
+<p>$root bogus-priv</p>
+<p>$root domain-needed</p>
+<p>$root domain=example.com</p>
+<p>$root expand-hosts</p>
+<p>$root local=/example.com/</p>
+<p>$root dns-forward-max=150</p>
+<p>$root cache-size=2000</p></pre>
+
+<p>What these options do:</p>
+
+<p>'interface' the network interface card</p>
+
+<p>'listen-address' the IP address to listen for queries</p>
+
+<p>'bind-interfaces' will make sure that 'listen-address' will listen for queries made by the ip assigned to it</p>
+
+<p>'bogus-priv' will prevent non-routed address to be forwarded</p>
+
+<p>'domain-needed' will block plain domain names (github instead github.com)</p>
+
+<p>'domain=example.com' and 'expand-hosts' - use some fake domain name to satisfy the <strong>fully qualified domain name</strong>, if you ever tried to install OpenBSD or FreeBSD you'll understand the FQDN importance</p>
+
+<p>'dns-forward-max' the maximum concurrent queries, even if you (ever) become 'zombie', that limit will save your ass and the police won't knock on your door.</p>
+
+<p>'cache-size' it does what it says</p>
+
+<p>Now restart your network manager. For <strong>netctl</strong> type <code>netctl restart profile</code> where 'profile' is your configuration file in /etc/netctl/ . For <strong>NetworkManager</strong> type <code>systemctl restart NetworkManager</code> .</p>
+
+<p>Automatically start dnsmasq upon system start up <code>systemctl enable dnsmasq</code>, and start it now <code>systemctl start dnsmasq</code></p>
+
+<p>Almost done, just perform 2 queries to verify that the caching is working: <code>dig youtube.com | grep 'Query time'</code>, on the second (and every next) query you should see 0 msec. From now on the cached queries will be stored in your RAM.</p>
+
+<p>The first 'nameserver' in <code>/etc/resolv.conf</code> - <strong>127.0.0.1</strong> will try to resolve all queries if they are cached, and if they are not present in the cache the rest 'nameservers' will be requested. That is why we need <strong>127.0.0.1</strong> to be the first 'nameserver'.</p>
+
+<p>If you are seeking even greater DNS security, you should consider <a href="https://en.wikipedia.org/wiki/DNSSEC" target="_blank">DNSSEC</a>, DNSCrypt is part of OpenDNS and OpenDNS is not listed in PRISM Break.</p>
+
+<p>To add DNSSEC in your current dnsmasq configuration, open up <code>/etc/dnsmasq.conf</code> and add:</p>
+
+<pre>$root dnssec
+<p>$root trust-anchor=.,19036,8,2,49AAC11D7B6F6446702E54A1607371607A1A41855200FD2CE1CDDE32F24E8FB5</p>
+<p>$root dnssec-check-unsigned</p></pre>
+
+<p>Forgot to mention that you should comment in the <strong>DNS=('IP')</strong> line in your netctl profile, otherwise <code>/etc/resolv.conf</code> will be overwritten.</p>

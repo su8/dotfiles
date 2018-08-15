@@ -1,0 +1,23 @@
+title:  New goodies
+date:   2015-09-03
+author: Aaron
+
+<p>Got peripherials that are not supported ?</p>
+
+<p>The solution is simple, buy a new one or exchange them.</p>
+
+<p>In my previous blog <a 
+href="$web/post/switching_from_archlinux_to_gentoo" 
+target="_blank">post</a> shared that I had to use some *cough* legacy peripherials which in turn forced me to purchase a new keyboard and mouse that was known to work in FreeBSD.</p>
+
+<p>The issue wasn't related to input drivers compiled with hal or evdev, neither have forgetten to add <strong>hald_enable="YES"</strong>.</p>
+
+<p>This is my first LED keyboard. It's almost twice the size of my previous one. It's also heavy and the build quality is outstanding for the $20 price tag. There are 7 available colours, 5 programmable keys and much <a href="http://pc-professional.info/keyboards/wired-keyboards/856-element-keyboard-kb1000g.html" target="_blank">more</a>.</p>
+
+<img src="$img/new_keyboard/kb.jpg" alt="" /><br />
+
+<p>I bet that you can't guess what colour my keyboard is using now. The colour starts with <strong>p</strong> and ends with <strong>ink</strong>.</p>
+
+<p>The <a href="http://pc-professional.info/mice/wired-mice/859-ms-1050g.html" target="_blank">mouse</a> was just $2 and all I did was to hurry to grab one and put it in my shopping basket.</p>
+
+<p>Also purchased two 8GB usb sticks that act as redundant LUKS backup for certain files that I value the most.</p>

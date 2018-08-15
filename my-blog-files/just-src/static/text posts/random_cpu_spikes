@@ -1,0 +1,39 @@
+title:  Random CPU spikes
+date:   2015-08-01
+author: Aaron
+
+<p>At random intervals one of my cpu cores is hogged for a few seconds.</p>
+
+<p>Re-compiling Xorg, the kernel, systemd, and several other packages didn't solved the issue.</p>
+
+<p>Instead staring at my screen (to watch my statusbar) I just crafted one-liner command to do the job for me. Note that the following command includes only the most important part that does all the heavy lifting. I'm sure you know how to use conditional loops.</p>
+
+<pre>$user ps -eo pcpu,comm | gawk '{ if ($1 > 10.1) { print $1,$2 } }'</pre>
+
+<p>The above one-liner lists all currently running processes and formats the output to include only the cpu usage and the process name, then it is piped to <a href="https://www.gnu.org/software/gawk/manual/gawk.html" target="_blank">gawk</a> where we check if the cpu usage value is bigger than the specified <strong>10.1</strong>, if it's true we output the cpu usage and the process name.</p>
+
+<p>The command was executed and I didn't touched my computer afterwards in order to reduce the load and false positives. 4 hours later the one-liner command catched the sneaky bastard.</p>
+
+<img src="$img/cpu_spikes/random_spikes.png" alt="" /><br />
+
+<p>So where <strong>mandb</strong> came from ?</p>
+
+<pre>$user pacman -Qo mandb</pre>
+
+<p>The package that contains it is called <strong>man-db</strong>, listing it's content revealed even more information:</p>
+
+<pre>$user pacman -Ql man-db</pre>
+
+<p>It revealed that there was auto-starting systemd units called <strong>man-db.service</strong> and <strong>man-db.target</strong>. Now had to verify that those units are running, if so then nuke them.</p>
+
+<pre>$user systemctl list-units | grep man
+<p>$user systemctl show -p WantedBy -p RequiredBy man-db.service</p>
+<p>$user systemctl show -p WantedBy -p RequiredBy man-db.target</p>
+<p>$root ln -s /dev/null /etc/systemd/system/man-db.service</p>
+<p>$root ln -s /dev/null /etc/systemd/system/man-db.target</p></pre>
+
+<p>The unit files in <strong>/usr/lib/systemd/system/</strong> can be overridden by the one in <strong>/etc/systemd/system/</strong>. The symlink from <strong>/dev/null</strong> ensures that those units will never ever start again, literary.</p>
+
+<p>Whenever I decide to re-index the installed <strong>man</strong> pages all I have to do is run <code>sudo mandb</code>.</p>
+
+<p>It was really creepy not knowing what causes those random cpu spikes, at least the paranoid in me didn't screamed <strong>HACKED</strong> at the beginning this time.</p>

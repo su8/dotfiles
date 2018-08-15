@@ -1,0 +1,206 @@
+title:  The best data compression tool &#63;
+date:   2014-05-11
+author: Aaron
+
+<p>Nowadays in GNU/Linux we often use the file managers to archive and compress out data.</p>
+
+<p>But did you knew that in the terminal you can use different compression tool than the provided in the file manager &#63;</p>
+
+<p>I made 3 tests which will compare some of the popular compression tools and we'll see which tool is the best when it comes to data compression.</p>
+
+<p>Let me show you the first table which reveals some data, and later I'll give you the commands which I used.</p>
+
+<h2>Test one: compressing mixed content</h2>
+
+<p>1 main folder, 687.2 MB in size with 643 files and 34 sub-folders. The content in it is mixed: from pictures, songs, video files to binary, text files, scripts and all the normal stuff you'll find in your drive.</p>
+
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Compression tool</th>
+      <th>Total waiting time</th>
+      <th>Archive size(out. file)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>lzma</td>
+      <td>5min 25sec</td>
+      <td>624.4 MB</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>xz</td>
+      <td>5min 49sec</td>
+      <td>619.7 MB</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>gz</td>
+      <td>0min 27sec</td>
+      <td>663.4 MB</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bzip2</td>
+      <td>3min 19sec</td>
+      <td>662.3 MB</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>7zip</td>
+      <td>2min 35sec</td>
+      <td>615.4 MB</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>zip</td>
+      <td>0min 27sec</td>
+      <td>663.5 MB</td>
+    </tr>
+  </tbody>
+</table> 
+
+<p>This is the first test out of three and it reveals which compression tool is the best to compress mixed content for the shortest time but with the lowest file size as possible, in the remaining tests we'll see does 7zip will continue to be so awesome.</p>
+
+<p>As it turns out, for mixed content <code>7zip</code> should be used.</p>
+
+<h2>Test 2: compressing binary content</h2>
+
+<p>1 folder with 292 files, 0 sub-folders and 597.9 MB in size, with content of binary files.</p>
+
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Compression tool</th>
+      <th>Total waiting time</th>
+      <th>Archive size(out. file)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>lzma</td>
+      <td>4min 1sec</td>
+      <td>790.1 KB</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>xz</td>
+      <td>6min 51sec</td>
+      <td>793.2 KB</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>gz</td>
+      <td>2min 3sec</td>
+      <td>246.7 MB</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bzip2</td>
+      <td>1min 30sec</td>
+      <td>215.8 MB</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>7zip</td>
+      <td>3min 33sec</td>
+      <td>2.8 MB</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>zip</td>
+      <td>2min 1sec</td>
+      <td>246.9 MB</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The results may surprise you. So if you have a folder with binary files only, you'll prefer to use <code>lzma</code> anytime, and out leader 7zip is feeling the pressure.</p>
+
+<h2>The final test: compressing text files/scripts</h2>
+
+<p>1 folder with 4973 files, 0 sub-folders and 770.2 MB in size, with content of python, bash scripts and text files.</p>
+
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Compression tool</th>
+      <th>Total waiting time</th>
+      <th>Archive size(out. file)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>lzma</td>
+      <td>3min 27sec</td>
+      <td>209.8 KB</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>xz</td>
+      <td>9 min 33 sec</td>
+      <td>202.9 KB</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>gz</td>
+      <td>3 min 25sec</td>
+      <td>188.6 MB</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>bzip2</td>
+      <td>12 min 42 sec</td>
+      <td>54.5 MB</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>7zip</td>
+      <td>3 min 5 sec</td>
+      <td>155.7 KB</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>zip</td>
+      <td>3min 16sec</td>
+      <td>189.4 MB</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We have a winner, superb. After 3 different tests, 2 won by 7zip, we can declare that 7zip is the best compression tool. Now you know, if you want to compress anything else than binary files, <code>7zip</code> is your best bet.</p>
+
+<p>Used commands:</p>
+
+<p><code>lzma:</code></p>
+
+<pre>$user tar cv docs | lzma -z -9 > docs.tar.lzma</pre>
+
+<p><code>xz:</code></p>
+
+<pre>$user XZ_OPT=-9e tar -cJf docs.tar.xz docs</pre>
+
+<p><code>gz:</code></p>
+
+<pre>$user GZIP=-9 tar cvzf docs.tar.gz docs</pre>
+
+<p><code>bzip2:</code></p>
+
+<pre>$user BZIP2=-9 tar -jcvf docs.tar.bz2 docs</pre>
+
+<p><code>7zip:</code></p>
+
+<pre>$user 7za a -mx=9 docs.7z docs</pre>
+
+<p><code>zip:</code></p>
+
+<pre>$user zip -9 -r docs.zip docs</pre>
+
+<p>Until next time :}</p>

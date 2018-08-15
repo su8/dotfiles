@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+
+<menu id="media" label="Multimedia">
+
+    <item icon="/usr/share/icons/Faenza/apps/22/multimedia-volume-control.png" label="ALSA mixer">
+        <action name="Execute">
+            <execute>sakura --execute alsamixer</execute>
+        </action>
+    </item>
+
+    <!-- <item icon="/usr/share/icons/Faenza/apps/22/defcon.png"  label="SimpleScreenRecorder">
+        <action name="Execute">
+            <execute>simplescreenrecorder --logfile</execute>
+        </action>
+    </item> -->
+
+    <item icon="/usr/share/icons/Faenza/apps/22/vlc.png" label="VLC">
+        <action name="Execute">
+            <execute>vlc</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/kaffeine.png" label="Winff">
+        <action name="Execute">
+            <execute>winff</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/xfburn.png" label="Xfburn">
+        <action name="Execute">
+            <execute>xfburn</execute>
+        </action>
+    </item>
+
+    <!-- <item icon="/usr/share/icons/Faenza/devices/22/multimedia-player-apple-ipod-touch.png" label="Qt V4L2 test Utility">
+        <action name="Execute">
+            <execute>qv4l2</execute>
+        </action>
+    </item> -->
+
+</menu>
+</openbox_menu>

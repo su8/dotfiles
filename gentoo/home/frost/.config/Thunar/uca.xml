@@ -1,0 +1,49 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<unique-id>1436854552924749-1</unique-id>
+	<command>urxvtc</command>
+	<description>Example for a custom action</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon></icon>
+	<name>Rename (New)</name>
+	<unique-id>1468097163976683-1</unique-id>
+	<command>/home/frost/.cache/bin/rename %n</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Extract here</name>
+	<unique-id>1426563614810465-1</unique-id>
+	<command>zsh --exec $HOME/.config/misc/my_thunar_plugin.zsh extr %N</command>
+	<description></description>
+	<patterns>*.tar.bz2;*.bz2;*.tz2;*.tbz2;*.tbz;*.tb2;*.tar.gz;*.gz;*.tgz;*.taz;*.tz;*.tar.xz;*.xz;*.txz;*.tpxz;*.lzma;*.tlz;*.rar;*.zip;*.xpi;*.tar;*.lz4;*.lrz;*.tar.lzo;*.lzo;*.Z;*.7z;*.exe</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon></icon>
+	<name>Compress to gzip</name>
+	<unique-id>1426561991587632-1</unique-id>
+	<command>zsh --exec $HOME/.config/misc/my_thunar_plugin.zsh gzf %N</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+</actions>

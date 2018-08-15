@@ -1,0 +1,59 @@
+
+${wireless_essid wlp3s0} ${wireless_link_qual wlp3s0}% 
+${freq_g cpu0} was replaced by 3.3Ghz
+
+${color}CPU  ${color1}${execi 24000 python2 -c'import re;
+with open("/proc/cpuinfo", "rt") as f:  model=f.read();\
+find=re.search("model name.*", model).group();found=re.split("\W+",find)[2:-1];\
+print(" ".join(x for x in found if not x in ["Athlon","tm","II"]))'}  ${color}@3.3GHz${color1}
+
+${execi 90 sensors | awk '/(Vcore)/   {print $3}' | cut -c2-5} \
+${execi 90 sensors | awk '/(3.3V)/    {print $3}' | cut -c2-5} \
+${execi 90 sensors | awk '/(5V)/      {print $3}' | cut -c2-5} \
+${execi 90 sensors | awk '/(12V)/     {print $3}' | cut -c2-5} \
+
+${execi 90 python2 -c'from subprocess import check_output;from re import search;
+v=["Vcore","3.3V","5V","12V"];a=check_output(["sensors"]);
+print(" ".join(search("{0}.*".format(x),a).group().split()[2][1:] for x in v))'}
+
+${execi 30 sensors | awk '/(temp1)/   {print $2}' | cut -c2-7}(${color}CPU${color1})  \
+${execi 30 sensors | awk '/(MB)/      {print $3}' | cut -c2-7}(${color}MB${color1})     \
+
+${execi 30 printf "%s CPU  %s MB" $(sensors |awk '/(emp)/ {print $3}'|head -n2|tr -d "+C")}
+${execi 5 python2 -c'from subprocess import check_output;\
+a=check_output(["free","-h"]).split();print(a[a.index("buffers/cache:")+1])'}
+
+${execi 30 printf "%s  %s  %s" $(sensors | awk '/(emp)/ {print $2 OFS $3}' | tr --delete \
+"+C:(highTemperature\n")}     \
+
+free -h | awk '/(cache)/ {if (NR==3) print $3}'
+$(awk -F: '/(model name)/ {cpu=$2} END {print cpu}' /proc/cpuinfo)
+printf "%s with %s cores @%dMHz" $(awk -F: '{if (NR==5) print $2}' /proc/cpuinfo) $(awk -F: '/(model name)/ {cores++} END {print cores}' \
+/proc/cpuinfo) $(awk -F: ' /(cpu MHz)/ {freq=$2} END {print freq}' /proc/cpuinfo)
+
+$(awk '/cpu/ {flag=1} /!/ {flag=0} flag && /Intel/ {sub(/\(TM\)/,""); print $5,$6,$8,$9;exit}' /proc/cpuinfo)
+$(awk '/cpu/ {flag=1} /!/ {flag=0} flag && /AMD/ {sub(/\(TM\)/,""); print $5,$6,$8,$9;exit}' /proc/cpuinfo)
+awk 'BEGIN{FS=":"} /model name/ { print $2; exit }' /proc/cpuinfo
+awk 'BEGIN{FS=": "} /(cpu cores)/ { print $2; exit }' /proc/cpuinfo
+
+gsub("[Temperature:+highC°]", "");
+
+old ram free -h | awk 'NR==3 {print $3}'
+
+/sys/class/hwmon/hwmon0/
+${hwmon 0 temp 2} ${hwmon 1 temp 1}
+
+lscpu | awk '/(max MHz)/ {print $4/1000}'
+
+sensors | awk '/(V)/ {ORS="";gsub("+","");print OFS $3}'
+
+printf " %d RPM " $(sensors | awk '/(Fan)/ {print $4}')
+
+printf "%.1f° MB  %.1f° CPU" $(sensors | awk '/(emp)/ \
+{if (NR % 3) print OFS $2 $3}' | tr --delete "+C:(highTemperature\n°")
+
+lspci | awk '/(VGA)/ {FS=".";gsub(/[\[\]]/,"");print $3}'
+
+gawk '/MemTotal/ {total=$2} /MemFree/ {free=$2} \
+    /Buffers/ {buffers=$2} /^Cached/ {cache=$2} END \
+        {printf "%dM",(total-free-buffers-cache)/1024 }' /proc/meminfo

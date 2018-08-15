@@ -1,0 +1,35 @@
+title:  One house, one router, two floors, weak wireless
+date:   2014-03-30
+author: Aaron
+
+<p>Nowadays most of us got more than one smartphone and or tablet and the only way to connect to the internet is by having wireless internet. It makes it really annoying, because the bigger your house is the wireless signal quality degrades. The built-in antennas in those devices are weak which leaves you the only choice to be closer to the router in order to get proper internet speed.</p>
+
+<p>Personally, I faced this issue while ago and solved it with really simple and cheaper approach.</p>
+
+<p>Even in the case of 3G internet, this post will be a life saver for those of you that wish to share the connection with someone else.</p>
+
+<img src="$img/extend_coverage/gliffy-diagram.png" alt="" /><br />
+
+<p>This is the stuff that you'd need to prepare, wifiextenders are better in this situation (you don't have to use computer nor usb wifi dongle), but I'll focus this post to the people that got access points around.</p>
+
+<p>I'll make it even more easier by deploying a rolling release distro <a href="http://torrents.sabayon.org/file?info_hash=%DEX%C2%95%CAf%E8d%80%0F%C8D%12%B0%B3%80M%C6%05f" target="_blank">(Sabayon 14.01 XFCE)</a> with X server up and running for easier maintenance (to those of you that are not GNU/Linux power users), with the lowest memory consumption you'll ever seen ~ 80MB-110MB, since it's rolling release the supported hardware shouldn't not be a issue.</p>
+
+<p>Once Sabayon is installed, Right click over the NetworkManager applet and press Edit Connections.</p>
+
+<img src="$img/extend_coverage/edit-connections.png" alt="" /><br />
+
+<p>Point the ethernet interface and click Edit</p>
+
+<img src="$img/extend_coverage/edit-network-connections.png" alt="" /><br />
+
+<p>Over the IPv4 Settings tab, click over the Method combobox and select "Shared to other computers"</p>
+
+<img src="$img/extend_coverage/shared-eth1.png" alt="" /><br />
+
+<p>Click Save and reboot the computer</p>
+
+<p>Once booted, connect to your wireless network first, and then click 'connect' to the ethernet interface in order to bond both devices.</p>
+
+<img src="$img/extend_coverage/connected-wifi-eth1.png" alt="" /><br />
+
+<p>Enjoy the blazing speed and better wireless signal quality.</p>

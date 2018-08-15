@@ -1,0 +1,108 @@
+# Edit with vim
+
+# Text settings #
+background yes
+use_xft yes
+xftfont URW Gothic L:bold:size=6
+xftalpha 0.1
+
+update_interval 5
+total_run_times 0
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+maximum_width 2800
+minimum_size 200
+
+# Window specifications #
+own_window yes
+own_window_type override
+own_window_transparent yes
+own_window_hints undecorate,sticky,skip_taskbar,skip_pager,below
+#own_window_colour 03010d
+
+double_buffer yes
+no_buffers no
+default_color 1793D1
+color1 CBCBCB
+alignment bottom_left
+# top_middle
+imlib_cache_size 0
+short_units yes
+text_buffer_size 2048
+
+# Move right
+gap_x 5
+# Move up
+gap_y 1
+
+
+
+TEXT
+${color}CPU  ${color1}\
+${execi 9000 gawk '/(model name)/ {print $4,$7,$8;exit}' /proc/cpuinfo} \
+${color}@${color1} \
+${execi 9000 gawk '{print $1/1000000}' \
+    /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq}GHz \
+${color}-${color1} \
+${execi 45 gawk '{printf "%.1f°",$1/1000.0}' \
+    /sys/class/hwmon/hwmon1/temp1_input}    \
+\
+${color}GPU ${color1}\
+${execi 9000 lspci |\
+    gawk -F '[' '/(VGA)/ {gsub("]","");OFS="";print $2,$3}'}    \
+\
+${color}Mobo  ${color1}\
+${execi 9000 gawk '{printf "%s ",$1}' /sys/class/dmi/id/board_{vendor,name}}\
+${color}-${color1} \
+${execi 45 gawk '{printf "%.1f°",$1/1000.0}' \
+    /sys/class/hwmon/hwmon0/temp2_input}    \
+\
+${color}Load ${color1} ${cpu cpu0}% ${cpu cpu1}% ${cpu cpu2}% ${color}/${color1} \
+${execi 45 python2 -c'import os;print("{0[0]} {0[1]} {0[2]}".format(os.getloadavg()))'}     \
+\
+${color}Fans ${color1}\
+${execi 45 gawk '{printf " %d RPM ",$1}' /sys/class/hwmon/hwmon0/fan*input}    \
+\
+${color}Voltage  ${color1}\
+${execi 90 gawk '{printf "%.2f ",$1/1000.0}' /sys/class/hwmon/hwmon0/in*input}    \
+\
+${color}SSD  ${color1}${fs_used /} ${color}/ ${color1}${fs_size /} ${color}| ${color1}\
+${if_match ${fs_used_perc /} >= 70}${color red}${endif}${fs_used_perc /}%     \
+\
+${color}RAM  ${color1}${execi 5 free -h | gawk '/^Mem/ {print $3}'} \
+(${color}$mem${color1}) ${color}/${color1} $memmax ${color}|${color1} $memperc%     \
+\
+${color}Kernel  ${color1}$kernel     \
+\
+${color}Uptime  ${color1}$uptime_short     \
+\
+\
+${if_existing Documents/blog/generate.py}\
+\
+${color}Blog updated  ${color1}${execi 2400 python2 -c'
+import os;from time import strftime,localtime;from datetime import date;
+os.chdir(os.path.join(os.getenv("HOME"),"Documents","blog","static","text posts"));
+a=sorted([strftime("%Y %m %d", localtime(os.path.getmtime(x))) \
+for x in os.listdir(os.getcwd())], reverse=True)[0].split();
+b=[int(z) for z in a];c=date.today()-date(b[0],b[1],b[2]);
+print("{0} days ago".format(c.days))'}\
+\
+${else}\
+\
+${color}Password  ${color1}\
+${execi 30 python2 -c'from random import choice;from string import printable,whitespace;
+pass_chars=15;num_or_letter=[x for x in printable if not x in whitespace];
+print(str().join(choice(num_or_letter) for _ in range(pass_chars)))'}\
+\
+${endif}     \
+\
+${color}Mouse  ${color1}\
+${execi 180 a=$(xset -q | gawk '/(threshold:)/ {print $4}');\
+b=$((110-$a));printf "%d%%" "$b"}     \
+\
+${color}Time  ${color1}${time %I:%M %p, %a %d %b}

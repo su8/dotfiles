@@ -1,0 +1,13 @@
+mkdir /mnt/remote
+sshfs root@$remote_machine:/ /mnt/remote
+# I tried NFS first here but mount.nfs kept hanging; sshfs will work just as well though.
+
+DISTDIR=$local_distdir emerge --fetchonly gcc
+# I'm not sure what's going on here, but portage gets horribly confused when $ROOT is used and it tries to download files.
+# Making sure both sides have all the distfiles beforehand fixed it.
+
+DISTDIR=$local_distdir ROOT=/mnt/remote CFLAGS="-O2 -pipe -march=$remote_cpu" emerge -av gcc
+# I used -march=btver1 from a -march=amdfam10 host here without problems, it should be safe as long as $(uname -m) is the same.
+
+ssh root@$remote_machine gcc-config -l
+ [1] x86_64-pc-linux-gnu-4.8.4 *

@@ -1,0 +1,44 @@
+        <!-- pagination -->
+         </div>
+          <!-- SIDEBAR -->
+          <!-- tags_bar -->
+        	<aside id="sidebar">  		
+        		<ul>
+	        		<li class="block">
+			        	<div class="sidebar-top"></div>
+		        		<div class="sidebar-content">
+		        			<h4 class="heading">Recent Posts</h4>
+		        			<ul>
+							<!-- recent posts -->
+						</ul>
+						</div>
+						<div class="sidebar-bottom"></div>
+	        		</li>
+        		</ul>
+        	</aside>
+            <!-- github_sidebar -->
+			<!-- ENDS sidebar -->			
+		</div>
+		<!-- ENDS MAIN -->
+		<footer>
+			<!-- twitter -->
+			<div id="twitter-holder">
+				<div class="ribbon-left"></div>
+				<div class="ribbon">
+					<div id="tweets-bar" class="tweet"></div>
+				</div>
+				<div class="ribbon-right"></div>
+			</div>
+			<!-- ENDS twitter -->
+			<!-- bottom -->
+			<div id="bottom">
+				footer_text
+			</div>
+			<!-- ENDS bottom -->
+		</footer>
+	</div>
+	<!-- ENDS WRAPPER -->
+<!-- github -->
+</body>
+</html>
+

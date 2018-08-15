@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+# Script to start given wm in a loop
+
+# the "statusbar" program location
+bar_exe="$HOME/.cache/bin/${1}bar"
+
+
+__compile_bar() {
+    cd $1; bash bootstrap archlinux
+    ./configure --prefix=$HOME/.cache
+    make && make install; cd $HOME
+}
+
+
+[[ $1 == 'dwm' ]] && {
+
+    [[ ! -f "${bar_exe}" ]] && {
+        cp -r "$HOME/.config/dwm_scripts/dwm-bar-new" /tmp
+        __compile_bar /tmp/dwm-bar-new
+    }
+
+    # Execute the "statusbar" program every 5 secs
+    while true; do
+        "$HOME/.cache/bin/dwmbar"
+        sleep 5
+    done &
+
+
+    while true; do
+        dwm >/dev/null
+        # to log stderrors to a file
+        # dwm 2> ~/.cache/dwm.log
+    done
+}
+
+
+[[ $1 == 'xmonad' ]] && {
+
+    [[ ! -f "${bar_exe}" ]] && {
+        cp -r $HOME/.config/dwm_scripts/{barpatches,dwm-bar-new} /tmp
+        cd /tmp/dwm-bar-new/src
+        sed -i 's/dwmbar/xmonadbar/g;s/TEST_X11//g;s/$(X_LIBS)//g' ../bootstrap
+
+        patches_arr=('constants1' 'functions' 'functions_h' 'main')
+        for x in ${patches_arr[@]}; do patch -p1 < "/tmp/barpatches/${x}.patch" ; done
+        __compile_bar ..
+    }
+
+    # Execute the "statusbar" program every 2 secs
+    while true; do
+        "$HOME/.cache/bin/xmonadbar"
+        sleep 2
+    done | dzen2 -w 1800 -x 130 -ta r -fn '-*-terminus-medium-r-*-*-11-*-*-*-*-*-*-*' &
+
+    xmonad
+}

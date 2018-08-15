@@ -1,0 +1,8 @@
+dev/node_modules/
+dev/uglifyjs
+dev/html-minifier
+dev/marked.min.js
+npm-debug.log
+dev/npm-debug.log
+dev/temp/
+dev/cleancss

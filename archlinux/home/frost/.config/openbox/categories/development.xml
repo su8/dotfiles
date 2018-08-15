@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+
+<menu id="dev" label="Development">
+
+    <item icon="/usr/share/icons/Faenza/apps/22/qtassistant.png" label="Qt4 Assistant">
+        <action name="Execute">
+            <execute>assistant-qt4</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/qtdesigner.png" label="Qt4 Designer">
+        <action name="Execute">
+            <execute>designer-qt4</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/qtlinguist.png" label="Qt4 Linguist">
+        <action name="Execute">
+            <execute>linguist-qt4</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/qtcreator.png" label="Qt4 QDbusViewer">
+        <action name="Execute">
+            <execute>qdbusviewer-qt4</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/kate.png" label="SublimeText3">
+        <action name="Execute">
+            <execute>subl3</execute>
+        </action>
+    </item>
+
+    <!-- <item icon="/usr/share/icons/Faenza/mimetypes/22/text-x-c++src.png" label="CodeBlocks">
+        <action name="Execute">
+            <execute>codeblocks</execute>
+        </action>
+    </item> -->
+
+    <item icon="/usr/share/icons/Faenza/apps/22/geany.png" label="Geany">
+        <action name="Execute">
+            <execute>geany</execute>
+        </action>
+    </item>
+
+</menu>
+</openbox_menu>

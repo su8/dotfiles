@@ -1,0 +1,27 @@
+title:  Install python3 in any android device
+date:   2014-04-30
+author: Aaron
+
+<p>Instead programming GUI applications with QPython, you would like to use the interpreter to run your scripts.</p>
+
+<p>To achive this, you should download <a href="https://code.google.com/p/python-for-android/downloads/detail?name=Python3ForAndroid_r6.apk" target="_blank">Python3ForAndroid.apk</a> and install it first
+. Make sure that you've enabled "install apps from unknown sources" in your device Settings.
+</p>
+
+<p>Get a <a href="https://play.google.com/store/apps/details?id=jackpal.androidterm" target="_blank">terminal emulator</a> and some <a href="https://play.google.com/store/apps/details?id=jp.sblo.pandora.jota" target="_blank">text editor</a></p>
+
+<p>Type the following in the text editor and save it as "python3" in your /sdcard/
+</p>
+
+<p>Click over the pictures to enlarge them.</p>
+
+<a href="$img/android_python/android_python3.png"><img src="$img/android_python/android_python3.png" alt="" /></a>
+
+<a href="$img/android_python/android_python3_2.png"><img src="$img/android_python/android_python3_2.png" alt="" /></a><br />
+
+<p>Open up the terminal emulator, "cd" to the /sdcard, copy the "python3" file to ~, make it executable and have fun.
+</p>
+
+<p>Click over the picture to enlarge it.</p>
+
+<a href="$img/android_python/android_python3_3.png"><img src="$img/android_python/android_python3_3.png" alt="" /></a>

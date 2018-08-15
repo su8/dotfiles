@@ -1,0 +1,22 @@
+{
+  "name": "empty",
+  "version": "1.0.0",
+  "description": "System failure",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wifiextender/wifiextender.github.io"
+  },
+  "author": "Aaron Caffrey",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "uglify-js": "^2.6.2",
+    "marked": "^0.3.5",
+    "html-minifier": "^2.1.0",
+    "clean-css": "^3.4.12"
+  },
+  "scripts": {
+      "setup": "chmod +x main; ./main 'setup'",
+      "build": "./main 'build'",
+      "clean": "./main 'clean'"
+  }
+}

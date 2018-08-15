@@ -1,0 +1,9 @@
+Description='Wired'
+Interface=enp2s0
+Connection=ethernet
+IP=static
+Address=('192.168.10.7/24')
+Gateway='192.168.10.254'
+#DNS=('37.221.170.104' '37.221.170.105')
+#DNS=('127.0.0.1' '93.115.92.252' '31.220.43.191')
+#DNS=('127.0.0.1')

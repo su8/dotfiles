@@ -1,0 +1,145 @@
+title:  Thunderbird &#43; GnuPG &#43; Enigmail &#61; encrypted email conversation
+date:   2014-06-08
+author: Aaron
+
+<p>I would like to make an announcement about my fifth Linux From Scratch installation.</p>
+
+<p>This time I tried to install it for record breaking time and I did it in range of two and half days - without sleeping at all. LFS makes the Gentoo installation a walk in the park.</p>
+
+<p>If you are gnu/linux enthusiast and haven't done at least one LFS installation, I will recommend you to not hurry with the installation process since it's so easy to burn out and give up because the whole process is really exhausting and you'll have to follow everything that is written in their book.</p>
+
+<p>The next challege in my list is: Beyond Linux From Scratch</p>
+
+<p>Okay, lets move to the email encryption. I assume that you have installed <strong>Thunderbird</strong>, <strong>gnupg2</strong> and some <strong>game</strong></p>
+
+<p>Generate a key pair (public and private keys) from the command line, because in case of error you'll be more likely to see it there instead in crashed GUI application. Type <code>gpg --gen-key</code> and follow the pictures:</p>
+
+<img src="$img/encrypted_emails/gpg-gen-key.png" alt="" />
+
+<img src="$img/encrypted_emails/gpg-gen-key1.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/gpg-gen-key2.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/gpg-gen-key3.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/gpg-gen-key4.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/gpg-gen-key5.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/gpg-gen-key6.png" alt="" /><br />
+
+<p>Start some game and play it, in my case I played Red Eclipse.</p>
+
+<img src="$img/encrypted_emails/gpg-gen-key7.png" alt="" /><br />
+
+<p>Open up Thunderbind. By default, Thunderbird has hidden the menu bar so we will have to make it visible. Right click below your window title and enable the menu bar option.</p> 
+
+<img src="$img/encrypted_emails/menu-bar.png" alt="" /><br />
+
+<p>Prefer plain text over HTML and never use PGP/MIME or S/MIME. Why you should not use them - read the information in this website <a href='https://futureboy.us/pgp.html' target='_blank'>https://futureboy.us/pgp.html</a></p>
+
+<img src="$img/encrypted_emails/message-body-plain-text.png" alt="" /><br />
+
+<p>Enable phishing protection - also known as <strong>email scams</strong>. Edit -> Preferences -> Security -> Email Scams</p>
+
+<img src="$img/encrypted_emails/email-scams.png" alt="" /><br />
+
+<p>This is a email client, so we don't actually need cookies.</p>
+
+<img src="$img/encrypted_emails/accept-cookies.png" alt="" /><br />
+
+<p>Install the Enigmail addon: Tools -> Add-ons</p>
+
+<img src="$img/encrypted_emails/install-enigmail.png" alt="" /><br />
+
+<p>Once installed, it will ask you to restart the bird, do it and verify that OpenPGP is listed in the menu bar after that.</p>
+
+<img src="$img/encrypted_emails/openpgp-in-menu-bar.png" alt="" /><br />
+
+<p>Click over the OpenPGP and select Setup Wizard</p>
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard-1.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard-2.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard-3.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard-4.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard-5.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/openpgp-setup-wizard-6.png" alt="" /><br />
+
+<p>In case of multiple accounts, repeat those steps for each one.</p>
+
+<p>It's time to exchange your public keys with others, before doing this I would recommend you to experiment with a second email account or alias.</p>
+
+<p>Write some random email to the second email address and:</p>
+
+<img src="$img/encrypted_emails/exchange-pub-keys.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/exchange-pub-keys1.png" alt="" /><br />
+
+<p>Once the email is received in your other email account, make sure to - sign and encrypt the message and attach your public key for first time.</p>
+
+<img src="$img/encrypted_emails/exchange-pub-keys3.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/exchange-pub-keys4.png" alt="" /><br />
+
+<p>In order to read the encrypted email reply, you will have to enter your passphrase. After that import the sender's public key.</p>
+
+<img src="$img/encrypted_emails/exchange-pub-keys5.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/keys-exchanged.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/keys-exchanged1.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/exchange-pub-keys6.png" alt="" /><br />
+
+<p>Change the trust settings for the sender's public key, notice the blue background and how it will be changed with a green one.</p>
+
+<img src="$img/encrypted_emails/exchange-pub-keys7.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/exchange-pub-keys8.png" alt="" /><br />
+
+<p>The last picture demonstrates how to check the email source and see that the email is really encrypted.</p>
+
+<p>If you want to send and receive encrypted emails from your alias, click over Edit and select Account Settings</p>
+
+<img src="$img/encrypted_emails/add-alias.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/add-alias-1.png" alt="" /><br />
+
+<p>Click <strong>add</strong>
+
+<img src="$img/encrypted_emails/add-alias-2.png" alt="" /><br />
+
+<p>In the <strong>Settings</strong> tab fill your Real Name and alias email address</p>
+
+<img src="$img/encrypted_emails/add-alias-3.png" alt="" /><br />
+
+<img src="$img/encrypted_emails/add-alias-4.png" alt="" /><br />
+
+<p>Some commands that you should know:</p>
+
+<pre>Generate a key pair
+<p>$user gpg --gen-key</p>
+<br />
+<p>List keys</p>
+<p>$user gpg --list-keys</p>
+<br />
+<p>Export my private/public keys by using my email address</p>
+<p>$user gpg --export --armor --output my_pub_key.asc user@email.com</p>
+<p>$user gpg --export-secret-keys --armor --output my_private_key.asc user@email.com</p>
+<br />
+<p>Export my whole private/public keyring</p>
+<p>$user gpg --export --armor --output pub_keyring.asc</p>
+<p>$user gpg --export-secret-keys --armor --output private_keyring.asc</p>
+<br />
+<p>When importing a key, first import the public key then the secret one.</p>
+<p>$user gpg --import pub_keyring.asc</p>
+<br />
+Certificate Managers:</p>
+<p>kgpg, seahorse, kleopatra</p></pre>

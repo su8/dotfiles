@@ -1,0 +1,73 @@
+
+<div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'linuxnews';
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+          <!-- SIDEBAR -->
+        	<aside id="sidebar">  		
+        		<ul>
+	        		<li class="block">
+			        	<div class="sidebar-top"></div>
+		        		<div class="sidebar-content">
+		        			<h4 class="heading">Recent Posts</h4>
+		        			<ul>
+							<!-- recent posts -->
+						</ul>
+						</div>
+						<div class="sidebar-bottom"></div>
+	        		</li>
+        		</ul>
+        	</aside>
+            <aside id="sidebar">        
+                <ul>
+                    <li class="block">
+                        <div class="sidebar-top"></div>
+                        <div class="sidebar-content">
+                        <h4 class="heading">GitHub Repos</h4>
+                        <div id="github-projects"></div>
+                        </div>
+                        <div class="sidebar-bottom"></div>
+                    </li>
+                </ul>
+            </aside>
+			<!-- ENDS sidebar -->			
+		</div>
+		<!-- ENDS MAIN -->
+		<footer>
+			<!-- twitter -->
+			<div id="twitter-holder">
+				<div class="ribbon-left"></div>
+				<div class="ribbon">
+					<div id="tweets-bar" class="tweet"></div>
+				</div>
+				<div class="ribbon-right"></div>
+			</div>
+			<!-- ENDS twitter -->
+			<!-- bottom -->
+			<div id="bottom">
+				<div id="content">This website is powered by <a href="https://github.com/wifiextender/blogfy" target="_blank">blogfy</a> &amp; <a href="https://github.com/" target="_blank">GitHub</a> <br /> Theme by <a href="http://www.luiszuno.com" >luiszuno.com</a> </div>
+			</div>
+			<!-- ENDS bottom -->
+		</footer>
+	</div>
+	<!-- ENDS WRAPPER -->
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="js/github.js" type="text/javascript"></script>
+<script type="text/javascript">
+  $(function() {
+    $("#github-projects").loadRepositories("wifiextender");
+  });
+</script>
+</body>
+</html>

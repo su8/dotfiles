@@ -1,0 +1,88 @@
+title:  Thunderbird - strip your email headers
+date:   2014-07-19
+author: Aaron
+
+<p>Today we will learn how to strip some information from our email headers.</p>
+
+<p>From, to and date are mandatory in email headers, but the rest information can be eliminated or exchanged easily as we are about to learn.</p>
+
+<p>Utilize the Tor network with Thunderbird for advanced anonymity. Open up the Thor err Tor browser, click over Edit, Preferences, Network, Settings. Keep the windows open and launch Thinderbird. Click Edit and Preferences again, Advanced, Network &amp; Disk Space, Settings. Apply the same network settings in Thunderbird as the one from the opened Tor network settings window, that's all you need to do.</p>
+
+<p>Lets begin with stripping the email headers. Here is an example of regular email header without any tweaks.</p>
+<pre>From - Sat Jul 19 14:41:44 2014
+<p>X-Mozilla-Status: 0001</p>
+<p>X-Mozilla-Status2: 00000000</p>
+<p>Return-Path: my_email@address.none</p>
+<p>Received: from 123.456.789.012</p>
+<p>    by mail.my_email@address.none</p>
+<p>    ; Sat, 19 Jul 2014 13:40:13</p>
+<p>Message-ID: <the_troll@example.com></p>
+<p>Date: Sat, 19 Jul 2014 14:40:28</p>
+<p>From: Santa Claus my_email@address.none</p>
+<p>User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0</p>
+<p>MIME-Version: 1.0</p>
+<p>To: The Troll the_troll@example.horse</p>
+<p>Subject: Test</p>
+<p>X-Enigmail-Version: 1.6</p>
+<p>Content-Type: text/plain; charset=ISO-8859-1</p>
+<p>Content-Transfer-Encoding: 8bit</p>
+<p></p>
+<p>-----BEGIN PGP MESSAGE-----</p>
+<p>Charset: ISO-8859-1</p>
+<p>Version: GnuPG v2</p>
+<p>Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/</p></pre>
+
+
+<p>In Thunderbird, click Edit and Preferences once again, Advanced, General, and at the very bottom <strong>Config Editor...</strong></p>
+
+<pre>network.protocol-handler.warn-external.https true
+<p>network.protocol-handler.warn-external.http true</p>
+<p>network.protocol-handler.warn-external.ftp true</p>
+<p>network.cookie.cookieBehavior 2</p>
+<p>mailnews.send_default_charset UTF-8</p>
+<p>mail.smtpserver.default.hello_argument string [127.0.0.1]</p>
+<p>general.useragent.override string -> (leave it empty)</p>
+<p>extensions.enigmail.addHeaders false</p>
+<p>extensions.enigmail.useDefaultComment true</p>
+<p>extensions.enigmail.mimeHashAlgorithm 5</p>
+<p>extensions.enigmail.agentAdditionalParam --no-emit-version --no-comments --throw-keyids --display-charset utf-8 --keyserver-options no-auto-key-retrieve,no-try-dns-srv</p>
+<p>network.proxy.socks_remote_dns True</p>
+<p>mailnews.reply_header_type 1</p>
+<p>mailnews.reply_header_authorwrote %s</p>
+<p># set all 'compose_html' to false
+<p>compose_html false</p></pre>
+
+<p>Some of the above options won't exist, so you will have to create them by right clicking and select new string (this is a string example, [127.0.0.1]), boolean (true/false), integer 1,2,3,4,5,6.</p>
+
+<p>What does these options do ?</p>
+<p>mimehash algorith:</p>
+<pre>0 - automatic selection, let GnuPG choose
+<p>1 - SHA1</p>
+<p>2 - RIPEMD160</p>
+<p>3 - SHA256</p>
+<p>4 - SHA384</p>
+<p>5 - SHA512</p>
+<p>6 - SHA224</p></pre>
+
+<p>enigmail.addHeaders set to false will hide <strong>X-Enigmail-Version</strong></p>
+
+<p>enigmail.useDefaultComment will hide the GnuPG comment information</p>
+<p>socks_remote_dns will ensure that DNS resolves aren't leaking information (it's important because we are using the tor network).</p>
+
+<p>cookieBehavior:</p>
+<pre>0 : Enable all cookies (default)
+<p>1: Allow cookies from originating server only</p>
+<p>2: Disable all cookies</p>
+<p>3: Use P3P policy to decide</p></pre>
+
+<p>enigmail.agentAdditionalParam will hide the enigmail version.</p>
+
+<p>mailnews - <a href="http://kb.mozillazine.org/Reply_header_settings" target="_blank">http://kb.mozillazine.org/Reply_header_settings</a></p>
+
+<p>hello_argument will replace <strong>Received: from 123.456.789.012</strong> to <strong>Received: from your internal ip (local network ip instead your public ip, eg: 192.168.1.1)</strong></p>
+
+<p>useragent.override will hide your email client (the whole line <strong>User-Agent:...</strong> will not be included anymore</p>
+
+<p>warn-external will always spawn an window which will ask you for an application to open up the given link.</p>
+
+<p>compose_html (if you are serious about security, you should know why this option is set to false), send_default_charset (Charset: ISO-8859-1 -> Charset: UTF-8)</p>

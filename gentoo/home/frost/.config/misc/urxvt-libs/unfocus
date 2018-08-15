@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+sub on_user_command {
+  my ($self,$cmd) = @_;
+
+  # $self->{hid} = 1;
+# print $cmd;
+  if ($cmd eq "unfocus:out") {
+    $self->exec_async("/home/frost/out");
+  #   $self->{hid} = 0;
+  }
+  # print $self;
+
+  return;
+}
+
+# sub on_focus_in {
+#   my ($self) = @_;
+#   `/home/frost/out`;
+
+#   return 1;
+# }

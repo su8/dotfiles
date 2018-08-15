@@ -1,0 +1,32 @@
+(sleep 1s && fbpanel --profile taskbar) &
+
+(sleep 1s && volumeicon) &
+
+# sbxkb - keyboard lang. tray indicator
+(sleep 1s && sbxkb) &
+(sleep 1s && tint2 -c ~/.config/tint2/notification_area) &
+(sleep 1s && fbpanel --profile AppLauncher_only) &
+
+# NetworkManager applet
+(sleep 1s && nm-applet --sm-disable) &
+
+(sleep 1s && fbpanel --profile AppLauncher_and_NotificationArea) &
+(sleep 1s && fbpanel --profile taskbar) &
+
+(sleep 1s && tint2 -c ~/.config/tint2/launcher) &
+
+# X compositor and window effects
+(sleep 1s && compton -bcCm 0.9) &
+(sleep 1s && compton -CGb) &
+
+
+# The daemon cums like crazy
+# in /var/lib/systemd/coredump/
+# Since it was removed, thunar
+# has NOT crashed even once
+(sleep 1s && thunar --daemon) &
+
+
+# I exchange this taskbar and
+# the one in fbpanel quiet often
+(sleep 1s && tint2) &

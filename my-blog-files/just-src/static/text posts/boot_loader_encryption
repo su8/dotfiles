@@ -1,0 +1,102 @@
+title:  Boot loader encryption
+date:   2015-06-20
+author: Aaron
+
+<p>We learned how to perform a full (root) disk encryption couple posts ago.</p>
+
+<p>Today we will take some steps in order to encrypt the boot loader partition.</p>
+
+<p>This post was meant to be published in July, but something happend and I cannot go in much more details right now. Let's hope that I will be able to publish the next one in August.</p>
+
+<p>The boot loader encryption provides another layer of complexity in order to boot your encrypted root partition.</p>
+
+<p>Let me show you what we are going to achieve: pc power on -> <a href="https://en.wikipedia.org/wiki/Power-on_self-test" target="_blank">POST</a> -> encrypted boot loader -> os menu -> load the kernel into memory then surrender yourself to systemd -> encrypted root partition.</p>
+
+<p>The process of moving the boot partition on external media and encrypting it, ensures that no one will be able to alter, tamper or do other <a href="https://twopointfouristan.wordpress.com/2011/04/17/pwning-past-whole-disk-encryption/" target="_blank">evil</a> things with your boot partition in order to extract your root encryption keys. Your current boot partition resides on your drive, and an adversary can modify the boot loader as well as the initramfs. All of this can happen while your computer is on and connect to the internet (if you've been targeted).</p>
+
+<p>Even if you lose your external media, you can always chroot your root partition, encrypt the new external media and regenerate the boot partition files. That's what we are going to do right now.</p>
+
+<p>I have booted the latest Arch Linux image written to a USB stick in order to chroot my encrypted root partition.</p>
+
+<p>Off-topic: The microsd card used with adapter ensures that the card contacts won't be wearing out, thus allowing you to use all the read and write cycles guaranteed by the card manufactor. You can always swap the adapter if it's contacts are wearing out. Buy microsd card that is at least rated as class 6, don't hesitate if you can afford class 10.</p>
+
+<p>Once you booted your distro image from external media, the very first thing to do is deleting the current <strong>/boot</strong> partition. <code>/dev/sda</code> is my primary drive where the boot and root partitions reside.</p>
+
+<pre>$root fdisk /dev/sda
+<p>p     # list the partitions</p>
+<p>d     # request partition deletion</p>
+<p>1     # you'll be asked "partition number: "</p>
+<p>w     # write the changes and exit</p></pre>
+
+<p>Erase your microsd card or whatever external media you will be using to move the <strong>/boot</strong> partition to. It's <code>/dev/sdb</code> in my case.</p>
+
+<pre>$root shred --verbose --random-source=/dev/urandom --iterations=3 /dev/sdb</pre>
+
+<p>Create new partition table:</p>
+
+<pre>$root cfdisk /dev/sdb</pre>
+
+<img src="$img/archlinux-luks/dos-label.png" alt="" />
+
+<p>Create the new boot loader partition:</p>
+
+<pre>$root New-> Partition Size: auto-detected -> primary -> Bootable</pre>
+
+<p>Write the changes and exit from cfdisk. Now unlock your LUKS encrypted root partition, mount it and chroot. We will use the "first in, last out" approach, so it is less likely to "unmount" your partitions the wrong way. <code>/dev/sda2</code> is my encrypted root partition.</p>
+
+<pre>$root cryptsetup open --type luks /dev/sda2 cryptroot
+<p>$root mount -t ext4 /dev/mapper/cryptroot /mnt</p>
+<p>$root arch-chroot /mnt   # use 'chroot' alternatively</p></pre>
+
+<p>Encrypt and mount the microsd card partition <code>/dev/sdb1</code>, notice the number <strong>1</strong> at the end.</p>
+
+<pre>$root cryptsetup --verbose --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --use-random luksFormat /dev/sdb1
+<p>$root cryptsetup open --type luks /dev/sdb1 boot</p>
+<p>$root mkfs.ext4 /dev/mapper/boot</p>
+<p>$root rm -rf /boot/*</p>
+<p>$root mount -t ext4 /dev/mapper/boot /boot</p></pre>
+
+<p>Edit <strong>GRUB_PRELOAD_MODULES</strong> in <code>/etc/default/grub</code>, let's repeat once again - edit this GRUB variable/option/parameter.</p>
+
+<pre>$root GRUB_PRELOAD_MODULES="crypto cryptodisk luks part_gpt part_msdos"</pre>
+
+<p>Now add the following line in <code>/etc/default/grub</code></p>
+
+<pre>$root GRUB_ENABLE_CRYPTODISK=y</pre>
+
+<p>Re-install your distro kernel to regenerate the vmlinuz-linux and initramfs images.</p>
+
+<pre>$root pacman -S linux  # in my case</pre>
+
+<p>Install grub and save it's configuration, <code>/dev/sdb</code> is my microsd card:</p>
+
+<pre>$root grub-install --recheck /dev/sdb
+<p>$root grub-mkconfig --output /boot/grub/grub.cfg</p></pre>
+
+<p>If your distribution handles the initramfs image creation separately, use <strong>mkinitcpio</strong> or other program of your choice:</p>
+
+<pre>$root mkinitcpio -p linux</pre>
+
+<p>That was it, we are done. Unmount the boot partition and close the device:</p>
+
+<pre>$root umount -R /boot
+<p>$root cryptsetup close boot</p>
+<p>$root exit  # exit from chroot</p></pre>
+
+<p>Unmount the root partition, close it's device and reboot.</p>
+
+<pre>$root umount -R /mnt
+<p>$root cryptsetup close cryptroot</p>
+<p>$user systemctl reboot</p></pre>
+
+<p>Instead exchanging the boot device priority settings in your bios/uefi/efi, there should be some key (F8 in my case) to bring the boot device menu. Select your external media, press enter and you'll be asked to enter your <strong>/boot</strong> LUKS passphrase in order to continue.</p>
+
+<p>From now on, when there is a new kernel release and your distro package manager prompt you to update it, you should unlock this external media and mount it firstable.</p>
+
+<p>Your computer is now 100% encrypted, but your <strong>/boot</strong> external media is 99.9% encrypted, because the first 2048kb in there aren't encrypted (bios_grub flag/label).</p>
+
+<p>As I said at the beginning of this post, the boot loader encryption is complex and requires you to type 2 passwords instead 1, the best of all is that you don't have to carry your external media with you all the time or keep it under your pillow. You also learned that you can regenerate the <strong>/boot</strong> partition and the files in it if you lose them. If you use custom theme (which I do) then you'll have to backup those files separately.</p>
+
+<p>Comment in the <strong>/boot</strong> line in <code>/etc/fstab</code>, alternatively you can add <strong>noauto</strong> in there if you want to pull out your external media once the kernel is loaded into memory.</p>
+
+<p>Head over to this <a href="http://www.tldp.org/HOWTO/html_single/Unix-and-Internet-Fundamentals-HOWTO/" target="_blank">HOWTO</a> until I get back in August.</p>

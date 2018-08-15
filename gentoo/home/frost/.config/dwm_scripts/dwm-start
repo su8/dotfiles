@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# Script to start given wm in a loop
+
+# the "statusbar" program location
+bar_exe="${HOME}/.cache/bin/${1}bar"
+# bar_copy='/tmp/dwm-bar-new'
+# cache_location="${bar_exe%%/bin/${bar_exe##*/}}"
+prog_opts='-LTrspkvfmdVt'
+
+# __compile_bar() {
+#     cd "${bar_copy}"; bash bootstrap gentoo
+
+#     [[ -z "${1}" ]] && {
+#       ./configure --prefix="${cache_location}" --with-x11 \
+#         --without-mpd --with-alsa
+#     } || {
+#       ./configure --prefix="${cache_location}" \
+#         --without-x11 --without-mpd icons="${1}" --with-alsa
+#     }
+#     make -j$(grep -c '^processor' /proc/cpuinfo)
+#     make install; cd "${HOME}"
+# }
+
+# __check_bar_exe() {
+#   [[ ! -f "${bar_exe}" ]] && {
+#     cp -r "$HOME/.config/dwm_scripts/${bar_copy##*/}" '/tmp'
+
+#     [[ ! -z "${1}" ]] && {
+#       sed -i 's/pinkybar/xmonadbar/g' "${bar_copy}/bootstrap"
+#     } || {
+#       sed -i 's/pinkybar/dwmbar/g' "${bar_copy}/bootstrap"
+#     }
+#     __compile_bar "${1}"
+#   }
+# }
+
+
+[[ "${1}" == 'dwm' ]] && {
+
+  # __check_bar_exe ""
+
+  # Execute the "statusbar" program every 5 secs
+  while true; do
+    "${bar_exe}" "${prog_opts}"
+    sleep 5
+  done &
+
+  while true; do
+    dwm >/dev/null
+    # to log stderrors to a file
+    # dwm 2> ~/.cache/dwm.log
+  done
+}
+
+
+[[ "${1}" == 'xmonad' ]] && {
+
+  # __check_bar_exe "${HOME}/.xmonad/icons"
+
+  # Execute the "statusbar" program every 2 secs
+  while true; do
+    "${bar_exe}" "${prog_opts}"
+    sleep 2
+  done | dzen2 -w 1800 -x 130 -ta r -fn '-*-dejavusans-*-r-*-*-11-*-*-*-*-*-*-*' &
+
+  xmonad
+}

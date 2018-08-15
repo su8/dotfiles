@@ -1,0 +1,41 @@
+title:  Switching from XFCE to KDE without re-install
+date:   2013-10-18
+author: Aaron
+
+<p>Few days ago I installed "plymouth" and my stable xfce display manager lxdm freaked out. Later discovered that the bad boy was plymouth, because archlinux wiki page is saying <strong>"Warning: Plymouth is currently under heavy development and may contain bugs."</strong>.</p>
+
+<p>Changed my display manager, but the damages from this piece of sh*t was so huge that at the end I was either forced to re-install the distro or to try replacing it with other desktop environment. I had no idea will the second thing will work flawlessly.</p>
+
+<p>I was pretty confident that the desktop environment that I had not tried yet is: Fluxbox, Openbox and KDE. The first on my list was KDE and if it's not working: removing it, and installing the next until some of these is working as it should be. In case they don't work flawleslly, a new re-install of my archlinux was the last thing that I would do.  </p>
+
+<p>I mean, fixing something will acknowledge you in future if you break it again, while doing re-installs just because something is not working is bad practice. Let's get started how I managed to replace my xfce with kde, firstable determine what's your current display manager</p>
+
+<pre>$user systemctl list-units | grep dm</pre>
+
+<p>If you are using "slim" or "mdm", replace the "lxdm" at the second line:</p>
+
+<pre>$root pacman -S kdebase kdm kdeplasma-applets-networkmanagement
+<p>$root systemctl disable lxdm</p>
+<p>$root pacman -Rsn $(pacman -Qqs | grep xfce4)</p>
+<p>$root pacman -Rsnc xfce4</p></pre>
+
+<p>Now you should reboot, don't be scared because your system will start in CLI mode. Log-in as root and type:</p>
+
+<pre>$root systemctl enable kdm.service
+<p>$root systemctl start kdm.service</p></pre>
+
+<p>Congrats, you got kde desktop environment working out of the box, now install some drop-down terminal, replace the default window decoration theme and add a widget for the network manager to your panel. First is the drop-down terminal:</p>
+
+<pre>$root pacman -S yakuake</pre>
+
+<p>Settings-> System Settings-> Workspace Appearance-> Get new decoration: Dark Shine
+<br />Right click to your panel-> Panel Options->Panel Settings-> add widget: Network Management</p>
+
+<p>That was it, whenever the NetworkManager stops working you can replace it with wicd:</p>
+
+<pre>wicd, wicd-gtk (or wicd-kde from yaourt) are optional if the default network management applet is not working properly.
+<p>$root systemctl disable NetworkManagement</p>
+<p>$root systemctl stop NetworkManagement</p>
+<p>$root systemctl enable wicd</p>
+<p>$root systemctl start wicd</p>
+</pre>

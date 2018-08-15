@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+# Start gvim to the right of my monitor
+# $1 is the passed file
+
+gvim -geometry 80x45+1270+20 $1

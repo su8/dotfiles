@@ -1,0 +1,79 @@
+#---------------------------------------------
+# The zsh variables will be replaced before
+# 'arch_array' gets compiled from C. This way
+# you can get involved and use the shell syntax
+# without knowing manifest constants and so on.
+#---------------------------------------------
+
+print_compiled_logo() {
+
+    logo0o="$XDG_CACHE_HOME/archlogo"
+    if [[ ! -f "${logo0o}" ]] ; then
+
+        BCY="\x1B[1;36m"   # bold cyan
+        NCY="\x1B[0;36m"   # normal cyan
+        NRM="\x1B[0m"      # normal
+
+        arch_array=('
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/sysinfo.h>
+#define MB 1048576
+int main(void)
+{
+
+    unsigned long int used;
+
+    struct sysinfo info;
+    sysinfo(&info);
+
+    used = (unsigned long int) (info.totalram - info.freeram - info.bufferram - info.sharedram) / MB;
+
+    unsigned short int packs;
+    FILE* packages;
+
+    packages = popen("pacman -Qq | wc -l", "r");
+    fscanf(packages, "%hu", &packs);
+    pclose(packages);
+
+    const char* user = getenv("USER");
+    static char arch_logo[] =
+        "'$BCY'                   -`                             '$NRM'\n"
+        "'$BCY'                  .o+`                            '$NRM'\n"
+        "'$BCY'                 `ooo/                            '$NRM'\n"
+        "'$BCY'                `+oooo:                           '$NRM'\n"
+        "'$BCY'               `+oooooo:                          '$NRM'\n"
+        "'$BCY'               -+oooooo+:                         '$NRM'\n"
+        "'$BCY'             `/:-:++oooo+:                        '$NRM'\n"
+        "'$BCY'            `/++++/+++++++:                       '$NRM'\n"
+        "'$BCY'           `/++++++++++++++:                      '$NRM'\n"
+        "'$BCY'          `/+++o'$NCY'oooooooo'$BCY'oooo/`        '$NRM'\n"
+        "'$NCY'         '$BCY'./'$NCY'ooosssso++osssssso'$BCY'+` '$NRM'\n"
+        "'$NCY'        .oossssso-````/ossssss+`                  '$NRM'\n"
+        "'$NCY'       -osssssso.      :ssssssso.                 '$NRM'\n"
+        "'$NCY'      :osssssss/        osssso+++.                '$NRM'\n"
+        "'$NCY'     /ossssssss/        +ssssooo/-                '$NRM'\n"
+        "'$NCY'   `/ossssso+/:-        -:/+osssso+-              '$NRM'\n"
+        "'$NCY'  `+sso+:-`                 `.-/+oso:             '$NRM'\n"
+        "'$NCY' `++:.                           `-/+/            '$NRM'\n"
+        "'$NCY' .`                                 `/            '$NRM'\n";
+
+    printf("%s", arch_logo);
+
+    printf("%20sWelcome %s%s%s\n", "'$NCY'", "'$BCY'", user, "'$NRM'");
+
+    printf("%12sPackages: %hu %sUsed RAM: %lu MB %s\n",
+           "'$NCY'", packs, "'$BCY'", used, "'$NRM'");
+
+    return 0;
+}
+')
+        cat <<EOF > /tmp/logo.c
+${arch_array[@]}
+EOF
+        gcc -o "${logo0o}" \
+        $(gawk -F '"' '/^CFLAGS/ {print $2}' /etc/makepkg.conf) /tmp/logo.c
+
+    fi
+    "${logo0o}"
+}

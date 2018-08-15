@@ -1,0 +1,53 @@
+#----------------------------------------------
+# APPLICATION LAUNCHER ~/.config/tint2/launcher
+#----------------------------------------------
+    # PANEL
+    rounded = 0
+    border_width = 0
+    background_color = #171717 100
+    border_color = #1793D1 100
+
+    # LAUNCHER
+    rounded = 5
+    border_width = 1
+    background_color = #2D2D2D 100
+    border_color = #1793D1 100
+
+#---------------------------------------------
+# PANEL
+#---------------------------------------------
+    panel_monitor = all
+    panel_position = bottom center horizontal
+    panel_items = LT
+
+    # adjust panel_size to allow more or less
+    # *.desktop shortcuts to be shown
+    panel_size = 580 25
+    panel_margin = 0 0
+    panel_padding = 125 0
+    panel_background_id = 5
+
+#---------------------------------------------
+# LAUNCHER
+# launcher_item_app = /usr/share/applications/thunderbird.desktop
+# launcher_item_app = /usr/share/applications/skype.desktop
+# launcher_item_app = /usr/share/applications/codeblocks.desktop
+# launcher_item_app = /usr/share/applications/virtualbox.desktop
+#---------------------------------------------
+    launcher_icon_theme = LinuxLex-8
+    launcher_padding = 5 0 10
+    launcher_background_id = 5
+    launcher_icon_size = 70
+    launcher_item_app = /usr/share/applications/firefox.desktop
+    launcher_item_app = /usr/share/applications/sakura.desktop
+    launcher_item_app = /usr/share/applications/Thunar.desktop
+    launcher_item_app = /usr/share/applications/mutt.desktop
+    launcher_item_app = /usr/share/applications/qBittorrent.desktop
+    
+    launcher_item_app = /usr/share/applications/geany.desktop
+    launcher_item_app = /usr/share/applications/sublime_text_3.desktop
+    
+    launcher_item_app = /usr/share/applications/pdf2img.desktop
+
+    launcher_item_app = /usr/share/applications/pacmanlogviewer.desktop
+    launcher_item_app = /usr/share/applications/bleachbit.desktop

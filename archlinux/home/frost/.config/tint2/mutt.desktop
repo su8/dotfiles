@@ -1,0 +1,10 @@
+# sudo cp -r ./mutt.desktop /usr/share/applications/
+[Desktop Entry]
+Version=1.0
+Type=Application
+Exec=sakura --execute mutt
+Icon=/usr/share/icons/Faenza/apps/22/internet-mail.png
+StartupNotify=false
+Terminal=true
+OnlyShowIn=XFCE;
+Name=Mutt

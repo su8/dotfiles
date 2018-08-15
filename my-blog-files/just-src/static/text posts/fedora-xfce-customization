@@ -1,0 +1,151 @@
+title:  Fedora XFCE Customization - from ugly to eyecandy
+date:   2013-07-05
+author: Aaron
+
+<p>This tutorial contains so many pictures that I decided to include them as a links, because the page was loading for 10 seconds.
+It's my 2nd day since I switched to Fedora from Sabayon, so this time I choose xfce instead <strong>mate</strong>. I never wanted <strong>XFCE </strong>desktop environment because I am gnome 2 <strong>die hard fan</strong>, but this time I had a lot of free time to customize this desktop environment and decided to share my experience with you - whether you are advanced gnu/linux user or beginner.
+</p>
+
+<p>Installing equinox theme, faenza icons and docky. I assume that you will be running all the following commands as root, otherwise use sudo for each command.</p>
+
+<pre>$root yum install gtk-equinox-engine faenza-icon-theme docky</pre>
+
+<p>Now it's time to decide do you want to use the default xfce menu or <strong>Whisker</strong></p>
+
+<a href="$img/fedora_xfce/xfce-original-menu.png" target="_blank">$img/fedora_xfce/xfce-original-menu.png</a> <br />
+
+<a href="$img/fedora_xfce/xfce-alternative-menu.png" target="_blank">$img/fedora_xfce/xfce-alternative-menu.png</a> 
+
+<p>If you choose the <strong>Whisker menu</strong>, then type this in your terminal:</p>
+
+<pre>$user cd /etc/yum.repos.d/
+<p>$user wget http://download.opensuse.org/repositories/home:gottcode/Fedora_19/home:gottcode.repo</p>
+<p>$root yum install xfce4-whiskermenu-plugin</p></pre>
+
+<p>That's all you need to download, let's make it eyecandy.</p>
+
+<p>Open up <strong>Windows Manager</strong> and choose some style.</p>
+
+<a href="$img/fedora_xfce/window-manager.png" target="_blank">$img/fedora_xfce/window-manager.png</a> 
+
+<p>Once you choose the style close that window and open up <strong>Window Manager Tweaks</strong>, you might want to make everthing like me or change some of these settings - it's all up to you.</p>
+
+<a href="$img/fedora_xfce/window-manager-tweaks.png" target="_blank">$img/fedora_xfce/window-manager-tweaks.png</a> <br />
+
+<a href="$img/fedora_xfce/window-manager-tweaks2.png" target="_blank">$img/fedora_xfce/window-manager-tweaks2.png</a> <br />
+
+<a href="$img/fedora_xfce/window-manager-tweaks3.png" target="_blank">$img/fedora_xfce/window-manager-tweaks3.png</a> <br />
+
+<a href="$img/fedora_xfce/window-manager-tweaks4.png" target="_blank">$img/fedora_xfce/window-manager-tweaks4.png</a> <br />
+
+<a href="$img/fedora_xfce/window-manager-tweaks5.png" target="_blank">$img/fedora_xfce/window-manager-tweaks5.png</a> <br />
+
+<a href="$img/fedora_xfce/window-manager-tweaks6.png" target="_blank">$img/fedora_xfce/window-manager-tweaks6.png</a> <br />
+
+<p>Close that window and open up <strong>Appearance</strong>, select the theme that you've downloaded earlier, there are 5 <strong>Equinox</strong> flavours.</p>
+
+<a href="$img/fedora_xfce/appearance.png" target="_blank">$img/fedora_xfce/appearance.png</a>
+
+<p>DON'T close that window yet, move to the next tab <strong>icons</strong> and select <strong>Faenza</strong> that you've downloaded earlier.</p>
+
+<a href="$img/fedora_xfce/icons.png" target="_blank">$img/fedora_xfce/icons.png</a>
+
+<p>Move to the next tab <strong>Fonts</strong> and select some that you might prefer, I liked <strong>FreeSans</strong>, watch out to Check <strong>Enable anti-aliasing</strong> and <strong>Sub-pixel order</strong> as it is shown in the picture below.</p>
+
+<a href="$img/fedora_xfce/fonts.png" target="_blank">$img/fedora_xfce/fonts.png</a>
+
+<p>Close this window and open up <strong>Desktop</strong> settings.</p>
+
+<a href="$img/fedora_xfce/desktop-settings.png" target="_blank">$img/fedora_xfce/desktop-settings.png</a>
+
+<p>I don't like to keep too many things on my desktop, so in the next picture I unchecked almost everything except the <strong>home</strong> directory.</p>
+
+<a href="$img/fedora_xfce/desktop-settings2.png" target="_blank">$img/fedora_xfce/desktop-settings2.png</a> 
+
+<p>Close this windows and hover your mouse over the top pannel, then right click on it and select Panel-> Panel Preferences , and make sure that the Length is 100%</p>
+
+<a href="$img/fedora_xfce/panel-settings.png" target="_blank">$img/fedora_xfce/panel-settings.png</a> 
+
+<p>Move to the next tab - <strong>Appearance</strong> and use Style None, then use the <strong>Alpha</strong> slider and move it to the left, which will make your top panel transparent.</p>
+
+<a href="$img/fedora_xfce/panel-settings2.png" target="_blank">$img/fedora_xfce/panel-settings2.png</a>
+
+<p>Close this window and hover your mouse this time to the bottom panel then right click on it and select <strong>Panel Preferences</strong>. Do the same changes as you did to the top panel, both panels must look like exactly the same, you don't want transparent top panel and red bottom panel - right ?</p>
+
+<a href="$img/fedora_xfce/panel2-settings.png" target="_blank">$img/fedora_xfce/panel2-settings.png</a> <br />
+
+<a href="$img/fedora_xfce/panel2-settings2.png" target="_blank">$img/fedora_xfce/panel2-settings2.png</a> 
+
+<p>As you already know I am gnome 2 fan, so I want all of my active windows to be opened on the bottom panel, take a look at this picture</p>
+
+<a href="$img/fedora_xfce/panel2-settings3.png" target="_blank">$img/fedora_xfce/panel2-settings3.png</a> 
+
+<p>Removed <strong>Windows Buttons</strong> from the top panel and added it to the bottom one, then I edited it in order to use <strong>flat buttons</strong></p>
+
+<p>Once you are done, navigate to your xfce menu and select: Settings-> Session and Startup-> Application Autostart, where you have to use your scrollbar and then tick Docky to make sure that it will load automatically during your system booting process.
+
+<p>Again open up your menu and start docky via: xfce menu->Accesories->Docky</p>
+
+<p>If you want to add more apps you have to drag these icons from the original xfce menu. Created <strong>New Dock</strong> in Docky and it went to the left of my screen then deleted the bottom existing Dock.</p>
+
+<p>Did you decided that you want to use different xfce menu (<strong>Whisker</strong>) ? If your answer is yes, then follow the pictures:</p>
+
+<a href="$img/fedora_xfce/panel-addmenu.png" target="_blank">$img/fedora_xfce/panel-addmenu.png</a> <br />
+
+<a href="$img/fedora_xfce/whiskermenu-vs-defaultmenu.png" target="_blank">$img/fedora_xfce/whiskermenu-vs-defaultmenu.png</a> 
+
+<p>Once you are done with choosing which menu you will use, select different logo for it</p>
+
+<a href="$img/fedora_xfce/panel-settings3.png" target="_blank">$img/fedora_xfce/panel-settings3.png</a> 
+
+<p>You might saw that there is border around your network manager applet, remove it.</p>
+
+<a href="$img/fedora_xfce/panel-settings4.png" target="_blank">$img/fedora_xfce/panel-settings4.png</a> 
+
+<p>If you want to customize your login wallpaper then download some wallpaper that you like and copy it to the following directory:</p>
+
+<a href="$img/fedora_xfce/copy-the-image.png" target="_blank">$img/fedora_xfce/copy-the-image.png</a> 
+
+<p>Once you copy the image to all of these folders, edit the <strong>.xml</strong> file and type your image name there:</p>
+
+<a href="$img/fedora_xfce/xml.png" target="_blank">$img/fedora_xfce/xml.png</a> 
+
+<p>And you are done, enjoy the final results. Click to enlarge the image below</p>
+
+<a href="img/xfce-pimped.png" target="_blank"></a><br />
+
+<a href="$img/fedora_xfce/login-wallpaper-changed.png" target="_blank">$img/fedora_xfce/login-wallpaper-changed.png</a>
+
+<p>The image I am using for my login screen. Click to enlarge the image below</p>
+
+<a href="img/fedora_xfce/alienware-login-wallpaper.jpg" target="_blank"></a>
+
+<p>Edit on July 13th, adding drop-down terminal and menu customization. You don't need to download anything if you use xfce4-terminal version 0.6, otherwise you will have to upgrade your existing one to 0.6</p>
+
+<p>Go to Menu-> Settings-> Keyboard-> Application Shortcuts  , then add shortcut command like the image below:</p>
+
+<a href="$img/fedora_xfce/dropdownterminal.png" target="_blank">$img/fedora_xfce/dropdownterminal.png</a> 
+
+<p>I prefer F13 to activate my drop-down terminal, because in the past I was using Guake which default activation key was F13 - old habits dying hard... (quick reference, there is no F13 button on your keyboard, just kidding to make this long and boring article a lot more attractive, also if you don't pay attention you may not notice it). Press F12 and attempt to customize your drop-down terminal.</p>
+
+<a href="$img/fedora_xfce/terminalpreferences.png" target="_blank">$img/fedora_xfce/terminalpreferences.png</a> <br />
+
+<a href="$img/fedora_xfce/terminalpreferences2.png" target="_blank">$img/fedora_xfce/terminalpreferences2.png</a> <br />
+
+<a href="$img/fedora_xfce/dropdownterminal-showoff.png" target="_blank">$img/fedora_xfce/dropdownterminal-showoff.png</a>
+
+<p>Joke aside, now in order to edit what you want to include your menu you have to install an external Gnome menu editor and create symlink:</p>
+
+<pre>$root yum install alacarte
+<p>$user cd /usr/bin</p>
+<p>$root ln -s exo-desktop-item-edit gnome-desktop-item-edit</p></pre>
+
+<p>Then do this:</p>
+
+<a href="$img/fedora_xfce/menucustomization.png" target="_blank">$img/fedora_xfce/menucustomization.png</a> <br />
+
+<a href="$img/fedora_xfce/menucustomization2.png" target="_blank">$img/fedora_xfce/menucustomization2.png</a> 
+
+<p>You can hide entire category or some program, but for gods sake don't even think about touching <strong>Documentation</strong>. The final result:</p>
+
+<a href="$img/fedora_xfce/xfce-pimped.png" target="_blank">$img/fedora_xfce/xfce-pimped.png</a>

@@ -1,0 +1,13 @@
+# stop and disiable the following targets
+# refer to `man systemd.special' for more details
+# systemctl show -p WantedBy -p RequiredBy service.name
+
+remote-fs.target
+graphical.target # I do not use display manager
+swap.target
+multi-user.target
+display-manager.service # WantedBy graphical.target
+man-db.service
+
+# Keep an eye on:
+# systemctl --all | grep 'not-found'

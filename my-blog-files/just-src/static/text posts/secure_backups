@@ -1,0 +1,51 @@
+title:  GPG encrypted backups
+date:   2014-07-05
+author: Aaron
+
+<p>How can you create a secure passwordless backup ?</p>
+
+<p>Is it possible to use your public/private keys that you generated one month ago by following the Thunderbird email encryption post ?</p>
+
+<p>Thankfully, GPG once again shows it's strength. And yes, you can create a passwordless backup with gpg by using your public key and for decryption the private key will be required.</p>
+
+<p>Firstable you should manually verify or change the trust level of your own key.</p>
+
+<img src="$img/1misc/gpg-trust-key.png" alt="" /><br />
+
+<p>And here is another gpg based program written by me. GUI version is waiting to be written by you, so roll up your sleeves and get it done to handle multiple and single folders, multiple and single files. Please notice the <strong>pub</strong> acronym while listing the keys, this is your own and unique public key ID.</p>
+
+<pre>#!/usr/bin/env python3
+<p>import os</p>
+<p>from sys import argv</p>
+<p>from subprocess import call</p>
+<p></p>
+<p>class Backup(object):</p>
+<p></p>
+<p>    def __init__(self, obj):</p>
+<p>        given_obj = (obj if not obj.endswith(os.sep) else obj[:-1])</p>
+<p>        pub_key = 'D747A316'  # type gpg --list-keys and replace this one</p>
+<p></p>
+<p>        self.encrypt(given_obj, pub_key)</p>
+<p></p>
+<p>    def encrypt(self, obj, key):</p>
+<p>        if os.path.isfile(obj):</p>
+<p>            call('gpg --hidden-recipient {pub_key_id} \</p>
+<p>                    --encrypt "{obj_to_encrypt}"'</p>
+<p>                        .format(</p>
+<p>                            pub_key_id=key, obj_to_encrypt=obj), shell=True)</p>
+<p>        else:</p>
+<p>            call(</p>
+<p>                'XZ_OPT=-9e tar cJf - -C "{dir}" . | \</p>
+<p>                    gpg -z 9 --batch --yes --encrypt \</p>
+<p>                    --hidden-recipient {pub_key_id} --output "{encrypted_file}"'</p>
+<p>                        .format(dir=obj, pub_key_id=key,</p>
+<p>                            encrypted_file=obj + '.tar.xz.gpg'), shell=True)</p>
+<p></p>
+<p>if __name__ == '__main__':</p>
+<p>    Backup(''.join(argv[1:]))</p></pre>
+
+<p>Usage - save it with some name.py then: python2 name.py '/path/to/folder' or python3 name.py '/path/to/file'</p>
+
+<p>Decrypt tha backup with <code>gpg mybackup.gpg</code></p>
+
+<p>Transfer the gpg encrypted backups with ssh, scp, sftp or other favourite tool and be sure that no one will be able to decrypt them. Just don't lose your private key.</p>

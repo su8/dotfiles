@@ -1,0 +1,71 @@
+parted -a optimal /dev/sda
+mklabel msdos
+mkpart primary 1 100
+set 1 bios_grub on | set 1 boot on
+mkpart primary 100 -1
+print
+quit
+mkfs.ext4 /dev/sda1
+mkfs.ext4 /dev/sda2
+mount -t ext4 /dev/sda2 /mnt/gentoo
+cd /mnt/gentoo
+mkdir -p boot
+mount -t ext4 /dev/sda1 boot
+links https://www.gentoo.org/downloads/mirrors
+release/amd64/autobuilds/current-stage3-amd64
+tar xjpf|tar --extract --bzip2 --preserve-permissions --file stage3-* --xattrs
+cp -L /etc/resolv.conf etc
+cryptsetup open --type luks /dev/sdf usbdrive
+mkdir /tmp/tempp
+mount -t ext4 /dev/mapper/usbdrive /tmp/tempp
+cp -r /tmp/tempp/make.conf etc/portage
+cp -r /tmp/tempp/ignore etc/portage/package.use
+cp -r /tmp/tempp/installed_packages .
+umount -R /tmp/tempp
+cryptsetup close usbdrive
+mount -t proc none proc
+mount -o bind /sys sys
+mount -o rbind /dev dev
+chroot . /bin/bash
+env-update
+source /etc/profile
+emerge-webrsync
+emerge --sync
+eselect profile list
+eselect profile set 3
+echo 'Europe/Brussels' > /etc/timezone
+cp /usr/share/zoneinfo/Europe/Brussels /etc/localtime
+emerge --config sys-libs/timezone-data
+hwclock --systohc --utc
+eselect python list
+eselect python set --python2 python2.7
+emerge -uDv --changed-use @world
+nano /etc/locale.gen # uncomment en_US utf8
+locale-gen
+env-update
+source /etc/profile
+emerge -a dhcpcd sudo gentoolkit pciutils syslog-ng sys-boot/grub sys-kernel/genkernel sys-kernel/gentoo-sources
+rc-update add dhcpcd default
+rc-update add syslog-ng default
+libtool --finish /usr/lib/sudo
+libtool --finish /usr/lib
+genkernel all
+useradd -m -G users,wheel,audio,video,cdrom.usb,portage -s /bin/bash username
+passwd username
+passwd
+nano /etc/fstab # do the magic
+EDITOR=nano visudo # uncomment wheel
+grub2-install --recheck /dev/sda
+grub2-mkconfig -o /boot/grub/grub.cfg
+exit
+umount -R dev
+umount -R sys
+umount -R proc
+umount -R boot
+cd ~
+umount -R /mnt/gentoo
+reboot
+# login as root
+emerge $(cat /installed_packages.txt)
+emerge -uDN @world
+revdep-rebuild

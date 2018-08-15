@@ -1,0 +1,10 @@
+# Bridged profile to allow access to my servers network
+
+Description='Bridged Interfaces'
+Interface=br0
+Connection=bridge
+BindsToInterfaces=('NIC1' 'NIC2')
+IP=static
+Address=('PREFERRED_IP_GOES_HERE/24')
+Gateway='GATAWAY_IP_GOES_HERE'
+IP6=stateless

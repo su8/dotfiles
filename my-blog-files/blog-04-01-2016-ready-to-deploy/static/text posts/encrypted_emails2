@@ -1,0 +1,98 @@
+title:  Encrypted emails part 1 of 2
+date:   2015-05-03
+author: Aaron
+
+<p>We revisit the email encryption one more time.</p>
+
+<p>In the first part we will talk about key creation which is the first self-defense step towards overreaching and out of control goventments/regime.</p>
+
+<p>Quote from <a href="https://www.gnupg.org" target="_blank">https://www.gnupg.org</a>: Even if you have nothing to hide, using encryption helps protect the privacy of people you communicate with, and makes life difficult for bulk surveillance systems. If you do have something important to hide, you are in good company; GnuPG is one of the tools that Edward Snowden used to uncover his secrets about the NSA.</p>
+
+<p>GPG is the GNU privacy guard implementation of the <a href="https://www.philzimmermann.com/EN/essays/WhyIWrotePGP.html" target="_blank">OpenPGP</a>. In order to start using GPG we have to create keypair that is known as public and private keys. The public key is used by your contacts to encrypt the emails they send to you, and for decryption your private key will be used. The public key is the one you want everyone to know about, while the private key is the one that no one should have it; except you.</p>
+
+<p>Even if someone manages to get your private key, we will take some extra stepts to make the key extremly difficult to bruteforce.</p>
+
+<p>Add the following environment variable in your shell configuration file to instruct GPG where to store your keypair, your $HOME directory is not (dumpster) the place where you should keep all the configuration files. There is special folder called <strong>.config</strong> where your programs should store their configuration files, so the chance to delete some improtant configration file will be pretty low:</p>
+
+<pre>$user export GNUPGHOME="$HOME/.config/gnupg"</pre>
+
+<p>Generate the key with the following options set as is:</p>
+
+<pre>$user gpg2 --cert-digest-algo SHA512 --cipher-algo AES256 --digest-algo SHA512 --s2k-cipher-algo AES256 --s2k-digest-algo SHA512 --s2k-mode 3 --s2k-count 64981052 --full-gen-key</pre>
+
+<p>Visit the <a href="https://www.gnupg.org/documentation/manuals/gnupg/OpenPGP-Options.html" target="_blank">following link</a> to learn what these options do.</p>
+
+<p>Follow the steps as shown in the below picture, and replace the input information where needed.</p>
+
+<img src="$img/encrypted_emails2/gpg-full-gen-key.png" alt="" />
+
+<p>Play some game, browse the internet or in other words - use your computer constantly in order GPG to generate the needed entropy.</p>
+
+<p>Once your keypair is created, append the following preferences in <strong>$HOME/.config/gnupg/gpg.conf</strong></p>
+
+<pre># Your public key goes here
+<p>$user default-key 0x7A923C0D83E349AE</p>
+<br />
+<p># The hash used in key signing</p>
+<p>$user cert-digest-algo SHA512</p>
+<br />
+<p>$user default-preference-list AES256 CAMELLIA256 AES192 CAMELLIA192 AES CAMELLIA128 TWOFISH CAST5 3DES SHA512 SHA384 SHA256 SHA224 SHA1 RIPEMD160 BZIP2 ZLIB ZIP Uncompressed</p>
+<br />
+<p># a/symetic encryption prefs</p>
+<p>$user personal-cipher-preferences AES256 CAMELLIA256 TWOFISH</p>
+<p>$user personal-digest-preferences SHA512 SHA384 SHA256 SHA224</p>
+<p>$user personal-compress-preferences BZIP2 ZLIB ZIP Uncompressed</p>
+<br />
+<p># encryption settings</p>
+<p>$user cipher-algo AES256</p>
+<p>$user digest-algo SHA512</p>
+<p>$user s2k-cipher-algo AES256</p>
+<p>$user s2k-digest-algo SHA512</p>
+<p>$user s2k-mode 3</p>
+<p>$user s2k-count 64981052</p>
+<br />
+<p># compression prefs</p>
+<p>$user compress-algo BZIP2</p>
+<p>$user compress-level 9</p>
+<p>$user bzip2-compress-level 9</p>
+<br />
+<p># metadata prefs</p>
+<p>$user no-emit-version</p>
+<p>$user no-comments</p>
+<br />
+<p># runtime prefs</p>
+<p>$user keyid-format 0xLONG</p>
+<p>$user with-fingerprint</p></pre>
+
+<p>From now on, if you have to create another keypair just type <code>gpg2 --full-gen-key</code>, because all the options will be provided by your <strong>gpg.conf</strong></p>
+
+<p>Exchange the trust level of your <strong>own</strong> keypair:</p>
+
+<pre>$user gpg2 --edit-key groovy@baby.shaggy
+<p>$user trust</p>
+<p>$user 5</p>
+<p>$user y</p>
+<p>$user quit</p></pre>
+
+<p>If you did everything correctly, you shouldn't see <strong>gpg: decryption failed: No secret key</strong> whenever you try to decrypt an email or file encrypted with GPG. Having said that, file encryption is <a href="https://github.com/wifiextender/secure_passwordless_backups/blob/master/encrypt_decrypt.zsh" target="_blank">trivial</a>.</p>
+
+<p>Some commands that you should learn:</p>
+<pre>List keys
+<p>$user gpg --list-keys</p>
+<br />
+<p>Export my private/public keys by using my email address</p>
+<p>$user gpg --export --armor --output my_pub_key.asc user@email.com</p>
+<p>$user gpg --export-secret-keys --armor --output my_private_key.asc user@email.com</p>
+<br />
+<p>Export my whole private/public keyring</p>
+<p>$user gpg --export --armor --output pub_keyring.asc</p>
+<p>$user gpg --export-secret-keys --armor --output private_keyring.asc</p>
+<br />
+<p>When importing a key, first import the public key then the secret one.</p>
+<p>$user gpg --import pub_keyring.asc</p>
+<p>$user gpg --allow-secret-key-import --import private_keyring.asc</p>
+<br />
+Certificate Managers:</p>
+<p>kgpg, seahorse, kleopatra</p></pre>
+
+<p>In next part we will download, compile, configure and use an email client that doesn't pinpoint you and sucks less. As you probably guessed, we will send encrypted emails too.</p>

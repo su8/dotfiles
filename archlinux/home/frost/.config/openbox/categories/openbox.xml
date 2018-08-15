@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+
+<menu id="hell" label="OpenBox">
+
+    <!-- <item icon="/usr/share/icons/Faenza/places/22/user-desktop.png" label="lxappearance">
+        <action name="Execute">
+            <execute>lxappearance</execute>
+        </action>
+    </item> -->
+
+    <!-- <item icon="/usr/share/icons/Faenza/apps/22/menu-editor.png" label="obconf">
+        <action name="Execute">
+            <execute>obconf</execute>
+        </action>
+    </item> -->
+
+    <!-- <separator/> -->
+
+    <item icon="/usr/share/icons/Faenza/emblems/22/emblem-synchronizing.png" label="Restart">
+        <action name="Execute">
+            <command>systemctl reboot</command>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/emblems/22/important.png" label="Shutdown">
+        <action name="Execute">
+            <command>systemctl poweroff</command>
+        </action>
+    </item>
+
+    <separator/>
+
+    <item icon="/usr/share/icons/Faenza/actions/22/exit.png" label="Exit">
+        <action name="Exit"/>
+    </item>
+
+</menu>
+</openbox_menu>

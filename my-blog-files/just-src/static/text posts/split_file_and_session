@@ -1,0 +1,46 @@
+title:  Split large file and ...
+date:   2014-12-13
+author: Aaron
+
+<p>Today we will solve a riddle that involves splitting large file on chunks.</p>
+
+<p>Later on we will <strong>capture</strong> and <strong>replay</strong> our interactive shell session, if you think about screencast then you are wrong.</p>
+
+<p>Imagine that you need to upload a large file to cloud service that has some uploading limits or backup 20 TB onto several Blu ray discs.</p>
+
+<p>What would you do if the data exceeds the limits ? The solution is called file splitting. We got the data and will split it on several chunks, so we can write the chunks onto several Blu ray discs or upload them to the cloud flawlessly.</p>
+
+<p>Let's produce a dummy file and demonstrate how to split it. Type <code>dd if=/dev/zero of=aa.iso count=10MB</code> , this will produce roughly 5GB file named <strong>aa.iso</strong></p>
+
+<p>You can split <strong>aa.iso</strong> and compress it's chunks in the same time. <strong>lz4</strong> provides outstanding compression speed by no means. Here is the splitting command itself:</p>
+
+<pre>$user split --bytes=500M --additional-suffix=.chunk --filter='lz4 > $FILE.lz4' aa.iso </pre>
+
+<p>Adjust the <strong>--bytes</strong> value according to your needs, the higher value the lesser chunk files and vice versa.</p>
+
+<p>The command produced 10 compressed chunks in our case. Don't even think to use file-manager to extract the chunks.</p>
+
+<p>To restore the original file type <code>cat *.chunk.lz4 | lz4 -d > aa2.iso</code>.</p>
+
+<p>It is highly recommended to include simple text file and explain what you've done and how to achieve the wanted result back, so you don't have to scratch your head after a year or two when you decide to restore the file(s).</p>
+
+<p>Make sure that the produced chunks will reside in their own folder along with the simple text file.</p>
+
+<p>As promised at the beginning of this post, we will capture and replay our interactive shell session. I have to <strong>YELL</strong> you that everything you are about to type will be executed in same order, timing and pauses, so don't perform any "remove" or "install" commands during the <strong>capturing</strong>.</p>
+
+<p>Take it seriously because it's that easy to fuck up your system if you type something silly.</p>
+
+<p>Invoke the command <code>script --timing 2> capture_begin</code> and you'll get response like <strong>Script started, file is typescript</strong></p>
+
+<p>From now on everything is recorded and appended to the files capture_begin, typescript.</p>
+
+<p>Invoke some <strong>SAFE</strong> and random commands:</p>
+
+<pre>$user echo 'Hot + dog = woof woof burger' | xz -9e > shizzle_my_nizzle.xz
+<p>$user date</p>
+<p>$user printf "%s" $SHELL</p>
+<p>$user whoami</p></pre>
+
+<p>Once done press CTRL-D to stop the capturing. To replay it type <code>scriptreplay capture_begin</code> sit back, watch and laugh.</p>
+
+<p>Merry Christmas and Happy New Year in advance.</p>

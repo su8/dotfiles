@@ -1,0 +1,13 @@
+title:  GRUB - dual booting issue
+date:   2014-04-11
+author: Aaron
+
+<p>I dual boot from time to time. Today while upgrading my archey noticed that the upgraded GRUB did not detected my windows partiotion.</p>
+
+<p>Rebooted the computer and what to see - only archlinux was listed...</p>
+
+<p>To fix it, tell grub to recheck the particular drive partiotion and generate new configuration after that.</p>
+
+<pre>$root grub-install --recheck /dev/sda</pre><br />
+
+<pre>$root grub-mkconfig -o /boot/grub/grub.cfg</pre>

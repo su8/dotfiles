@@ -1,0 +1,79 @@
+# connection bindlist
+
+connection unbind application=FTP port=21
+connection unbind application=IRC port=6660-6669
+connection unbind application=JABBER port=5222
+connection unbind application=JABBER port=15222
+connection unbind application=RAUDIO(PNA) port=7070
+connection unbind application=CU/SeeMe port=7648
+connection unbind application=GAME(UDP) port=27010-27011
+connection unbind application=SIP port=5060
+connection unbind application=IKE port=500
+connection unbind application=ESP port=0
+connection unbind application=ILS port=389
+connection unbind application=ILS port=1002
+connection unbind application=LOOSE(UDP) port=69
+connection unbind application=LOOSE(UDP) port=67
+connection unbind application=RTSP port=554
+connection unbind application=H323 port=1720
+connection unbind application=IP6TO4 port=0
+connection unbind application=PPTP port=1723
+ids config state=enabled
+dsd config state=enabled
+dsd syslog config syslog=all
+saveall
+
+hostmgr list
+service system list
+service system modify name=CWMP-C state=disabled
+service system modify name=CWMP-S state=disabled
+service system modify name=IP_COMMANDS state=disabled
+service system modify name=MDAP state=disabled
+service system modify name=PING_RESPONDER state=disabled
+service system modify name=IGMP-Proxy state=disabled
+service system modify name=PPTP state=disabled
+connection unbind application=DHCP port=67
+connection unbind application=CONE(UDP) port=69
+service system modify name=FTP state=disabled
+service system modify name=SSDP state=disabled
+service system ifdelete name=PING_RESPONDER group=wan
+sntp flush
+sntp add name=2.uk.pool.ntp.org
+sntp config poll=360
+sntp list
+saveall
+
+
+dns server route add dns=1.2.3.4 metric=0 intf=pppInternet
+user config name= password=
+eth bridge igmpsnooping config brname=bridge state=disabled
+# filter the telnet port
+service system ipadd name TELNET ip 192.x.x.x
+ip ifconfig intf=pppInternet hwaddr=00:01:02:03:04:05
+ip ifconfig intf=ipInternet hwaddr=00:01:02:03:04:05
+ip ifconfig intf=ipManagement hwaddr=00:01:02:03:04:05
+ip ifconfig intf=LocalNetwork hwaddr=00:01:02:03:04:05
+
+user list
+
+user flush # exit and re-login without username and pass
+user add name=hidden password=hidden rote=root
+
+#service system modify name=DNS-C state=disabled
+#service system modify name=DNS-S state=disabled
+
+
+ip rtlist
+
+ip rtdelete dst=1.2.3.4/32 gateway=5.6.7.8 intf=loop
+
+example:
+
+Label             Destination          Gateway  Interface     Mtc Admin  Oper  
+                    1.2.3.4/32       127.0.0.1* loop          0   UP     [UP]   
+                  127.0.0.1/32       127.0.0.1  loop          0   UP     [UP]   
+             192.168.10.254/32       127.0.0.1  loop          0   UP     [UP]   
+             192.168.10.255/32       127.0.0.1  loop          0   UP     [UP]   
+            255.255.255.255/32       127.0.0.1  loop          0   UP     [UP]   
+               192.168.10.0/24  192.168.10.254  LocalNetwork  0   UP     [UP]   
+                    0.0.0.0/0          1.2.3.4* pppInternet   0   UP     UP

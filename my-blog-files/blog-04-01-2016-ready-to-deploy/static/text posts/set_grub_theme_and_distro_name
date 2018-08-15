@@ -1,0 +1,39 @@
+title:  GRUB hacking
+date:   2014-04-11
+author: Aaron
+
+<p>It seems today is my GRUB hacking and fixing day, lol.</p>
+
+<p>While searching how to resolve the previous grub issue found out how to set different grub theme and change the listed operating systems names.</p>
+
+<p>Let's begin with setting grub theme.</p>
+
+<pre>$root pacman -S git</pre>
+
+<pre>$user git clone git://github.com/Generator/Grub2-themes.git</pre>
+
+<p>Unzip the archive and cd into it.</p>
+
+<pre>$root cp -r Archxion/ /boot/grub/themes/</pre>
+
+<p>Edit your <code>/etc/default/grub</code> and change the lines:</p>
+
+<pre>$root GRUB_BACKGROUND to #GRUB_BACKGROUND</pre>
+
+<p>#GRUB_THEME="/path/to/gfxtheme" to:</p>
+
+<pre>$root GRUB_THEME="/boot/grub/themes/Archxion/theme.txt"</pre>
+
+<p>Save the /etc/default/grub file and update the grub configuration:</p>
+
+<pre>$root grub-mkconfig --output /boot/grub/grub.cfg</pre>
+
+<p>Now to change the detected operating system names:</p>
+
+<pre>$root nano /boot/grub/grub.cfg</pre>
+
+<p>Let's say your distro is archlinux. Search for Arch Linux and replace all lines that match "menuentry", "submenu" with Arch Linux, replace the detected os name. Keep in mind whenever the grub configuration gets updated your changed os names will gone and you'll have to edit the grub.cfg file again.</p>
+
+<p>See the available Archxion/icons/ names and replace the '--class gnu-linux' or '--class yourdistroname' with the icon name from that folder without .png at the end.</p>
+
+<img src='$img/1misc/grub_theme.png' alt='' />

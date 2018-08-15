@@ -1,0 +1,88 @@
+ <!DOCTYPE html>
+<html lang="en" class="cufon-active cufon-ready"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Search</title>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="img/icon.ico" />
+<link rel="stylesheet" href="css/template-5/css/reset.css" type="text/css" media="all">
+<link rel="stylesheet" href="css/template-5/css/style.css" type="text/css" media="all">
+<style type="text/css">cufon{text-indent:0!important;}@media screen,projection{cufon{display:inline!important;display:inline-block!important;position:relative!important;vertical-align:middle!important;font-size:1px!important;line-height:1px!important;}cufon cufontext{display:-moz-inline-box!important;display:inline-block!important;width:0!important;height:0!important;overflow:hidden!important;text-indent:-10000in!important;}cufon canvas{position:relative!important;}}@media print{cufon{padding:0!important;}cufon canvas{display:none!important;}}</style>
+<!--[if lt IE 7]><link rel="stylesheet" href="css/template-5/css/ie6.css" type="text/css" media="screen"><script type="text/javascript" src="css/template-5/js/ie_png.js"></script><script type="text/javascript">ie_png.fix('.png, .tail-top, .main-box .right-bot-corner, .main-box .left-bot-corner, div.platforms, div.platforms .right');</script><![endif]--><!--[if lt IE 9]><script type="text/javascript" src="css/template-5/js/html5.js"></script><![endif]-->
+<script type="text/javascript" src="http://www.google.com/cse/brand?form=searchform&#38;lang=en"></script>
+<script>
+ (function() {
+ var cx = '000510344615717143304:k7p5xn-2xbi';
+ var gcse = document.createElement('script');
+ gcse.type = 'text/javascript';
+ gcse.async = true;
+ gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+    '//www.google.com/cse/cse.js?cx=' + cx;
+ var s = document.getElementsByTagName('script')[0];
+ s.parentNode.insertBefore(gcse, s);
+ })();
+ </script>
+</head>
+<body id="page1">
+   <div id="main">
+      <header>
+      <div class="siteimage">
+      </div>
+         
+         <div class="platforms">
+            <div class="left">
+               <div class="right">
+                 <ul>
+                     <li><a href="http://www.debian.org/" target="_blank">Debian</a></li>
+                      <li><a href="http://linuxmint.com/" target="_blank">Mint</a></li>
+                       <li><a href="http://www.centos.org/" target="_blank">CentOS</a></li>
+                        <li><a href="http://www.redhat.com/" target="_blank">RedHat</a></li>
+                       <li><a href="http://fedoraproject.org/" target="_blank">Fedora</a></li>
+                      <li><a href="http://www.archlinux.org/" target="_blank">ArchLinux</a></li>
+                     <li><a href="http://www.opensuse.org/en/" target="_blank">openSUSE</a></li>
+                    <li><a href="http://www.freebsd.org/" target="_blank">FreeBSD</a></li>
+                   </ul>
+               </div>
+            </div>
+         </div>
+       </header>
+      <div class="main-box">
+         <div class="left-top-corner">
+            <div class="inner"><nav>
+              <ul class="nav">
+                <li class="first"><a href="index.html">Home</a></li>
+                  <li><a href="archive.html">Archive</a></li>
+                          <li>
+                          <div id="cse" style="width: 30%;"><form action="/search" id="searchform" method="get">
+                      <p>
+					   <input type="hidden" name="cref" value="http://linux.sytes.net/search.html">  
+                       <input type="hidden" name="cx" value="000510344615717143304:k7p5xn-2xbi" />
+                       <input type="hidden" name="cof" value="FORID:11" />
+                       <input type="hidden" name="ie" value="UTF-8" />
+                       <input class="search-sidebar" type="text" placeholder="Search..." name="q" size="30" />
+                      </p>
+                      <input name="siteurl" type="hidden" value="linux.sytes.net/">
+                      <input name="ref" type="hidden" value="">
+                      <input name="ss" type="hidden" value="">
+                     </form></div></li></ul></nav>      
+               <div id="mainContent">
+                  <div class="wrapper">
+                     <!-- content -->
+                     <section id="content">
+                        <div class="box indent">
+                           <div class="right-bot-corner">
+                              <div class="left-bot-corner">
+                              </div>
+                           </div>
+                        </div>
+                        <div class="box indent">
+                           <div class="left-top-corner">
+                              <div class="right-top-corner">
+                                 <div class="right-bot-corner">
+                                    <div class="left-bot-corner">
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                         <div class="inside">
+                            <gcse:searchresults-only></gcse:searchresults-only>
+

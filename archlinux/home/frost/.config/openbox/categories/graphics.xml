@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+
+<menu id="graph" label="Graphics">
+
+    <item icon="/usr/share/icons/Faenza/apps/22/gimp.png" label="GIMP">
+        <action name="Execute">
+            <execute>gimp</execute>
+        </action>
+    </item>
+
+    <!-- (replaced with 'sxiv') <item icon="/usr/share/icons/Faenza/apps/22/ristretto.png" label="ristretto">
+        <action name="Execute">
+            <execute>ristretto</execute>
+        </action>
+    </item> -->
+
+    <item icon="/usr/share/icons/Faenza/apps/22/ksnapshot.png" label="scrot -bs">
+        <action name="Execute">
+            <execute>scrot -bs</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/evince.png" label="Evince">
+        <action name="Execute">
+            <execute>evince</execute>
+        </action>
+    </item>
+
+</menu>
+</openbox_menu>

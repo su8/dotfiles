@@ -1,0 +1,16 @@
+ssh-keygen -b 4096 -t rsa -C "user@email"
+
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_rsa
+
+# copy the public key
+cat ~/.ssh/id_rsa.pub
+
+# Go to the 'settings', click 'SSH keys', click 'Add SSH key'
+# and paste the key there
+
+# Test if ssh is working
+ssh -T git@github.com
+
+git remote -v
+git remote set-url origin git@github.com:USERNAME/REPOSITORY.git

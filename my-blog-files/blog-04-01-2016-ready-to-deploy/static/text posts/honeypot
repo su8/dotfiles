@@ -1,0 +1,118 @@
+title:  Catch the bad guys with honeypot
+date:   2013-06-26
+author: Aaron
+
+<p>Set up a simple ssh honeypot in a virtual environment to learn and explore what's going on your network and who wants to "hack" you. Kippo is a simple SSH honeypot written in Python that will fool the "hacker" that he has real  access to your real system.</p>
+
+<pre>$root apt-get update</pre>
+
+<pre>$root apt-get install openssh-server openssh-client</pre>
+
+<p>Change the current port on your SSH to something like 2222, because we will set Kippo to listen port 22</p>
+
+<pre>$root nano /etc/ssh/sshd_config</pre>
+
+<p>Change the port 22 to any other number you like, for my virtual honeypot I use 2222. Then restart the ssh server:</p>
+
+<pre>$root /etc/init.d/ssh restart</pre>
+
+<p>Let's install the necessary tools which kippo will be using</p>
+
+<pre>$root apt-get install python-dev openssl python-openssl python-pyasn1 python-twisted subversion authbind</pre>
+
+<p>Since the honeypot Kippo will be running on port 22 this is going to be an issue, because only the root is allowed to use ports that are in range 1 - 1024, here authbind will help you to solve this port issue - authbind will bind sockets to privileged ports without root, also authbind allows a program which does not or should not run as root to bind to low-numbered ports in a controlled way. You will have to create a new user and add it to the users that can use "sudo", because kippo cannot be started as root. </p>
+
+<pre>$root adduser kippo sudo</pre>
+
+<p>The username is just example, replace it with whatever you want.</p>
+
+<p>Bind the port 22</p>
+
+<pre>$root touch /etc/authbind/byport/22
+<p>$root chown kippo:kippo /etc/authbind/byport/22</p>
+<p>$root chmod 755 /etc/authbind/byport/22</p></pre>
+
+<p>It came the time to download the Kippo</p>
+
+<pre>$user svn checkout http://kippo.googlecode.com/svn/trunk/ ./kippo</pre>
+
+<p>Enter in the kippo directory</p>
+
+<pre>$user cd kippo</pre>
+
+<p>Now rename the following file and change the port 2222 to 22, don't use any other number ! </p>
+
+<pre>$user mv kippo.cfg.dist kippo.cfg
+<p>$user nano kippo.cfg</p></pre>
+
+<p>Once you changed the port, scroll down few rows with your keyboard arrow keys, find <strong>hostname</strong> and name it like distribution name, I am using "FedoraHardenedServer".. nice name for a Debian server ;D</p>
+
+<img src="$img/kippo/kippoportandhostname.png" alt="" />
+
+<p>Want to fool the hacker again that he attempts to enter in legitimate server, you will place some text that will be shown before the log-in attempt. While you are in the kippo.cfg file, press CTRL+W to find the word <strong>banner</strong>, once you find it uncomment the <strong>banner_file = </strong> and make it to look like <strong>banner_file = b.txt</strong>, save and exit from that file.</p>
+
+<img src="$img/kippo/banner.png" alt="" />
+
+<p>Create that b.txt file and type whatever message you want</p>
+
+<pre>$user nano b.txt</pre>
+
+<p>Checkout what's mine:</p>
+
+<img src="$img/kippo/bannertext.png" alt="" />
+
+<p>Now you have to edit someting else:</p>
+
+<pre>$user nano start.sh</pre>
+
+<p>Add the following thig as is without changing anything else !</p>
+
+<pre>$user authbind --deep twistd -y kippo.tac -l log/kippo.log --pidfile kippo.pid</pre>
+
+<p>Save the file and do:</p>
+
+<pre>$user cd ..
+<p>$user chown -R kippo kippo</p>
+<p>$user mv kippo /home/kippo</p></pre>
+
+<p>Now you will install mysql server to log everything that happens in kippo - even nmap scannings will be logged</p>
+
+<pre>$root apt-get install python-mysqldb phpmyadmin mysql-server</pre>
+
+<p>Take your time and decide what password you want to use.</p>
+
+<p>Once you answered to all MySQL questions you will have to create new database</p>
+
+<pre>$root mysql -u root -p</pre>
+<pre>$root CREATE DATABASE kippo;
+<p>$root GRANT ALL ON kippo.* TO 'kippo'@'localhost' IDENTIFIED BY 'Kippo-DB-pass';</p>
+<p>$root exit</p></pre>
+
+<p>Go back to the kippo directory and edit the kippo.cfg file to add the new configuration which we tell on kippo to log everything in the MySQL database:</p>
+
+<pre>$user cd /home/kippo/kippo
+<p>$user nano kippo.cfg</p></pre>
+
+<p>Press CTRL+W and find <strong>database_mysql</strong>, take a look what looks like my configuration, then adjust it to yours.</p>
+
+<img src="$img/kippo/kippomysql.png" alt="" />
+
+<p>Log out from the root, and log-in as your kippo user and do that:</p>
+
+<pre>$user cd kippo
+<p>$user sh start.sh</p></pre>
+
+<p>You are done, just in case you want to access your MySQL database from other local computer you must to grant privileges to it's ip and username. Again, you can access your MySQL database and read everything via phpadmin from your browser, but I am using application called DBeaver that is connected directly to the database. Anyway, if you want to use some  universal database tool like DBeaver or other program then log-in as root and do:</p>
+
+<pre>$root mysql -u root -p
+<p>$root use mysql</p>
+<p>$root GRANT ALL ON *.* to root@'192.168.10.4' IDENTIFIED BY 'your MySQL password'; </p>
+<p>$root exit</p></pre>
+
+<p>Change 192.168.10.4 according to your remote machine ip. If it's dynamic then better set it to static, otherwise you will have to grant always privileges to the newer ip. Restart the MySQL server and you are done.</p>
+
+<pre>$root service mysql restart</pre>
+
+<p>Keep an eye on the tables for any activity, then examine and learn what,how and why they do this.</p>
+
+<img src="$img/kippo/dbeaver.png" alt="" />

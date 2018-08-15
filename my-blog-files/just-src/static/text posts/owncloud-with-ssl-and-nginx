@@ -1,0 +1,192 @@
+title:  Install ownCloud with SSL and Nginx on your CentOS server
+date:   2013-06-29
+author: Aaron
+
+<p>I can do deploy this thing in my debian server for less than a 7 minutes, but RHEL made everything to be "secure", so in order to install some packages you have to seek external repositories. I don't think that 3rd party repositories are good idea to mess with, but it's red hat decision which packages they want to have. Since this CentOS server is meant to used as personal cloud storage, I decided that there is no need from xcache for caching, but it is up to you if you want caching for Few pages...</p>
+
+<p>Download these 3rd party repos</p>
+
+<pre>$root rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+<p>$root rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm</p></pre>
+
+<p>Edit these repositories and make sure that the top is <strong>enabled=1</strong></p>
+
+<pre>$root nano /etc/yum.repos.d/epel.repo 
+<p>$root nano /etc/yum.repos.d/remi.repo</p></pre>
+
+<p>Since you will be using PostgreSQL you will have to remove the default installed mysql database, it's installed even in the minimal CentOS iso image.</p>
+
+<pre>$root yum remove mysql* mysql-server mysql-devel mysql-libs
+<p>$root yum update</p></pre>
+
+<p>Now install the following packages that you will be using in order to run ownCloud properly without issues.</p>
+
+<pre>$root yum install postgresql postgresql-libs postgresql-server php-fpm php-gd php-ldap php-pear php-xml php-xmlrpc
+php-magickwand php-magpierss php-mbstring php-mcrypt php-shout php-snmp php-soap php-tidy php-pgsql php-pdo 
+</pre>
+
+<p>Start the PostgreSQL.</p>
+
+<pre>$root service postgresql initdb 
+<p>$root service postgresql start</p>
+<p>$root chkconfig postgresql on</p></pre>
+
+<p>Create new PostgreSQL user and database.</p>
+
+<pre>$root su - -c "psql" postgres </pre>
+<pre>$root CREATE USER cloud WITH PASSWORD 'userpass'; </pre>
+<pre>$root CREATE DATABASE cloudbase OWNER cloud ENCODING 'UTF8'; </pre>
+<pre>$root GRANT ALL PRIVILEGES ON DATABASE cloudbase TO cloud; </pre>
+<pre>$root \q</pre>
+
+<p>If you don't know what is <strong>php.ini</strong> then you are not familiar with php at all.</p>
+
+<pre>$root nano /etc/php.ini</pre>
+
+<p>Find the following strings and edit the content after <strong>=</strong>, <strong>max_filesize</strong> is to determine the maximum size of single file that you or someone else will want to upload in your ownCloud server. </p>
+
+<pre>$root post_max_size = 2G</pre>
+<pre>$root cgi.fix_pathinfo = 0</pre>
+<pre>$root upload_max_filesize = 2G</pre>
+
+<p>See what is your timezone:</p>
+
+<pre>$user cat /etc/sysconfig/clock</pre>
+
+<p>Then add it to php.ini, find the string <strong>date.timezone</strong></p>
+
+<pre>$root nano /etc/php.ini</pre>
+<pre>$root date.timezone = "America/New York"</pre>
+
+<p>Edit the following file to use unix socket instead of tcp.</p>
+
+<pre>$root nano /etc/php-fpm.d/www.conf</pre>
+
+<p>Change the line:</p>
+
+<pre>;listen = 127.0.0.1:9000</pre>
+
+<p>to:</p>
+
+<pre>$root listen = /var/run/php-fpm/php-fpm.sock</pre>
+
+<p>Start the php-fpm service</p>
+
+<pre>$root chkconfig php-fpm on 
+<p>$root service php-fpm start</p></pre>
+
+<p>Edit the postgresql config file to allow password logins:</p>
+
+<pre>$root nano /var/lib/pgsql/data/pg_hba.conf</pre>
+
+<p>Change the line:</p>
+
+<pre># IPv4 local connections: 
+<p>$root host all all 127.0.0.1/32 ident</p></pre>
+
+<p>to:</p>
+
+<pre># IPv4 local connections: 
+<p>$root host all all 127.0.0.1/32 password</p></pre>
+
+<p>Restart the postgresql database.</p>
+
+<pre>$root service postgresql restart</pre>
+
+<p>Install nginx.</p>
+
+<pre>$root yum install nginx
+<p>$root service nginx start </p>
+<p>$root chkconfig nginx on </p>
+<p>$root service nginx stop</p></pre>
+
+<p>If you are familiar with apache virtual hosts, then the next file that you will have to create is exactly that.</p>
+
+<pre>$root nano /etc/nginx/conf.d/cloud.conf</pre>
+
+<p>Add the following configuration there:</p>
+
+<pre>server {
+<p>listen 80;</p>
+<p>server_name 192.168.10.30; #replace with your internal ip or domain name</p>
+<p>return 301 https://$server_name$request_uri;</p>
+<p>}</p>
+<p>server {</p>
+<p>listen 443 ssl;</p>
+<p>server_name 192.168.10.30; #replace with your internal ip or domain name</p>
+<p>ssl_certificate /etc/nginx/cert/server.crt;</p>
+<p>ssl_certificate_key /etc/nginx/cert/server.key;</p>
+<p>root /var/www/owncloud;</p>
+<p>index index.php;</p>
+<p>client_max_body_size 2G;</p>
+<p>fastcgi_buffers 64 4K;</p>
+<p>rewrite ^/webdav(.*)$ /remote.php/webdav$1 redirect;</p>
+<p>error_page 403 = /core/templates/403.php;</p>
+<p>error_page 404 = /core/templates/404.php;</p>
+<p>location = /robots.txt {</p>
+<p>allow all;</p>
+<p>log_not_found off;</p>
+<p>access_log off;</p>
+<p>}</p>
+<p>location / {</p>
+<p>rewrite ^/.well-known/host-meta /public.php?service=host-meta last;</p>
+<p>rewrite ^/.well-known/host-meta.json /public.php?service=host-json last;</p>
+<p>rewrite ^(/core/doc/[^\/]+/)$ $1/index.html;</p>
+<p>try_files $uri $uri/ index.php;</p>
+<p>}</p>
+<p>location @webdav {</p>
+<p>fastcgi_split_path_info ^(.+\.php)(/.*)$;</p>
+<p>fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;</p>
+<p>fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</p>
+<p>fastcgi_param HTTPS on;</p>
+<p>include  fastcgi_params;</p>
+<p>}</p>
+<p>location ~ ^(.+?\.php)(/.*)?$ {</p>
+<p>try_files $1 = 404;</p>
+<p>fastcgi_param PATH_INFO $2;</p>
+<p>fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;</p>
+<p>fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;</p>
+<p>fastcgi_param HTTPS on;</p>
+<p>include  fastcgi_params;</p>
+<p>}</p>
+<p>}</p>
+</pre>
+
+<p>As you specified in the nginx "virtual host" above, your ownCloud server will be using SSL, so let's create these certificates, shall we ?</p>
+
+<pre>$root mkdir -p /etc/nginx/cert/ 
+
+<p>$user cd /etc/nginx/certs/ </p>
+
+<p>$root openssl genrsa -des3 -out server.key 2048 </p>
+
+<p>$root openssl req -new -key server.key -out server.csr </p>
+
+<p>$root cp server.key server.key.org </p>
+
+<p>$root openssl rsa -in server.key.org -out server.key </p>
+
+<p>$root openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt</p>
+
+<p>$root service nginx start</p></pre>
+
+<p>Next, download, uncompress and set permissions for the owncloud.</p>
+
+<pre>$user cd /var/www
+<p>$root wget http://download.owncloud.org/community/owncloud-5.0.7.tar.bz2 </p>
+<p>$root tar xjf owncloud </p>
+<p>$root mkdir -p owncloud/data </p>
+<p>$root chmod 755 owncloud/data </p>
+<p>$root chown -R root:apache owncloud</p>
+<p>$root rm -rf owncloud-5.0.7.tar.bz2</p></pre>
+
+<p>Allow incomming tcp connections to your server ports: 80 and 443. If you or someone else call your server internal ip it will be redirected to https://yourserverinternalip, because you specified that in the nginx "virtual host" earlier.</p>
+
+<pre>$root iptables -I INPUT 4 -p tcp --dport 80 -j ACCEPT
+<p>$root iptables -I INPUT 4 -p tcp --dport 443 -j ACCEPT  </p>
+<p>$root service iptables save </p>
+<p>$root service iptables restart</p></pre>
+
+<p>That's all, open up your browser and point your server ip. Choose whatever log-in name and password you like.</p>
+
+<img src="$img/1misc/centos-owncloud.png" alt="" />

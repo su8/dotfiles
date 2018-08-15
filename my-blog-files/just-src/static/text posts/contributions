@@ -1,0 +1,15 @@
+title:  Recent contributions
+date:   2015-02-20
+author: Aaron
+
+<p>January and February was the most busiest months in my life.</p>
+
+<p>However in range of 3 weeks I managed to contribute to screenfetch-c.</p>
+
+<p>4000+ changes separated in 5 commits. By the time of writing, not all changes was pushed to the <a href="https://github.com/woodruffw/screenfetch-c" target="_blank">screenfetch-c</a> master branch.</p>
+
+<p>There is the link to my improved screenfetch-c fork - <a href="https://github.com/wifiextender/screenfetch-c" target="_blank">https://github.com/wifiextender/screenfetch-c</a></p>
+
+<p>If anyone had any doubts about my previous blog post where I shared my uname implementation and announced <a href="https://github.com/wifiextender/pdf2img-c" target="_blank">https://github.com/wifiextender/pdf2img-c</a>, the contributions to screenfetch-c will be enough to prove my knowledge in C.</p>
+
+<p>Let me know guys if you want to start a tutorial series regarding Linux From Scratch.</p>

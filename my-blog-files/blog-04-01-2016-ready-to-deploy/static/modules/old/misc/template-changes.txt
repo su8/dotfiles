@@ -1,0 +1,61 @@
+==================================================================
+
+04/14/2015 - template 3
+
+Old:
+
+@media (min-width:768px){.navbar>.container}
+
+
+New:
+
+@media (min-width:900px) {.navbar>.container{width:900px}}
+
+==================================================================
+
+05/07/2015 - template 3
+
+Added:
+
+a.fit-tag{color:#888;}a.fit-tag:hover{color:#2A9FD6;}
+
+==================================================================
+
+05/13/2015 - template 3
+
+Old:
+
+a{color:#2a9fd6;text-decoration:none;/* some old display:inline-block */word-wrap:break-word}
+
+New:
+
+a{color:#2a9fd6;text-decoration:none;/* some old display:inline-block */word-wrap:break-word;transition:all 0.1s ease-in-out 0s;}
+
+==================================================================
+
+08/08/2015 - template 3
+
+Old:
+
+body{margin-top:56px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#888;background-color:#060606}
+
+New:
+
+body{margin-top:56px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;/*line-height:1.42857143;*/color:#888;background-color:#060606}
+
+==================================================================
+
+08/29/2015 - template 3
+
+old colours: 2a9fd6 1f79a3
+
+new colours: 714da1 493f6a
+
+old:
+
+a{color:#714da1
+
+new:
+
+a{color:#914da1
+==================================================================

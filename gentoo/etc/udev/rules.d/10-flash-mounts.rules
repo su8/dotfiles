@@ -1,0 +1,71 @@
+#! /bin/sh
+
+####################################################
+#        USB Flash Drives automounting             #
+#    Device without partitions will not be mounted #
+#                                                  #
+#        parted -a optimal /dev/sdX                #
+#        mklabel msdos                             #
+#        mkpart primary 1 -1                       #
+#        quit                                      #
+#        mkfs.TYPE /dev/sdX1                       #
+#                                                  #
+####################################################
+
+# start at sdb to ignore the system drive
+KERNEL!="sd[b-z]*", GOTO="exit"
+ACTION=="add", PROGRAM!="/sbin/blkid %N", GOTO="exit"
+
+# import some useful filesystem info as variables
+IMPORT{program}="/sbin/blkid -o udev -p %N"
+#IMPORT{program}="/bin/udevadm info -n %N"
+
+# get the label if present, otherwise assign one based on device/partition
+ENV{ID_FS_LABEL}!="", ENV{dir_name}="%E{ID_FS_LABEL}"
+ENV{ID_FS_LABEL}=="", ENV{dir_name}="USB_%k"
+ENV{ID_FS_TYPE}=="", GOTO="exit"
+
+
+# Your $USER goes here if you want rw access
+ENV{MY_UZER}="frost"
+
+
+# determine whether the FS is vfat or ntfs
+# and assign some environment variables to
+# make our life easier
+ENV{ID_FS_TYPE}!="(vfat|ntfs)", ENV{da_mount_type}="auto"
+ENV{ID_FS_TYPE}=="vfat", ENV{da_mount_type}="vfat"
+ENV{ID_FS_TYPE}=="ntfs", ENV{da_mount_type}="ntfs-3g"
+
+# create the dir in /media
+ACTION=="add", RUN+="/bin/mkdir -p '/media/%E{dir_name}'"
+
+#Octal   Binary  Meaning
+#0   000     no permissions
+#1   001     execute only
+#2   010     write only
+#3   011     write and execute
+#4   100     read only
+#5   101     read and execute
+#6   110     read and write
+#7   111     read, write and execute
+ACTION=="add", ENV{mount_optionz}="gid=100,dmask=000,fmask=110,utf8,flush,rw,noauto,discard,noatime,users"
+ACTION=="add", ENV{ID_FS_TYPE}!="vfat", ENV{ID_FS_TYPE}!="ntfs", ENV{mount_optionz}="rw,noauto,discard,noatime,users"
+
+# remove existing device and then add it to /etc/fstab
+ACTION=="add", RUN+="/bin/sed -i '/\/dev\/%k /d' /etc/fstab"
+ACTION=="add", RUN+="/bin/sed -i '$a\/dev/%k /media/%E{dir_name} %E{da_mount_type} %E{mount_optionz} 0 0' /etc/fstab"
+
+# mount device and change ownership to have rw access
+ACTION=="add", RUN+="/bin/mount -t %E{da_mount_type} -o %E{mount_optionz} /dev/%k '/media/%E{dir_name}'"
+ACTION=="add", RUN+="/bin/chown -R %E{MY_UZER}:users /media/%E{dir_name}"
+
+# clean up after device removal
+ACTION=="remove", RUN+="/bin/umount -l '/media/%E{dir_name}'", RUN+="/bin/rmdir '/media/%E{dir_name}'"
+ACTION=="remove", RUN+="/bin/sed -i '/\/dev\/%k /d' /etc/fstab"
+
+# exit
+LABEL="exit"
+
+
+# All credits goes to https://github.com/HalisCz/udev-automount/blob/master/10-flash-mounts.rules

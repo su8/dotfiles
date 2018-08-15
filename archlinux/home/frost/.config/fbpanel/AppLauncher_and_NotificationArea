@@ -1,0 +1,216 @@
+########################################
+## fbpanel configuration file         ##
+########################################
+
+Global {
+    edge                = bottom
+    allign              = right
+    margin              = 0
+    widthtype           = percent
+    width               = 58           # adjust the position for the apps
+    height              = 24
+    transparent         = true
+    tintcolor           = #RRGGBB
+    alpha               = 0
+    setdocktype         = true
+    setpartialstrut     = true
+    autohide            = false
+    heightWhenHidden    = 2
+    roundcorners        = false
+    layer               = none
+    roundcornersradius  = 0
+    MaxElemHeight       = 32
+}
+
+###################################################################
+#                    Application Launcher                         #
+###################################################################
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/firefox.png
+            action = firefox
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/xterm.png
+            action = sakura
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/Thunar.png
+            action = thunar
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/internet-mail.png
+            action = sakura --execute mutt
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/pixmaps/qbittorrent.png
+            action = qbittorrent
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/geany.png
+            action = geany
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/pixmaps/pdf2img_icon.png
+            action = pdf2img
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/hicolor/24x24/apps/plv.png
+            action = plv
+        }
+    }
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 10
+    }
+}
+
+Plugin {
+    type    = launchbar
+    padding = 0
+    config {
+        button {
+            image  = /usr/share/icons/Faenza/apps/22/bleachbit.png
+            action = bleachbit
+        }
+    }
+}
+
+########################################
+##       Huge and empty space         ##
+########################################
+Plugin {
+    type     = space
+    config {
+        size = 595
+    }
+}
+
+########################################
+## Network manager applet volume icon ##
+########################################
+Plugin {
+    type = tray
+}
+
+Plugin {
+    type     = space
+    config {
+        size = 5
+    }
+}
+
+########################################
+##           Digital clock            ##
+########################################
+Plugin {
+    type          = tclock
+    config {
+        ClockFmt  = <span font="Terminus 10">%I:%M %p, %a %d %b</span>
+        HoursView = 12
+    }
+}

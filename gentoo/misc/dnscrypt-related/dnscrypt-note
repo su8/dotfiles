@@ -1,0 +1,8 @@
+Unable to retrieve server certificates
+
+sudo dnscrypt-proxy -R okturtles --user=nobody --daemonize
+dnsutils
+dig -p 443 txt 2.dnscrypt-cert.fr.dnscrypt.org @212.47.228.136
+
+
+/usr/share/dnscrypt-proxy/dnscrypt-resolvers.csv

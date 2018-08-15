@@ -1,0 +1,68 @@
+Include my mobo and cpu family sensors as modules
+
+(luks) mark the input drivers (keyboard) as inline, same goes for USB->*HCI
+
+Delete the old kernel(s) modules in /lib/modules/1.2.3-gentoo
+
+Keep at least 2 kernels in /boot
+
+My lame 'fw' script:
+Networking support-> Network options-> Network packet filtering framework-> Core Netfilter Configuration
+
+  LOG over NFNETLINK
+  LOG
+  connlimit
+  conntrack
+  state
+  TCPMSS
+
+
+# Referrence for me
+
+# eselect kernel list|set
+sudo modprobe -a $(sed ':a;N;$!ba;s/\n/ /g' my-system-modules.txt)
+su
+cd /usr/src/linux
+make -j3 localmodconfig
+make -j3 menuconfig
+make -j3
+make -j3 modules_install
+make -j3 install
+grub2-mkconfig --output /boot/grub/grub.cfg
+
+networking support -> 
+        wireless -> 
+                <*>   cfg80211 - wireless configuration API 
+                [ ]     nl80211 testmode command 
+                [ ]     enable developer warnings 
+                [ ]     cfg80211 regulatory debugging 
+                [*]     enable powersave by default 
+                [ ]     cfg80211 DebugFS entries 
+                [ ]     cfg80211 wireless extensions compatibility 
+                [ ]   lib80211 debugging messages 
+                <*>   Generic IEEE 802.11 Networking Stack (mac80211) 
+                Default rate control algorithm (Minstrel)  ---> 
+                [ ]   Enable mac80211 mesh networking (pre-802.11s) support 
+                -*-   Enable LED triggers 
+                [ ]   Export mac80211 internals in DebugFS 
+                [ ]   Trace all mac80211 debug messages 
+                [ ]   Select mac80211 debugging features  ---> 
+
+device drivers -> 
+        network device support -> 
+                wireless LAN -> 
+                        <*>   Atheros Wireless Cards  ---> 
+                                [ ]   Atheros wireless debugging 
+                                < >   Atheros 5xxx wireless cards support 
+                                [ ]   Atheros 5xxx PCI bus support 
+                                [*]   Atheros bluetooth coexistence support 
+                                <*>   Atheros 802.11n wireless cards support 
+                                [*]     Atheros ath9k PCI/PCIe bus support 
+                                [*]     Atheros ath9k AHB bus support 
+                                [ ]     Atheros ath9k debugging 
+                                [*]   Atheros ath9k rate control 
+                                <M>   Atheros HTC based wireless cards support 
+                                < >   Linux Community AR9170 802.11n USB support 
+                                < >   Atheros mobile chipsets support 
+                                < >   Atheros AR5523 wireless driver support 
+                                < >   Wilocity 60g WiFi card wil6210 support 

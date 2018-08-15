@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+		<link rel="shortcut icon" href="../../img/icon.ico" />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+        <meta name="author" content="Blogfy">
+        <meta name="description" content="site_description">
+		<title>titlefixed</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		
+		<!-- CSS -->
+		<link href='http://fonts.googleapis.com/css?family=Arvo:400' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="../../css/template-1/style.css">
+		<link rel="stylesheet" href="../../css/template-1/responsive.css">
+
+	</head>
+	<body>	
+		<!-- WRAPPER -->
+		<div class="wrapper">
+		
+			<!-- HEADER -->
+			<header class="cf"><br />
+				<div id="blogtitle"><a href="../../" class="heading2">site_name</a></div>
+                <div class="blogdescription">site_description</div>
+				
+				<!-- social-bar 
+				<ul id="social-bar" class="cf">
+					
+					<li class="dribbble"><a href="http://www.dribbble.com/ansimuz"  title="Dribbble" ></a></li>
+					<li class="facebook"><a href="http://www.facebook.com/pages/Ansimuz/224538697564461"  title="Facebook" ></a></li>
+					<li class="googleplus"><a href="https://plus.google.com/109030791898417339180/posts"  title="googleplus" ></a></li>
+					<li class="twitter"><a href="https://twitter.com/ansimuz"  title="twitter" ></a></li>
+				</ul>
+				 -->
+				
+			</header>
+			<!-- ENDS HEADER -->
+			
+			<!-- NAV -->
+			<nav class="cf">
+				<ul id="nav" class="sf-menu">
+					<li><a href="../../index.html">Home</a></li>
+					<li><a href="../../archive.html">Archive</a></li>
+<!--					<li><a href="../../forum.html">Forum</a></li> -->
+                     <form action="../../search.html" id="searchform">
+                      <div>
+                       <input type="hidden" name="cx" value="000510344615717143304:k7p5xn-2xbi" />
+                       <input type="hidden" name="cof" value="FORID:11" />
+                       <input type="hidden" name="ie" value="UTF-8" />
+                       <input class="search-sidebar" type="text" placeholder="Search..." name="q" size="30" />
+                      </div>
+                     </form>
+                </ul>
+			</nav>
+			<!-- ENDS NAV -->
+			
+			
+			<!-- MAIN -->
+			<div id="main" class="cf">
+				
+				<!-- posts list -->
+				<div id="posts-list" class="cf"> 

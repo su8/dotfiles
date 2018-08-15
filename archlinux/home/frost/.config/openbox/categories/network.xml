@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+
+<menu id="net" label="Network">
+    
+    <item icon="/usr/share/icons/Faenza/apps/22/firefox.png" label="FireFox">
+        <action name="Execute">
+            <execute>firefox</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/firefox.png" label="Tor">
+        <action name="Execute">
+            <execute>tor-browser-en --dir=/tmp</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/skype.png" label="Skype">
+        <action name="Execute">
+            <execute>skype</execute>
+        </action>
+    </item>
+
+    <item icon="/usr/share/icons/Faenza/apps/22/deluge.png" label="qBittorrent">
+        <action name="Execute">
+            <execute>qbittorrent</execute>
+        </action>
+    </item>
+
+    <!-- <item icon="/usr/share/icons/Faenza/apps/22/thunderbird.png" label="Thunderbird">
+        <action name="Execute">
+            <execute>thunderbird</execute>
+        </action>
+    </item> -->
+
+    <!-- <item icon="/usr/share/icons/Faenza/apps/22/zenmap.png" label="Zenmap">
+        <action name="Execute">
+            <execute>/usr/share/zenmap/su-to-zenmap.sh</execute>
+        </action>
+    </item> -->
+
+</menu>
+</openbox_menu>

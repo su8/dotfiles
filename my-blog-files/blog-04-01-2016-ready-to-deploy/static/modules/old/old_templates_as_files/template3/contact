@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="<!-- charset -->">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="img/file/icon.ico" />
+    <meta name="description" content="<!-- description -->">
+    <meta name="author" content="<!-- author -->">
+    <title>Contact</title>
+    <link href="css/template-3/bootstrap-min.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">Home</a>
+          <a class="navbar-brand" href="archive.html">Archive</a>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="panel panel-primary">
+          <div class="panel-body">
+          <p>To prevent the email crawlers and spam bots from getting my email address, and care about our privacy, you are allowed to contact me only with encrypted emails. Wrote a fairly small and easy to follow tutorial about email encryption.</p>
+
+          <p>Get my <a href="http://linux.sytes.net/img/file/pubkey.asc" target="_blank">public key here</a> and import it in your keyring. Hit me up with a simple email along with your public key. Once I've imported your public key will encrypt &amp; sign the email reply. Alternatively you can get my public key from the <strong>keys.gnupg.net</strong> key server with: <code>gpg --search-keys 'Aaron Caffrey'</code></p>
+
+          <p>Fingerprint = <strong>CF03 3489 E6A7 5CD9 B895  F251 148A 94F9 AA92 AE64</strong></p>
+
+          <p>Long key ID = 148A94F9AA92AE64, Short key ID = AA92AE64</p>
+
+          <p>Useful links - <a href="https://github.com/wifiextender?tab=repositories" target="_blank">GitHub Repos</a>, <a href="http://linux.sytes.net/rss.xml">RSS</a>, <a href="http://linux.sytes.net/sitemap.xml">Sitemap</a>
