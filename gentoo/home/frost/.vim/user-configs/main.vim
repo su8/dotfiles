@@ -98,3 +98,13 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm!  g`\"
 
 " Using two spaces for indentation when coding in js
 autocmd FileType javascript setlocal ts=2 sts=2 sw=2
+
+" Strip trailing whitespaces
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+
+autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
