@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+# set the correct ownership
+chown_this() {
+    chown --recursive root:root $1
+    chmod 644 $1
+}
+
+# Find all files in the first argument and store them in an array
+# Recursively create all subfolders if they do not exist
+# and copy all array elements to their --> / <-- root directory
+find_mkdir_cp() {
+  filez_arr=(`find $1 -type f`)
+
+  # replace 'frost' in all array elements with your $USER
+  [[ ! -z $2 ]] && filez_arr=(${filez_arr[@]/frost/$2})
+
+  for x in ${filez_arr[@]}
+  do
+    mkdir --parent "/${x%/*}"
+    cp --recursive ${x} "/${x}"
+    [[ -z $2 ]] && chown_this "/${x}"
+  done
+  unset x
+}
+
+
+# Delete the $1 archive once it's extracted
+extract_n_del() {
+  tar --extract --gzip --file $1 --directory "/${1%/*}"
+  rm $1
+}
+
+
+find_mkdir_cp boot
+find_mkdir_cp etc
+chmod 600 '/etc/polkit-1/rules.d/50-udisks.rules'
+
+cursor_theme='usr/share/icons/Bridge.tar.gz'
+icon_theme='usr/share/themes/OMG.tar.gz'
+
+extract_n_del ${cursor_theme}
+extract_n_del ${icon_theme}
+
+find_mkdir_cp usr

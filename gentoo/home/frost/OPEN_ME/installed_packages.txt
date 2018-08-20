@@ -228,6 +228,7 @@ dev-python/appdirs
 dev-python/beautifulsoup
 dev-python/bz2file
 dev-python/certifi
+dev-python/clang-python
 dev-python/cython
 dev-python/docutils
 dev-python/html5lib
@@ -513,10 +514,7 @@ sys-devel/binutils
 sys-devel/binutils-config
 sys-devel/bison
 sys-devel/clang
-<<<<<<< HEAD
 sys-devel/clang-common
-=======
->>>>>>> b372fd9a4d4e1180c10802163c15692c83d3786c
 sys-devel/clang-runtime
 sys-devel/flex
 sys-devel/gcc
@@ -634,10 +632,6 @@ virtual/ttf-fonts
 virtual/udev
 virtual/wine
 virtual/yacc
-<<<<<<< HEAD
-=======
-www-client/chromium
->>>>>>> b372fd9a4d4e1180c10802163c15692c83d3786c
 www-client/google-chrome
 www-client/links
 www-client/seamonkey-bin
