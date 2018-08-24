@@ -42,7 +42,8 @@ main() {
     'https://github.com/tpope/vim-fugitive'
     'https://github.com/mbbill/undotree'
     'https://github.com/justinmk/vim-syntax-extra'
-    'https://github.com/lifepillar/vim-mucomplete'
+
+    # 'https://github.com/lifepillar/vim-mucomplete'
 
     # 'https://github.com/severin-lemaignan/vim-minimap'
 
