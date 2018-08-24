@@ -42,9 +42,18 @@ main() {
     'https://github.com/tpope/vim-fugitive'
     'https://github.com/mbbill/undotree'
     'https://github.com/justinmk/vim-syntax-extra'
+    'https://github.com/lifepillar/vim-mucomplete'
+
+    # 'https://github.com/severin-lemaignan/vim-minimap'
+
+    # these 4 go together
+    # 'https://github.com/roxma/vim-hug-neovim-rpc'
+    # 'https://github.com/roxma/nvim-yarp'
+    # 'https://github.com/Shougo/deoplete.nvim'
+    # 'https://github.com/neovim/python-client'
 
     # requires manual "make -j4, and use CTRL+p/n to complete"
-    'https://github.com/Rip-Rip/clang_complete'
+    # 'https://github.com/Rip-Rip/clang_complete'
   )
   for x in "${_repos[@]}"
   do

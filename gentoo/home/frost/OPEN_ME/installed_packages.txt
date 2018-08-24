@@ -44,7 +44,6 @@ app-eselect/eselect-cdparanoia
 app-eselect/eselect-ctags
 app-eselect/eselect-fontconfig
 app-eselect/eselect-lib-bin-symlink
-app-eselect/eselect-mesa
 app-eselect/eselect-notify-send
 app-eselect/eselect-opengl
 app-eselect/eselect-pinentry
@@ -76,6 +75,7 @@ app-text/docbook-xml-dtd
 app-text/docbook-xsl-stylesheets
 app-text/evince
 app-text/ghostscript-gpl
+app-text/hunspell
 app-text/iso-codes
 app-text/libpaper
 app-text/libspectre
@@ -138,6 +138,7 @@ dev-libs/dbus-glib
 dev-libs/double-conversion
 dev-libs/elfutils
 dev-libs/expat
+dev-libs/fribidi
 dev-libs/geoip
 dev-libs/glib
 dev-libs/gmp
@@ -238,6 +239,7 @@ dev-python/m2crypto
 dev-python/markupsafe
 dev-python/numpy
 dev-python/packaging
+dev-python/pip
 dev-python/ply
 dev-python/pyblake2
 dev-python/pycairo
@@ -596,9 +598,11 @@ virtual/pam
 virtual/perl-Archive-Tar
 virtual/perl-CPAN-Meta
 virtual/perl-CPAN-Meta-YAML
+virtual/perl-Carp
 virtual/perl-Data-Dumper
 virtual/perl-Digest-MD5
 virtual/perl-Digest-SHA
+virtual/perl-Encode
 virtual/perl-Exporter
 virtual/perl-ExtUtils-CBuilder
 virtual/perl-ExtUtils-Install

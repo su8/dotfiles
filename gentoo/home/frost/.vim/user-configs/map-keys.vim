@@ -44,7 +44,7 @@
 " jshint2 lint errors, prev <-> next
 " :nnoremap <F6> :lprevious<CR>
 " :nnoremap <F6> :TagbarToggle<CR>
-:nnoremap <F7> :lnext<CR>
+" :nnoremap <F7> :lnext<CR>
 
 " toggle the undo-tree panel 
 :nnoremap <F4> :UndotreeToggle<CR>
